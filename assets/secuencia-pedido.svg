@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="680" height="460" fill="#ffffff"/>
+  <defs>
+    <marker id="arrQ" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Cabeceras de participantes -->
+  <g font-size="14" font-weight="bold">
+    <rect x="30" y="30" width="120" height="46" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+    <text x="90" y="58" text-anchor="middle" fill="#713f12">Cliente</text>
+
+    <rect x="210" y="30" width="130" height="46" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="275" y="50" text-anchor="middle" fill="#4c1d95">:InterfazUI</text>
+    <text x="275" y="68" text-anchor="middle" font-size="11.5" fill="#5b21b6">app m&#243;vil</text>
+
+    <rect x="400" y="30" width="140" height="46" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="470" y="50" text-anchor="middle" fill="#1e3a8a">:ServicioPedidos</text>
+    <text x="470" y="68" text-anchor="middle" font-size="11.5" fill="#1e40af">servidor</text>
+
+    <rect x="580" y="30" width="80" height="46" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="620" y="58" text-anchor="middle" fill="#14532d">:BD</text>
+  </g>
+
+  <!-- Líneas de vida -->
+  <g stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="5 5">
+    <line x1="90" y1="76" x2="90" y2="420"/>
+    <line x1="275" y1="76" x2="275" y2="420"/>
+    <line x1="470" y1="76" x2="470" y2="420"/>
+    <line x1="620" y1="76" x2="620" y2="420"/>
+  </g>
+
+  <!-- Mensajes -->
+  <line x1="92" y1="130" x2="273" y2="130" stroke="#334155" stroke-width="2" marker-end="url(#arrQ)"/>
+  <text x="182" y="120" text-anchor="middle" font-size="12.5" fill="#1e293b">hacerPedido(items)</text>
+
+  <line x1="277" y1="180" x2="468" y2="180" stroke="#334155" stroke-width="2" marker-end="url(#arrQ)"/>
+  <text x="372" y="170" text-anchor="middle" font-size="12.5" fill="#1e293b">validarYCrear(pedido)</text>
+
+  <line x1="472" y1="230" x2="618" y2="230" stroke="#334155" stroke-width="2" marker-end="url(#arrQ)"/>
+  <text x="545" y="220" text-anchor="middle" font-size="12.5" fill="#1e293b">guardar(pedido)</text>
+
+  <line x1="618" y1="280" x2="472" y2="280" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrR)"/>
+  <text x="545" y="270" text-anchor="middle" font-size="12.5" fill="#64748b">ok (id=123)</text>
+
+  <line x1="468" y1="330" x2="277" y2="330" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrR)"/>
+  <text x="372" y="320" text-anchor="middle" font-size="12.5" fill="#64748b">pedidoConfirmado</text>
+
+  <line x1="273" y1="385" x2="92" y2="385" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrR)"/>
+  <text x="182" y="375" text-anchor="middle" font-size="12.5" fill="#64748b">&#171;Pedido #123 registrado&#187;</text>
+</svg>

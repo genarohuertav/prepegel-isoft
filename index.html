@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="App de preparación para el EGEL Plus ISOFT del Ceneval: simulacros y práctica por áreas con explicaciones.">
+  <meta name="theme-color" content="#4338ca">
+  <title>PrepEGEL ISOFT — Simulador EGEL Plus Ingeniería de Software</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234338ca'/%3E%3Ctext x='50' y='68' font-size='48' text-anchor='middle' fill='white' font-family='Arial'%3EPS%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button id="btn-home" class="brand" aria-label="Ir al inicio">
+        <span class="brand-badge">PS</span>
+        <span class="brand-text">
+          <strong>PrepEGEL</strong> ISOFT
+          <small>Simulador · EGEL Plus Ingeniería de Software</small>
+        </span>
+      </button>
+    </div>
+    <div class="progress-track" id="progress-track" hidden>
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ PANTALLA INICIO ============ -->
+    <section id="screen-home" class="screen">
+      <div class="hero card">
+        <h1>¿Listo para acreditar tu <span class="grad-text">EGEL Plus ISOFT</span>?</h1>
+        <p class="muted">
+          Practica con reactivos tipo Ceneval (3 opciones, basados en casos) organizados según la
+          estructura oficial: 4 áreas disciplinares + Lenguaje y Comunicación.
+        </p>
+        <div class="hero-stats" id="hero-stats"></div>
+      </div>
+
+      <h2 class="section-title">Elige tu modo de estudio</h2>
+      <div class="mode-grid">
+
+        <button class="mode-card" data-mode="simulacro">
+          <div class="mode-icon" style="background:#eef2ff;color:#4338ca">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <div>
+            <h3>Simulacro completo</h3>
+            <p>Mezcla proporcional de todas las áreas, cronómetro de 2 min por reactivo y resultados al final. Como el examen real.</p>
+            <span class="tag">Recomendado antes del examen</span>
+          </div>
+        </button>
+
+        <button class="mode-card" data-mode="practica">
+          <div class="mode-icon" style="background:#ecfdf5;color:#047857">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div>
+            <h3>Práctica por tema</h3>
+            <p>Elige área y subárea, responde con retroalimentación inmediata y explicación en cada reactivo.</p>
+            <span class="tag">Para aprender tema por tema</span>
+          </div>
+        </button>
+
+        <button class="mode-card" data-mode="errores">
+          <div class="mode-icon" style="background:#fff1f2;color:#be123c">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          </div>
+          <div>
+            <h3>Repaso de errores</h3>
+            <p>Vuelve a contestar los reactivos que has fallado hasta dominarlos.</p>
+            <span class="tag" id="errors-count-tag">Sin errores pendientes</span>
+          </div>
+        </button>
+
+        <button class="mode-card" data-mode="flash">
+          <div class="mode-icon" style="background:#fefce8;color:#a16207">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 9v6"/><path d="M15.5 10.5c-.5-1-1.9-1.7-3.5-1.7-1.7 0-3 .8-3 1.9 0 2.4 6.5 1 6.5 3.3 0 1.1-1.4 1.9-3.2 1.9-1.8 0-3.2-.7-3.7-1.8"/></svg>
+          </div>
+          <div>
+            <h3>Flashcards</h3>
+            <p>Tarjetas de repaso rápido: definiciones, fórmulas, SOLID y patrones problema-solución. Marca las que ya dominas.</p>
+            <span class="tag">Repaso exprés · memoriza lo clave</span>
+          </div>
+        </button>
+
+      </div>
+
+      <div id="history-box" class="card history" hidden>
+        <h3>Tus últimos intentos</h3>
+        <ul id="history-list"></ul>
+      </div>
+
+      <p class="footnote muted">
+        Material de estudio original alineado a la Guía para el Sustentante (EGEL Plus ISOFT, Ceneval).
+        No es material oficial del Ceneval.
+      </p>
+    </section>
+
+    <!-- ============ PANTALLA CONFIGURACIÓN ============ -->
+    <section id="screen-setup" class="screen" hidden>
+      <button class="back-link" id="btn-setup-back">&larr; Volver</button>
+      <div class="card setup-card">
+        <h2 id="setup-title">Configura tu sesión</h2>
+
+        <div id="setup-areas-block">
+          <h3 class="block-label">Áreas a practicar</h3>
+          <div class="area-checks" id="area-checks"></div>
+          <h3 class="block-label">Subáreas (opcional)</h3>
+          <div class="subarea-chips" id="subarea-chips">
+            <span class="muted small">Selecciona una o más áreas para filtrar por subárea.</span>
+          </div>
+        </div>
+
+        <div id="setup-length-block">
+          <h3 class="block-label">Extensión del simulacro</h3>
+          <div class="seg-group" id="length-options"></div>
+        </div>
+
+        <div class="toggles">
+          <label class="switch-row">
+            <span>
+              <strong>Cronómetro</strong><br>
+              <span class="muted small">2 minutos por reactivo, como en el examen real.</span>
+            </span>
+            <input type="checkbox" id="toggle-timer" checked>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row">
+            <span>
+              <strong>Retroalimentación inmediata</strong><br>
+              <span class="muted small">Ver la respuesta correcta y su explicación tras cada reactivo.</span>
+            </span>
+            <input type="checkbox" id="toggle-instant">
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" id="btn-start">Comenzar sesión &rarr;</button>
+      </div>
+    </section>
+
+    <!-- ============ PANTALLA QUIZ ============ -->
+    <section id="screen-quiz" class="screen" hidden>
+      <div class="quiz-head">
+        <div class="quiz-meta">
+          <span class="badge" id="quiz-area-badge">Área</span>
+          <span class="badge badge-sub" id="quiz-sub-badge">Subárea</span>
+        </div>
+        <div class="quiz-right">
+          <span class="counter" id="quiz-counter">1 / 10</span>
+          <span class="timer-pill" id="quiz-timer">02:00</span>
+        </div>
+      </div>
+
+      <article class="card question-card">
+        <div id="quiz-base" class="question-base" hidden></div>
+        <figure id="quiz-figure" class="q-figure" hidden></figure>
+        <h2 id="quiz-stem" class="question-stem"></h2>
+        <div id="quiz-options" class="options"></div>
+        <div id="quiz-feedback" class="feedback" hidden>
+          <p class="feedback-verdict" id="feedback-verdict"></p>
+          <p class="feedback-exp" id="feedback-exp"></p>
+        </div>
+      </article>
+
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="btn-prev">&larr; Anterior</button>
+        <button class="btn btn-danger-ghost" id="btn-finish">Terminar</button>
+        <button class="btn btn-primary" id="btn-next">Siguiente &rarr;</button>
+      </div>
+      <p class="muted small quiz-hint">Atajos: teclas 1·2·3 para responder, flechas para navegar.</p>
+    </section>
+
+    <!-- ============ PANTALLA RESULTADOS ============ -->
+    <section id="screen-results" class="screen" hidden>
+      <div class="card results-hero">
+        <p class="results-kicker">Resultado de la sesión</p>
+        <div class="score-ring" id="score-ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="52" class="ring-bg"/>
+            <circle cx="60" cy="60" r="52" class="ring-fg" id="ring-fg"/>
+          </svg>
+          <div class="score-center">
+            <strong id="score-pct">0%</strong>
+            <span id="score-level">—</span>
+          </div>
+        </div>
+        <p class="muted" id="score-detail"></p>
+        <p class="disclaimer small muted">Nivel estimado. El examen oficial usa la escala ICNE 700–1300 (≥1000 Satisfactorio, ≥1150 Sobresaliente).</p>
+      </div>
+
+      <div class="card">
+        <h3>Desempeño por área</h3>
+        <div id="area-breakdown"></div>
+      </div>
+
+      <div class="card">
+        <h3>Desempeño por subárea</h3>
+        <div id="subarea-breakdown"></div>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn btn-primary" id="btn-review-all">Revisar reactivos con explicaciones</button>
+        <button class="btn btn-ghost" id="btn-new-session">Nueva sesión</button>
+      </div>
+    </section>
+
+    <!-- ============ PANTALLA REPASO ============ -->
+    <section id="screen-review" class="screen" hidden>
+      <button class="back-link" id="btn-review-back">&larr; Volver a resultados</button>
+      <div class="review-filter" id="review-filter">
+        <button class="chip active" data-filter="all">Todas</button>
+        <button class="chip" data-filter="wrong">Incorrectas</button>
+        <button class="chip" data-filter="right">Correctas</button>
+      </div>
+      <div id="review-list"></div>
+    </section>
+
+    <!-- ============ PANTALLA FLASHCARDS ============ -->
+    <section id="screen-flash" class="screen" hidden>
+      <button class="back-link" id="fc-exit">&larr; Volver al inicio</button>
+
+      <div class="flash-toolbar">
+        <div class="review-filter" id="fc-filter">
+          <button class="chip active" data-area="all">Todas</button>
+          <button class="chip" data-area="A1">A1 · Análisis</button>
+          <button class="chip" data-area="A2">A2 · Diseño</button>
+          <button class="chip" data-area="A3">A3 · Desarrollo</button>
+          <button class="chip" data-area="A4">A4 · Gestión</button>
+          <button class="chip" data-area="LC">Lenguaje</button>
+        </div>
+        <label class="fc-toggle">
+          <input type="checkbox" id="fc-only-unknown">
+          <span>Solo no dominadas</span>
+        </label>
+      </div>
+
+      <div class="fc-meta muted small">
+        <span id="fc-progress-text"></span>
+        <span id="fc-counter-known"></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="fc-progress-fill"></div></div>
+
+      <div id="fc-card-wrap">
+        <div class="fc-card" id="fc-card">
+          <div class="fc-face fc-front">
+            <span class="badge" id="fc-area-badge"></span>
+            <p class="fc-text" id="fc-card-front-text"></p>
+            <span class="muted tiny">Pregunta</span>
+          </div>
+          <div class="fc-face fc-back">
+            <p class="fc-text fc-back-text" id="fc-card-back-text"></p>
+            <span class="muted tiny">Respuesta</span>
+          </div>
+        </div>
+      </div>
+      <p class="muted small center" id="fc-hint"></p>
+
+      <div class="fc-verdicts" id="fc-verdicts" hidden>
+        <button class="btn btn-danger" id="fc-hard">&#10007; Aún no la sabía</button>
+        <button class="btn btn-success" id="fc-easy">&#10003; ¡La sabía!</button>
+      </div>
+
+      <div class="card center" id="fc-done-panel" hidden></div>
+    </section>
+
+  </main>
+
+  <!-- Diálogo de confirmación al terminar -->
+  <div class="overlay" id="finish-overlay" hidden>
+    <div class="dialog card">
+      <h3>¿Terminar la sesión?</h3>
+      <p id="finish-summary" class="muted"></p>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" id="btn-cancel-finish">Seguir estudiando</button>
+        <button class="btn btn-primary" id="btn-confirm-finish">Sí, terminar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer muted small">
+    PrepEGEL ISOFT · Estudia a tu ritmo · Hecho con cariño para futuros titulados
+  </footer>
+
+  <script src="js/questions-a1.js"></script>
+  <script src="js/questions-a2.js"></script>
+  <script src="js/questions-a3.js"></script>
+  <script src="js/questions-a4.js"></script>
+  <script src="js/questions-lang.js"></script>
+  <script src="js/questions-extra.js"></script>
+  <script src="js/flashcards.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

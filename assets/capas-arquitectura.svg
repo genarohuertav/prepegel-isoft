@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="680" height="460" fill="#ffffff"/>
+  <defs>
+    <marker id="arrC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <!-- Capa Presentación -->
+  <g>
+    <rect x="160" y="30" width="360" height="72" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="340" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#4c1d95">CAPA DE PRESENTACI&#211;N (UI)</text>
+    <text x="340" y="84" text-anchor="middle" font-size="12" fill="#5b21b6">formularios &#183; vistas &#183; validaci&#243;n de entrada</text>
+  </g>
+
+  <!-- Capa Lógica -->
+  <g>
+    <rect x="160" y="150" width="360" height="72" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="340" y="180" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e3a8a">CAPA DE L&#211;GICA DE NEGOCIO</text>
+    <text x="340" y="204" text-anchor="middle" font-size="12" fill="#1e40af">reglas del dominio &#183; c&#225;lculos &#183; servicios</text>
+  </g>
+
+  <!-- Capa Datos -->
+  <g>
+    <rect x="160" y="270" width="360" height="72" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="340" y="300" text-anchor="middle" font-size="16" font-weight="bold" fill="#14532d">CAPA DE ACCESO A DATOS</text>
+    <text x="340" y="324" text-anchor="middle" font-size="12" fill="#166534">repositorios &#183; ORM &#183; consultas</text>
+  </g>
+
+  <!-- BD -->
+  <g>
+    <ellipse cx="340" cy="418" rx="120" ry="20" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+    <rect x="220" y="398" width="240" height="20" fill="#fef9c3"/>
+    <line x1="220" y1="398" x2="220" y2="418" stroke="#ca8a04" stroke-width="2"/>
+    <line x1="460" y1="398" x2="460" y2="418" stroke="#ca8a04" stroke-width="2"/>
+    <text x="340" y="414" text-anchor="middle" font-size="14" font-weight="bold" fill="#713f12">BASE DE DATOS</text>
+  </g>
+
+  <!-- Flechas descendentes -->
+  <line x1="340" y1="102" x2="340" y2="144" stroke="#334155" stroke-width="2" marker-end="url(#arrC)"/>
+  <line x1="340" y1="222" x2="340" y2="264" stroke="#334155" stroke-width="2" marker-end="url(#arrC)"/>
+  <line x1="340" y1="342" x2="340" y2="386" stroke="#334155" stroke-width="2" marker-end="url(#arrC)"/>
+
+  <!-- Anotación lateral -->
+  <g font-size="13" fill="#64748b">
+    <line x1="528" y1="66" x2="580" y2="90" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="586" y="88">dependencia</text>
+    <text x="586" y="106">unidireccional:</text>
+    <text x="586" y="124">cada capa solo</text>
+    <text x="586" y="142">&#171;conoce&#187; a la</text>
+    <text x="586" y="160">capa inmediata</text>
+    <text x="586" y="178">inferior</text>
+  </g>
+</svg>

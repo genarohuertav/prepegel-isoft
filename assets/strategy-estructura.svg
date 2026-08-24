@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="680" height="460" fill="#ffffff"/>
+  <defs>
+    <marker id="tri2" viewBox="0 0 14 12" refX="13" refY="6" markerWidth="14" markerHeight="12" orient="auto">
+      <path d="M0,0 L14,6 L0,12 z" fill="#ffffff" stroke="#334155" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- Contexto -->
+  <g>
+    <rect x="50" y="60" width="210" height="110" rx="10" fill="#eef2ff" stroke="#4338ca" stroke-width="2"/>
+    <line x1="50" y1="92" x2="260" y2="92" stroke="#4338ca" stroke-width="1.5"/>
+    <text x="155" y="82" text-anchor="middle" font-size="16" font-weight="bold" fill="#312e81">Contexto</text>
+    <text x="62" y="116" font-size="13" fill="#1e293b">- estrategia: Estrategia</text>
+    <text x="62" y="140" font-size="13" fill="#1e293b">+ setEstrategia(e)</text>
+    <text x="62" y="162" font-size="13" fill="#1e293b">+ ejecutar() &#8594; delega</text>
+  </g>
+
+  <!-- Interfaz Estrategia -->
+  <g>
+    <rect x="400" y="55" width="230" height="70" rx="10" fill="#fff" stroke="#4338ca" stroke-width="2" stroke-dasharray="7 4"/>
+    <line x1="400" y1="87" x2="630" y2="87" stroke="#4338ca" stroke-width="1.5"/>
+    <text x="515" y="77" text-anchor="middle" font-size="14" font-weight="bold" fill="#312e81">&#171;interface&#187; Estrategia</text>
+    <text x="412" y="111" font-size="13" fill="#1e293b">+ algoritmo()</text>
+  </g>
+
+  <!-- Agregación Contexto -> Estrategia -->
+  <polygon points="268,110 286,102 304,110 286,118" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+  <line x1="304" y1="108" x2="398" y2="95" stroke="#334155" stroke-width="2"/>
+
+  <!-- Estrategias concretas -->
+  <g>
+    <rect x="380" y="190" width="250" height="56" rx="10" fill="#fff" stroke="#4338ca" stroke-width="2"/>
+    <text x="505" y="212" text-anchor="middle" font-size="14" font-weight="bold" fill="#312e81">EstrategiaTerrestre</text>
+    <text x="392" y="234" font-size="13" fill="#1e293b">+ algoritmo()</text>
+  </g>
+  <g>
+    <rect x="380" y="280" width="250" height="56" rx="10" fill="#fff" stroke="#4338ca" stroke-width="2"/>
+    <text x="505" y="302" text-anchor="middle" font-size="14" font-weight="bold" fill="#312e81">EstrategiaAerea</text>
+    <text x="392" y="324" font-size="13" fill="#1e293b">+ algoritmo()</text>
+  </g>
+  <g>
+    <rect x="380" y="370" width="250" height="56" rx="10" fill="#fff" stroke="#4338ca" stroke-width="2"/>
+    <text x="505" y="392" text-anchor="middle" font-size="14" font-weight="bold" fill="#312e81">EstrategiaExpres</text>
+    <text x="392" y="414" font-size="13" fill="#1e293b">+ algoritmo()</text>
+  </g>
+
+  <!-- Realizaciones -->
+  <line x1="500" y1="190" x2="512" y2="131" stroke="#334155" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#tri2)"/>
+  <line x1="520" y1="280" x2="517" y2="131" stroke="#334155" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#tri2)"/>
+  <line x1="540" y1="370" x2="522" y2="131" stroke="#334155" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#tri2)"/>
+</svg>
