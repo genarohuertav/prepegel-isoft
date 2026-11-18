@@ -443,20 +443,34 @@ function tick() {
 }
 
 /* ---------------- Navegación ---------------- */
-$("#btn-prev").addEventListener("click", () => {
-  if (session.idx > 0) { session.idx--; renderQuestion(); }
-});
-$("#btn-next").addEventListener("click", () => {
-  if (session.idx < session.items.length - 1) { session.idx++; renderQuestion(); }
-});
-$("#btn-finish").addEventListener("click", openFinishDialog);
+/* Los botones de navegación sueltan el foco tras el clic: si no, Espacio o Enter
+   volverían a "pulsarlos" y la pantalla avanzaría sin que se haya elegido una opción. */
+function navTo(delta, btn) {
+  const next = session.idx + delta;
+  if (next >= 0 && next < session.items.length) { session.idx = next; renderQuestion(); }
+  btn?.blur();
+}
+$("#btn-prev").addEventListener("click", e => navTo(-1, e.currentTarget));
+$("#btn-next").addEventListener("click", e => navTo(1, e.currentTarget));
+$("#btn-finish").addEventListener("click", e => { e.currentTarget.blur(); openFinishDialog(); });
 
+/* Teclas 1·2·3 (fila superior o teclado numérico, con o sin NumLock): eligen la opción que se VE en
+   esa posición; como las opciones se mezclan, se traduce con it.order. Nunca cambian de pregunta. */
+const ANSWER_KEYS = { Digit1: 0, Digit2: 1, Digit3: 2, Numpad1: 0, Numpad2: 1, Numpad3: 2 };
 document.addEventListener("keydown", e => {
   if (screens.quiz.hidden || !session) return;
+  if (!$("#finish-overlay").hidden) return;                      // diálogo abierto
+  if (e.ctrlKey || e.altKey || e.metaKey) return;                 // atajos del navegador
+  if (e.target.closest?.("input, textarea, select")) return;
   const it = current();
-  if (["1", "2", "3"].includes(e.key) && !it.locked) answer(it.order[Number(e.key) - 1]);
-  if (e.key === "ArrowRight") $("#btn-next").click();
-  if (e.key === "ArrowLeft") $("#btn-prev").click();
+  const pos = e.code in ANSWER_KEYS ? ANSWER_KEYS[e.code] : ["1", "2", "3"].indexOf(e.key);
+  if (pos >= 0) {
+    e.preventDefault();
+    if (!it.locked && !e.repeat) answer(it.order[pos]);
+    return;
+  }
+  if (e.key === "ArrowRight") { e.preventDefault(); navTo(1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); navTo(-1); }
 });
 
 /* ---------------- Finalizar ---------------- */

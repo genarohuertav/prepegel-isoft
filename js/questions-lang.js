@@ -32,7 +32,7 @@ window.QB_LANG = [
       "La modalidad de trabajo importa menos que la claridad de objetivos y la calidad de la comunicación; el entorno físico influye pero no determina"
     ],
     ans: 2,
-    exp: "El eje argumentativo: «la claridad de objetivos y la madurez de los canales pesan más que el lugar físico», matizado con los descensos por malas condiciones domésticas. A contradice los datos (21 % bajó); B es justamente la creencia que el estudio refuta."
+    exp: "El eje argumentativo: «la claridad de objetivos y la madurez de los canales pesan más que el lugar físico», matizado con los descensos por malas condiciones domésticas. Decir que el teletrabajo «siempre» aumenta la productividad contradice los datos (21 % bajó), y la supervisión presencial «indispensable» es justamente la creencia que el estudio refuta."
   },
   {
     id: "lg-03", sub: "LC", grupo: "lc-t01", ambito: "estudio", proceso: "evaluacion",
@@ -43,7 +43,7 @@ window.QB_LANG = [
       "Los 480 desarrolladores encuestados mintieron deliberadamente sobre su desempeño"
     ],
     ans: 0,
-    exp: "La limitación declarada: muestra solo de empresas GRANDES con infraestructura consolidada → los resultados quizá NO apliquen a pymes. La opción A reproduce exactamente ese límite; B y C introducen conclusiones que el texto no sostiene."
+    exp: "La limitación declarada: muestra solo de empresas GRANDES con infraestructura consolidada → los resultados quizá NO apliquen a pymes. El caso de la pyme sin infraestructura consolidada reproduce exactamente ese límite. Abandonar el esquema híbrido o suponer que los participantes mintieron son conclusiones que el texto no sostiene."
   },
 
   /* ========== COMPRENSIÓN LECTORA — Texto B (ámbito literario) ========== */
@@ -128,18 +128,18 @@ window.QB_LANG = [
       "Sí apruebas el EGEL, obtendras tu testimonio."
     ],
     ans: 1,
-    exp: "«SI» sin tilde introduce CONDICIÓN (si pasa esto, entonces aquello). «SÍ» con tilde es afirmación. Además «obtendrás» requiere tilde diacrítica — la opción C acumula dos faltas."
+    exp: "«SI» sin tilde introduce CONDICIÓN (si pasa esto, entonces aquello). «SÍ» con tilde es afirmación, por eso no puede iniciar esta condicional. Además, «obtendrás» lleva tilde por ser aguda terminada en -s (regla general, no tilde diacrítica); la versión «Sí… obtendras» acumula las dos faltas."
   },
   {
     id: "lg-11", sub: "RI", proceso: "ortografica",
-    stem: "Complete: «No ___ terminado la migración de la base de datos». La forma correcta es…",
+    stem: "Complete: «Lamentamos no ___ terminado a tiempo la migración de la base de datos». La forma correcta es…",
     opts: [
       "a ver",
       "haber",
       "aver"
     ],
     ans: 1,
-    exp: "HABER (verbo auxiliar) construye tiempos compuestos: «no HABER terminado». «A ver» (= vamos a mirar/comprobar: «a ver cómo queda») y «aver» (colonia marina) son palabras distintas. Confusión homófona clásica."
+    exp: "HABER (verbo auxiliar en infinitivo) forma el infinitivo compuesto: «lamentamos no HABER terminado». «A ver» es la preposición más el verbo ver («a ver cómo queda») y no funciona como auxiliar; «aver» no existe en español, es solo una falta de ortografía. Confusión homófona clásica."
   },
   {
     id: "lg-12", sub: "RI", proceso: "ortografica",
@@ -150,7 +150,7 @@ window.QB_LANG = [
       "El sistema es rápido; pero consume mucha memoria."
     ],
     ans: 0,
-    exp: "Ante «pero» que une dos proposiciones contrapuestas se escribe COMMA previa (regla normativa). Omitirla (B) deja la adversativa sin pausa requerida; combinar punto y coma + pero (C) duplica incorrectamente la separación."
+    exp: "Ante «pero» que une dos proposiciones contrapuestas se escribe COMA previa (regla normativa). La versión sin coma deja la adversativa sin la pausa requerida. El punto y coma antes de «pero» se reserva para periodos largos o que ya contienen comas; con dos proposiciones breves como estas, lo indicado es la coma."
   },
   {
     id: "lg-13", sub: "RI", proceso: "ortografica",
@@ -174,7 +174,7 @@ window.QB_LANG = [
       "Los módulos del sistema están desactualizado."
     ],
     ans: 1,
-    exp: "Concordancia plural completa: módulos (sustantivo plural) → ESTÁN (verbo plural) → DESACTUALIZADOS (participio plural masculino). A rompe verbo-sujeto; C rombe adjetivo-sustantivo."
+    exp: "Concordancia plural completa: módulos (sustantivo plural) → ESTÁN (verbo plural) → DESACTUALIZADOS (participio plural masculino). «Los módulos… está» rompe la concordancia sujeto-verbo, y «están desactualizado» rompe la concordancia entre el sustantivo y el participio."
   },
   {
     id: "lg-15", sub: "RI", proceso: "gramatical",
@@ -185,7 +185,7 @@ window.QB_LANG = [
       "Estaba molesto cuando habló con él, el analista."
     ],
     ans: 1,
-    exp: "En A, «él» puede referirse al analista O al cliente (ambigüedad anafórica). B explicita quién estaba molesto y quién contactó. C es además agramatical (sujeto omitido sin contexto). Regla: todo pronombre debe tener UN único antecedente claro."
+    exp: "En «Cuando el analista habló con el cliente, él estaba molesto», «él» puede referirse al analista O al cliente (ambigüedad anafórica). «El cliente estaba molesto cuando el analista lo contactó» explicita quién estaba molesto y quién contactó. «Estaba molesto cuando habló con él, el analista» tampoco deja claro quién estaba molesto y desordena la oración. Regla: todo pronombre debe tener UN único antecedente claro."
   },
   {
     id: "lg-16", sub: "RI", proceso: "gramatical",
@@ -196,7 +196,7 @@ window.QB_LANG = [
       "es decir"
     ],
     ans: 1,
-    exp: "Relación CONTRASATIVA: cumplimiento pactado vs petición adicional → «sin embargo». «Por lo tanto» marca conclusión/causalidad (incorrecto aquí); «es decir» reformula/explica lo mismo."
+    exp: "Relación CONTRASTIVA: cumplimiento pactado vs petición adicional → «sin embargo». «Por lo tanto» marca conclusión/causalidad (incorrecto aquí); «es decir» reformula/explica lo mismo."
   },
   {
     id: "lg-17", sub: "RI", proceso: "gramatical",
@@ -218,7 +218,7 @@ window.QB_LANG = [
       "Vamos a ir informando conforme vayamos viendo cómo va yendo el asunto del informe."
     ],
     ans: 0,
-    exp: "Registro FORMAL uniforme, léxico preciso y sin cacofonías. B mezcla registro formal con coloquial («ya luego», «tipo») y relleno vacío («o sea»); C encadena verbos pronominales redundantes («vayamos viendo... va yendo») típico de habla descuidada."
+    exp: "«El informe anual será enviado próximamente…» mantiene un registro FORMAL uniforme, léxico preciso y sin cacofonías. La versión con «ya luego» y «tipo formal» mezcla registro formal con coloquial y añade relleno vacío («o sea»); la de «vayamos viendo cómo va yendo» encadena perífrasis verbales redundantes, típicas del habla descuidada."
   },
 
   /* ===== REDACCIÓN INDIRECTA — Dimensión comunicativa ===== */
@@ -232,7 +232,7 @@ window.QB_LANG = [
       "Buen día. Soy egresado de la licenciatura en Ingeniería de Software (matrícula 2019xxxx). Solicito amablemente me emitan la constancia de egreso, requisito para mi registro al EGEL Plus. Adjunto copia de credencial y comprobante de estudios. Agradezco su atención y quedo atento(a) a cualquier dato adicional. Atentamente, [nombre y teléfono]."
     ],
     ans: 2,
-    exp: "C logra TODO: saludo apropiado, identificación clara (quién pide), PETICIÓN específica y motivada, documentos adjuntos, cortesía y cierre con datos de contacto. A viola registro formal; B cae en fórmulas arcaicas y burocráticas («el que suscribe», «sin otro particular») sin identificarse siquiera — formalismo hueco también falla la dimensión comunicativa."
+    exp: "El mensaje que inicia con «Buen día. Soy egresado…» logra TODO: saludo apropiado, identificación clara (quién pide), PETICIÓN específica y motivada, documentos adjuntos, cortesía y cierre con datos de contacto. El de «Oigan, necesito YA mi papelito» viola el registro formal. El de «Estimados señores: Por medio del presente…» cae en fórmulas arcaicas y burocráticas («el que suscribe», «sin otro particular») sin identificarse siquiera: el formalismo hueco también falla en la dimensión comunicativa."
   },
   {
     id: "lg-20", sub: "RI", ambito: "social", proceso: "comunicativa",
@@ -244,6 +244,6 @@ window.QB_LANG = [
       "Debido a circunstancias ajenas a nuestro control, el servicio podría eventualmente presentar interrupciones en algún momento próximo sin fecha definida."
     ],
     ans: 1,
-    exp: "Un aviso eficaz responde QUÉ, CUÁNDO, POR QUÉ y QUÉ debe hacer el usuario: fecha exacta, horario, causa, acción preventiva. A carece de datos verificables; B cumple todos los elementos con instrucción clara. C genera incertidumbre total (sin fecha ni causa concreta), lo opuesto a comunicar."
+    exp: "Un aviso eficaz responde QUÉ, CUÁNDO, POR QUÉ y QUÉ debe hacer el usuario: fecha exacta, horario, causa, acción preventiva. El aviso del sábado 12 de septiembre cumple todos los elementos con una instrucción clara. «Pronto habrá mantenimiento…» carece de datos verificables, y «Debido a circunstancias ajenas…» genera incertidumbre total (sin fecha ni causa concreta), lo opuesto a comunicar."
   }
 ];

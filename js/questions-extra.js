@@ -24,7 +24,7 @@ window.QB_EXTRA = [
       "Permite que las clases EstrategiaTerrestre, Aerea y Expres hereden su comportamiento común de la clase Contexto"
     ],
     ans: 0,
-    exp: "Strategy encapsula familias de algoritmos intercambiables detrás de una interfaz; el Contexto los usa por composición (agregación). Esto cumple abierto/cerrado: agregar 'EstrategiaDron' solo crea una clase nueva. La opción B describe Singleton y la C invierte la relación (los concretos realizan la interfaz, no heredan del Contexto)."
+    exp: "Strategy encapsula familias de algoritmos intercambiables detrás de una interfaz; el Contexto los usa por composición (agregación). Esto cumple abierto/cerrado: agregar 'EstrategiaDron' solo crea una clase nueva. «Una única instancia del algoritmo» describe Singleton, y la herencia desde el Contexto invierte la relación: las estrategias concretas realizan la interfaz Estrategia, no heredan del Contexto."
   },
   {
     id: "ex-03", sub: "2.2", img: "assets/adapter-estructura.svg",

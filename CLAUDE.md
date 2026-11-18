@@ -46,6 +46,22 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 - Calificación: Índice Ceneval de 700 a 1300; Satisfactorio ≥ 1000, Sobresaliente ≥ 1150 (por área, por sección y global).
 - Formatos de reactivo de opción múltiple: cuestionamiento directo, completamiento y ordenamiento.
 
+## Prioridades (actualizado)
+
+- **La Sección Disciplinar es la prioridad**: es la que decide si se aprueba.
+- Lenguaje y Comunicación solo influye para el Sobresaliente global; basta con Satisfactorio en esa
+  sección. Su ampliación grande (paso 3) se **pospone al final del proyecto**, con una meta modesta.
+- Orden de trabajo: bug del teclado → correcciones de explicaciones → paso 4 por área (A3, A4, A1, A2),
+  con revisión del usuario al terminar cada área → pasos 5, 6, 7 → rebalanceo de opciones → paso 3.
+- Meta del paso 4: unas **2 veces el peso de la guía** en cada subárea, **sin crecer la 2.2**.
+  Empezar por las más débiles: 3.3, 3.1, 3.5, 4.3, 1.1, 3.2 y 4.2.
+- Temas prioritarios del paso 4 (descriptores): fragmentación y replicación; NoSQL (columnar, grafos, CAP);
+  paradigmas lógico y funcional aplicados; móviles y embebidos; documentación de pruebas; PMBOK 7;
+  Scrum 2020; COCOMO con cálculos; viabilidad y tipos de riesgo; ISO/IEC/IEEE 29148; ISO/IEC 25010:2023;
+  4+1; ATAM; heurísticas de Nielsen.
+- Las explicaciones (`exp`) **nunca** deben nombrar opciones por letra (A, B, C): las opciones se mezclan al
+  mostrarse. Hay que referirse a ellas por su contenido.
+
 ## Plan
 
 1. **Inventario**: leer el PDF, README.md, js/app.js y todos los js/questions-*.js. Hacer una tabla de cobertura por subárea (banco contra guía) y listar los temas de los descriptores y la bibliografía que no tienen preguntas (p. ej. NoSQL, fragmentación y replicación, paradigmas lógico y funcional, móviles y embebidos, ISO/IEC 25002:2024, 29148:2018, PMBOK 7, Scrum 2020, COCOMO, 4+1, ATAM, heurísticas de Nielsen).

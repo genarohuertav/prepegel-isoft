@@ -196,7 +196,7 @@ window.QB_A1 = [
       "Como sistema, quiero validar tarjetas, para cumplir mi trabajo de autorización"
     ],
     ans: 0,
-    exp: "Formato: «COMO [rol], QUIERO [acción/meta], PARA [beneficio]». El rol debe ser humano (no «como sistema») y debe expresar el valor obtenido. La opción B es un requerimiento tradicional y C invierte el rol."
+    exp: "Formato: «COMO [rol], QUIERO [acción/meta], PARA [beneficio]». El rol debe ser humano (no «como sistema») y debe expresar el valor obtenido. «El sistema permitirá registrar pagos…» es un requerimiento tradicional sin rol ni beneficio, y «Como sistema, quiero validar tarjetas…» pone al software en el lugar del usuario."
   },
   {
     id: "a1-17", sub: "1.2",
