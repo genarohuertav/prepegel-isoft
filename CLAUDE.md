@@ -10,6 +10,27 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 - Las preguntas deben ser **originales**: no copiar reactivos ni textos de la guía.
 - Formato de pregunta del README (`id`, `sub`, `base` opcional, `stem`, `opts` con 3 opciones, `ans` 0–2, `exp` obligatoria).
 - Toda pregunta lleva explicación en `exp`.
+- **Regla permanente para preguntas nuevas:** las 3 opciones deben tener un largo parecido y la correcta
+  no debe ser siempre la más larga ni la más detallada. (En el banco original la correcta era la más
+  larga en 157 de 179 reactivos; ese rebalanceo es un paso aparte, después del paso 4.)
+- No citar ni presentar reactivos como "oficiales" del Ceneval.
+- Normas: usar ISO/IEC/IEEE 29148:2018 (no IEEE 830) e ISO/IEC 25010:2023 / 25002:2024 con su nomenclatura actual.
+
+## Decisiones de diseño (paso 2)
+
+1. Simulacro muestreado **por subárea** con los pesos de la guía; en Lenguaje, por **ámbito y proceso**.
+2. Tiempo por reactivo configurable. Por defecto **2.9 min** en la parte disciplinar y **2 min** en Lenguaje.
+   Modo **"Examen real"**: respeta la estructura de 203 reactivos (o su proporción si el banco no alcanza).
+3. Multirreactivos: campo `grupo` en cada pregunta (p. ej. `grupo: "lc-t01"`). Las preguntas del mismo
+   grupo salen juntas y en orden. El texto (`base`) va solo en la primera del grupo y se comparte.
+   El orden dentro del grupo lo da el orden en el archivo. No existe `BASE_GROUPS`.
+4. Preguntas de Lenguaje: campos opcionales `ambito` y `proceso`, mostrados en el desglose de resultados.
+   - `ambito`: `"estudio" | "literario" | "social"`.
+   - `proceso` (LC): `"identificacion" | "interpretacion" | "evaluacion"`;
+     (RI): `"comunicativa" | "gramatical" | "ortografica"`.
+5. Clave única del área de Lenguaje: `LG` (preguntas y flashcards). Subáreas: `LC` y `RI`.
+6. Niveles de desempeño: porcentajes marcados como **estimados**; la pantalla explica que el Ceneval usa el
+   Índice Ceneval 700–1300 con cortes en 1000 (Satisfactorio) y 1150 (Sobresaliente).
 
 ## Datos de la guía Dic 2026 (verificados en el PDF)
 

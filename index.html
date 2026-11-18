@@ -48,7 +48,18 @@
           </div>
           <div>
             <h3>Simulacro completo</h3>
-            <p>Mezcla proporcional de todas las áreas, cronómetro de 2 min por reactivo y resultados al final. Como el examen real.</p>
+            <p>Mezcla proporcional por subárea según la guía, con cronómetro configurable y resultados al final.</p>
+            <span class="tag">40, 80 o todo el banco</span>
+          </div>
+        </button>
+
+        <button class="mode-card" data-mode="examen">
+          <div class="mode-icon" style="background:#f5f3ff;color:#6d28d9">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 3H8z"/><rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
+          </div>
+          <div>
+            <h3>Examen real</h3>
+            <p>Estructura de 203 reactivos (143 disciplinares + 60 de Lenguaje), en el orden y con el ritmo del examen.</p>
             <span class="tag">Recomendado antes del examen</span>
           </div>
         </button>
@@ -119,15 +130,32 @@
           <div class="seg-group" id="length-options"></div>
         </div>
 
+        <div id="setup-exam-block" hidden>
+          <h3 class="block-label">Estructura</h3>
+          <div class="exam-info" id="exam-info"></div>
+        </div>
+
         <div class="toggles">
           <label class="switch-row">
             <span>
               <strong>Cronómetro</strong><br>
-              <span class="muted small">2 minutos por reactivo, como en el examen real.</span>
+              <span class="muted small">Tiempo total = suma del tiempo por reactivo configurado abajo.</span>
             </span>
             <input type="checkbox" id="toggle-timer" checked>
             <span class="switch" aria-hidden="true"></span>
           </label>
+          <div class="time-config">
+            <label>
+              <span>Minutos por reactivo · disciplinar</span>
+              <input type="number" id="input-min-dis" min="0.5" max="10" step="0.1" inputmode="decimal">
+            </label>
+            <label>
+              <span>Minutos por reactivo · Lenguaje</span>
+              <input type="number" id="input-min-lg" min="0.5" max="10" step="0.1" inputmode="decimal">
+            </label>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-time-reset">Restablecer 2.9 / 2</button>
+            <p class="muted small">Por defecto 2.9 min (7 h para 143 reactivos disciplinares) y 2 min (2 h para 60 de Lenguaje), según el horario de la guía.</p>
+          </div>
           <label class="switch-row">
             <span>
               <strong>Retroalimentación inmediata</strong><br>
@@ -189,7 +217,12 @@
           </div>
         </div>
         <p class="muted" id="score-detail"></p>
-        <p class="disclaimer small muted">Nivel estimado. El examen oficial usa la escala ICNE 700–1300 (≥1000 Satisfactorio, ≥1150 Sobresaliente).</p>
+        <p class="disclaimer small muted">
+          <strong>Nivel estimado.</strong> Aquí se calcula con el porcentaje de aciertos (60 % o más: Satisfactorio;
+          85 % o más: Sobresaliente). El Ceneval no usa porcentajes: convierte los aciertos de cada área al
+          Índice Ceneval, de 700 a 1300 puntos, donde 1000 o más es Satisfactorio y 1150 o más es Sobresaliente,
+          y con eso asigna el nivel por área, por sección y global.
+        </p>
       </div>
 
       <div class="card">
@@ -200,6 +233,11 @@
       <div class="card">
         <h3>Desempeño por subárea</h3>
         <div id="subarea-breakdown"></div>
+      </div>
+
+      <div class="card" id="lg-breakdown-card" hidden>
+        <h3>Lenguaje y Comunicación: ámbitos y procesos</h3>
+        <div id="lg-breakdown"></div>
       </div>
 
       <div class="results-actions">
@@ -230,7 +268,7 @@
           <button class="chip" data-area="A2">A2 · Diseño</button>
           <button class="chip" data-area="A3">A3 · Desarrollo</button>
           <button class="chip" data-area="A4">A4 · Gestión</button>
-          <button class="chip" data-area="LC">Lenguaje</button>
+          <button class="chip" data-area="LG">Lenguaje</button>
         </div>
         <label class="fc-toggle">
           <input type="checkbox" id="fc-only-unknown">

@@ -131,14 +131,14 @@ window.QB_A4 = [
   {
     id: "a4-11", sub: "4.2",
     base: "Tras el release, el equipo logra incorporar cambios normativos fiscales modificando solo dos clases, sin romper módulos ajenos.",
-    stem: "Según ISO/IEC 25010, el atributo exhibido es la…",
+    stem: "Según ISO/IEC 25010:2023, la característica de calidad exhibida es la…",
     opts: [
       "Mantenibilidad (modificabilidad)",
       "Eficiencia de desempeño",
       "Compatibilidad"
     ],
     ans: 0,
-    exp: "MANTENIBILIDAD: facilidad para MODIFICAR (corregir, mejorar, adaptar) el software con esfuerzo contenido — modularidad, reusabilidad, testabilidad. Eficiencia habla de recursos/tiempo; compatibilidad de interoperabilidad."
+    exp: "MANTENIBILIDAD: facilidad para MODIFICAR (corregir, mejorar, adaptar) el software con esfuerzo contenido. En ISO/IEC 25010:2023 sus subcaracterísticas son modularidad, reusabilidad, analizabilidad, modificabilidad y capacidad de ser probado. Eficiencia de desempeño habla de recursos/tiempo; compatibilidad, de coexistencia e interoperabilidad."
   },
   {
     id: "a4-12", sub: "4.2",
