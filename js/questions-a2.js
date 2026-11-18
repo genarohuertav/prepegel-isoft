@@ -16,7 +16,7 @@ window.QB_A2 = [
       "En capas"
     ],
     ans: 0,
-    exp: "La arquitectura DISTRIBUIDA (con BD fragmentadas y replicadas) da autonomía a cada sitio manteniendo coherencia global — exactamente el caso del reactivo oficial del EGEL. Cliente-servidor centraliza el servicio; las capas organizan responsabilidades internas, no sitios autónomos."
+    exp: "La arquitectura DISTRIBUIDA (con BD fragmentadas y replicadas) da autonomía a cada sitio manteniendo coherencia global. Cliente-servidor centraliza el servicio; las capas organizan responsabilidades internas, no sitios autónomos."
   },
   {
     id: "a2-02", sub: "2.1",
@@ -28,7 +28,7 @@ window.QB_A2 = [
       "Orientada a objetos"
     ],
     ans: 1,
-    exp: "Caso oficial tipo EGEL: cuando la INTERFAZ domina y se requiere separar presentación (vista), lógica (controlador) y datos (modelo) para facilitar cambios y portabilidad, MVC es la respuesta. «Orientada a objetos» es un paradigma, no una arquitectura de aplicación."
+    exp: "Cuando la INTERFAZ domina y se requiere separar presentación (vista), lógica (controlador) y datos (modelo) para facilitar cambios y portabilidad, MVC es la respuesta. «Orientada a objetos» es un paradigma, no una arquitectura de aplicación."
   },
   {
     id: "a2-03", sub: "2.1",

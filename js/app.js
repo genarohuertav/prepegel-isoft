@@ -1,5 +1,6 @@
 /* ============================================================
    PrepEGEL ISOFT — Lógica de la aplicación
+   Estructura alineada a la Guía para el sustentante, diciembre 2026
    ============================================================ */
 "use strict";
 
@@ -11,7 +12,6 @@ const AREAS = {
   A4: { name: "Área 4 · Gestión de Proyectos de Software", short: "Gestión", color: "#db2777" },
   LG: { name: "Lenguaje y Comunicación", short: "Lenguaje", color: "#7c3aed" }
 };
-const AREA_WEIGHTS = { A1: 31, A2: 33, A3: 49, A4: 30, LG: 60 }; // reactivos oficiales del examen
 
 const SUBAREA_LABELS = {
   "1.1": "Tipos de requerimientos",
@@ -32,6 +32,34 @@ const SUBAREA_LABELS = {
   "RI": "Redacción indirecta"
 };
 
+const AMBITO_LABELS = { estudio: "Ámbito de estudio", literario: "Ámbito literario", social: "Ámbito de participación social" };
+const PROCESO_LABELS = {
+  identificacion: "Identificación de información",
+  interpretacion: "Interpretación",
+  evaluacion: "Evaluación de la forma y el contenido",
+  comunicativa: "Dimensión comunicativa",
+  gramatical: "Dimensión gramatical y semántica",
+  ortografica: "Dimensión ortográfica"
+};
+
+/* Estructura del examen según la guía (dic 2026): 203 reactivos */
+const EXAM = {
+  total: 203,
+  subWeights: {
+    "1.1": 12, "1.2": 9, "1.3": 10,
+    "2.1": 10, "2.2": 16, "2.3": 7,
+    "3.1": 10, "3.2": 10, "3.3": 10, "3.4": 9, "3.5": 10,
+    "4.1": 8, "4.2": 10, "4.3": 12,
+    "LC": 30, "RI": 30
+  },
+  /* Objetivos dentro de Lenguaje. La guía da los procesos de LC (12/12/6) y los ámbitos de RI (15/15).
+     Supuestos propios: LC reparte los ámbitos por igual (10/10/10) y RI reparte las dimensiones por igual. */
+  lgTargets: {
+    LC: { ambito: { estudio: 10, literario: 10, social: 10 }, proceso: { identificacion: 12, interpretacion: 12, evaluacion: 6 } },
+    RI: { ambito: { estudio: 15, social: 15 }, proceso: { comunicativa: 10, gramatical: 10, ortografica: 10 } }
+  }
+};
+
 function areaOfSub(sub) {
   return sub.startsWith("1.") ? "A1"
     : sub.startsWith("2.") ? "A2"
@@ -39,6 +67,7 @@ function areaOfSub(sub) {
     : sub.startsWith("4.") ? "A4"
     : "LG";
 }
+const isLG = q => areaOfSub(q.sub) === "LG";
 
 /* ---------------- Banco global ---------------- */
 const BANK = [
@@ -47,20 +76,29 @@ const BANK = [
   ...(window.QB_LANG || []), ...(window.QB_EXTRA || [])
 ];
 const BY_ID = Object.fromEntries(BANK.map(q => [q.id, q]));
+const BANK_INDEX = Object.fromEntries(BANK.map((q, i) => [q.id, i]));
 
-/* Textos compartidos de comprensión lectora: copia la base al resto del grupo */
-const BASE_GROUPS = [
-  ["lg-01", "lg-02", "lg-03"],
-  ["lg-04", "lg-05", "lg-06"],
-  ["lg-07", "lg-08"]
-];
-BASE_GROUPS.forEach(group => {
-  const leader = BY_ID[group[0]];
-  if (leader && leader.base) group.slice(1).forEach(id => { const q = BY_ID[id]; if (q) q.base = leader.base; });
+/* Multirreactivos: las preguntas con el mismo `grupo` comparten el texto (`base`) de la primera
+   del grupo y se presentan juntas, en el orden en que aparecen en el banco. */
+const GROUPS = {};
+BANK.forEach(q => { if (q.grupo) (GROUPS[q.grupo] = GROUPS[q.grupo] || []).push(q); });
+Object.values(GROUPS).forEach(members => {
+  const base = members.find(q => q.base)?.base;
+  if (base) members.forEach(q => { if (!q.base) q.base = base; });
 });
 
+/* ---------------- Preferencias (tiempo por reactivo) ---------------- */
+const LS_PREFS = "isoft_prefs_v1";
+const DEFAULT_PREFS = { minDis: 2.9, minLG: 2 };
+function loadPrefs() {
+  try { return { ...DEFAULT_PREFS, ...JSON.parse(localStorage.getItem(LS_PREFS) || "{}") }; }
+  catch { return { ...DEFAULT_PREFS }; }
+}
+function savePrefs(p) { try { localStorage.setItem(LS_PREFS, JSON.stringify(p)); } catch { /* sin almacenamiento */ } }
+let prefs = loadPrefs();
+const secondsFor = q => (isLG(q) ? prefs.minLG : prefs.minDis) * 60;
+
 /* ---------------- Estado ---------------- */
-const SECONDS_PER_Q = 120;
 let session = null;
 let tickHandle = null;
 let setupMode = null;
@@ -90,9 +128,15 @@ function shuffle(arr) {
 }
 function fmtTime(sec) {
   sec = Math.max(0, Math.ceil(sec));
-  const m = String(Math.floor(sec / 60)).padStart(2, "0");
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
   const s = String(sec % 60).padStart(2, "0");
-  return `${m}:${s}`;
+  return h ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${String(m).padStart(2, "0")}:${s}`;
+}
+function fmtDuration(sec) {
+  const min = Math.round(sec / 60);
+  const h = Math.floor(min / 60), m = min % 60;
+  return h ? `${h} h ${m} min` : `${m} min`;
 }
 function esc(str) {
   return String(str).replace(/[&<>"']/g, c =>
@@ -106,6 +150,15 @@ function toast(msg) {
   requestAnimationFrame(() => t.classList.add("show"));
   setTimeout(() => { t.classList.remove("show"); setTimeout(() => t.remove(), 400); }, 2600);
 }
+function countBy(list, keyFn) {
+  const out = {};
+  list.forEach(x => { const k = keyFn(x); out[k] = (out[k] || 0) + 1; });
+  return out;
+}
+/* Etiqueta corta de ámbito y proceso (solo preguntas de Lenguaje que los tengan) */
+function lgTags(q) {
+  return [q.ambito && AMBITO_LABELS[q.ambito], q.proceso && PROCESO_LABELS[q.proceso]].filter(Boolean);
+}
 
 /* ---------------- Persistencia ---------------- */
 const LS_ERRORS = "isoft_errors_v1";
@@ -115,7 +168,7 @@ function getErrors() {
   catch { return new Set(); }
 }
 function saveErrors(set) {
-  localStorage.setItem(LS_ERRORS, JSON.stringify([...set].filter(id => BY_ID[id])));
+  try { localStorage.setItem(LS_ERRORS, JSON.stringify([...set].filter(id => BY_ID[id]))); } catch { /* sin almacenamiento */ }
 }
 function getHistory() {
   try { return JSON.parse(localStorage.getItem(LS_HISTORY) || "[]"); } catch { return []; }
@@ -123,16 +176,14 @@ function getHistory() {
 function pushHistory(entry) {
   const h = getHistory();
   h.unshift(entry);
-  localStorage.setItem(LS_HISTORY, JSON.stringify(h.slice(0, 8)));
+  try { localStorage.setItem(LS_HISTORY, JSON.stringify(h.slice(0, 8))); } catch { /* sin almacenamiento */ }
 }
 function refreshHomeStats() {
   const errs = [...getErrors()].filter(id => BY_ID[id]);
   $("#errors-count-tag").textContent =
     errs.length ? `${errs.length} reactivo${errs.length > 1 ? "s" : ""} por repasar` : "Sin errores pendientes";
 
-  const perArea = {};
-  BANK.forEach(q => perArea[q.sub.startsWith("1.") || q.sub.startsWith("2.") || q.sub.startsWith("3.") || q.sub.startsWith("4.") ? areaOfSub(q.sub) : "LG"] =
-    (perArea[areaOfSub(q.sub)] || 0) + 1);
+  const perArea = countBy(BANK, q => areaOfSub(q.sub));
   $("#hero-stats").innerHTML =
     `<span class="stat-chip">${BANK.length} reactivos</span>` +
     Object.entries(AREAS).map(([k, v]) =>
@@ -151,39 +202,152 @@ function refreshHomeStats() {
   } else box.hidden = true;
 }
 
-/* ---------------- Construcción de sesiones ---------------- */
-function makeItems(pool) {
-  return shuffle(pool).map(q => ({ q, order: shuffle([0, 1, 2]), picked: null, locked: false }));
+/* ---------------- Muestreo ---------------- */
+
+/* Reparto por residuos mayores: enteros que suman `total` en proporción a `weights` */
+function largestRemainder(weights, total) {
+  const keys = Object.keys(weights);
+  const sumW = keys.reduce((s, k) => s + weights[k], 0);
+  const out = {};
+  if (!sumW || total <= 0) { keys.forEach(k => out[k] = 0); return out; }
+  const raw = keys.map(k => ({ k, v: total * weights[k] / sumW }));
+  raw.forEach(r => out[r.k] = Math.floor(r.v));
+  let left = total - raw.reduce((s, r) => s + out[r.k], 0);
+  shuffle(raw).sort((a, b) => (b.v - Math.floor(b.v)) - (a.v - Math.floor(a.v)))
+    .forEach(r => { if (left > 0) { out[r.k]++; left--; } });
+  return out;
 }
 
-function sampleWeighted(total) {
-  // Distribuye según los pesos oficiales del examen, respetando disponibilidad del banco
-  const avail = {};
-  BANK.forEach(q => { const a = areaOfSub(q.sub); (avail[a] = avail[a] || []).push(q); });
-  const totalW = Object.values(AREA_WEIGHTS).reduce((s, w) => s + w, 0);
-  const quotas = {};
-  Object.keys(AREAS).forEach(a => quotas[a] = Math.min(avail[a]?.length || 0, Math.floor(total * AREA_WEIGHTS[a] / totalW)));
-  let assigned = Object.values(quotas).reduce((s, n) => s + n, 0);
-  // Redistribuir sobrante a áreas con disponibilidad
-  while (assigned < total) {
-    const candidates = Object.keys(AREAS)
-      .filter(a => quotas[a] < (avail[a]?.length || 0))
-      .sort((x, y) => (AREA_WEIGHTS[y] - quotas[y]) - (AREA_WEIGHTS[x] - quotas[x]));
-    if (!candidates.length) break;
-    quotas[candidates[0]]++; assigned++;
+/* Cuotas proporcionales a `weights`, sin pasar de `caps`; lo que no cabe se redistribuye */
+function apportion(weights, total, caps) {
+  const q = {};
+  Object.keys(weights).forEach(k => q[k] = 0);
+  let left = Math.min(total, Object.keys(weights).reduce((s, k) => s + (caps[k] || 0), 0));
+  let active = Object.keys(weights).filter(k => (caps[k] || 0) > 0);
+  while (left > 0 && active.length) {
+    const share = largestRemainder(Object.fromEntries(active.map(k => [k, weights[k]])), left);
+    let assigned = 0;
+    active.forEach(k => { const add = Math.min(share[k], caps[k] - q[k]); q[k] += add; assigned += add; });
+    left -= assigned;
+    active = active.filter(k => q[k] < caps[k]);
+    if (!assigned) break;
   }
-  let qs = [];
-  Object.keys(quotas).forEach(a => qs.push(...shuffle(avail[a]).slice(0, quotas[a])));
-  return qs;
+  return q;
 }
 
-function startSession({ mode, pool, timed, instant }) {
+/* Une las preguntas de un mismo grupo en una "unidad" (en orden del banco); las sueltas son unidades de 1 */
+function toUnits(pool) {
+  const units = [], byGroup = new Map();
+  pool.forEach(q => {
+    if (!q.grupo) { units.push([q]); return; }
+    if (!byGroup.has(q.grupo)) { const u = []; byGroup.set(q.grupo, u); units.push(u); }
+    byGroup.get(q.grupo).push(q);
+  });
+  units.forEach(u => u.sort((a, b) => BANK_INDEX[a.id] - BANK_INDEX[b.id]));
+  return units;
+}
+
+/* Elige unidades hasta llenar `quota`, favoreciendo las que cubren los objetivos de `dims`
+   (p. ej. ámbito y proceso). Un grupo que no cabe completo se recorta conservando su orden. */
+function pickUnits(units, quota, dims = []) {
+  const sel = dims.map(() => ({}));
+  const fitOf = q => {
+    let s = 0, c = 0;
+    dims.forEach((d, i) => {
+      const k = q[d.field];
+      if (k == null) return;
+      c++;
+      const t = d.target[k];
+      s += t ? (t - (sel[i][k] || 0)) / t : -1;
+    });
+    return c ? s / c : 0;
+  };
+  const pool = shuffle(units), chosen = [];
+  let remaining = quota;
+  while (remaining > 0 && pool.length) {
+    let best = -Infinity, bi = 0;
+    pool.forEach((u, i) => {
+      const f = u.reduce((s, q) => s + fitOf(q), 0) / u.length;
+      if (f > best) { best = f; bi = i; }
+    });
+    let unit = pool.splice(bi, 1)[0];
+    if (unit.length > remaining) {
+      unit = unit.map((q, i) => ({ q, i, f: fitOf(q) }))
+        .sort((a, b) => b.f - a.f).slice(0, remaining)
+        .sort((a, b) => a.i - b.i).map(x => x.q);
+    }
+    unit.forEach(q => dims.forEach((d, i) => { const k = q[d.field]; if (k != null) sel[i][k] = (sel[i][k] || 0) + 1; }));
+    chosen.push(...unit);
+    remaining -= unit.length;
+  }
+  return chosen;
+}
+
+/* Muestra un examen con las cuotas por subárea dadas (Lenguaje equilibrado por ámbito y proceso) */
+function sampleByQuotas(quotas) {
+  const bySub = {};
+  BANK.forEach(q => (bySub[q.sub] = bySub[q.sub] || []).push(q));
+  const out = [];
+  Object.entries(quotas).forEach(([sub, n]) => {
+    if (!n || !bySub[sub]) return;
+    const t = EXAM.lgTargets[sub];
+    const dims = t ? [{ field: "ambito", target: t.ambito }, { field: "proceso", target: t.proceso }] : [];
+    out.push(...pickUnits(toUnits(bySub[sub]), n, dims));
+  });
+  return out;
+}
+
+const availBySub = () => countBy(BANK, q => q.sub);
+
+/* Simulacro de N reactivos: cuotas por subárea proporcionales a los pesos de la guía */
+function sampleSimulacro(total) {
+  return sampleByQuotas(apportion(EXAM.subWeights, total, availBySub()));
+}
+
+/* Examen real: 203 reactivos con la estructura de la guía, o la misma proporción si el banco no alcanza */
+function examPlan() {
+  const avail = availBySub();
+  let scale = 1, limiting = null;
+  Object.entries(EXAM.subWeights).forEach(([sub, w]) => {
+    const r = (avail[sub] || 0) / w;
+    if (r < scale) { scale = r; limiting = sub; }
+  });
+  const total = scale >= 1 ? EXAM.total : Math.floor(EXAM.total * scale);
+  const quotas = scale >= 1 ? { ...EXAM.subWeights } : apportion(EXAM.subWeights, total, avail);
+  const sumQ = Object.values(quotas).reduce((s, n) => s + n, 0);
+  const lgN = (quotas.LC || 0) + (quotas.RI || 0);
+  return {
+    full: scale >= 1, scale, limiting, total: sumQ, quotas,
+    seconds: (sumQ - lgN) * prefs.minDis * 60 + lgN * prefs.minLG * 60
+  };
+}
+
+/* ---------------- Construcción de sesiones ---------------- */
+/* Mezcla por unidades (los multirreactivos quedan juntos y en orden).
+   sectionOrder: primero la sección disciplinar y al final Lenguaje, como en la aplicación real. */
+function makeItems(pool, { sectionOrder = false } = {}) {
+  let units = shuffle(toUnits(pool));
+  if (sectionOrder) units = [...units.filter(u => !isLG(u[0])), ...units.filter(u => isLG(u[0]))];
+  const items = units.flat().map(q => ({ q, order: shuffle([0, 1, 2]), picked: null, locked: false, gpos: 0, glen: 0 }));
+  // Posición dentro del grupo, relativa a esta sesión
+  for (let i = 0; i < items.length;) {
+    const g = items[i].q.grupo;
+    let j = i + 1;
+    if (g) while (j < items.length && items[j].q.grupo === g) j++;
+    if (g && j - i > 1) for (let k = i; k < j; k++) { items[k].gpos = k - i + 1; items[k].glen = j - i; }
+    i = j;
+  }
+  return items;
+}
+
+function startSession({ mode, pool, timed, instant, sectionOrder = false }) {
   if (!pool.length) { toast("No hay reactivos disponibles con esos filtros."); return; }
+  const items = makeItems(pool, { sectionOrder });
+  const totalSecs = items.reduce((s, it) => s + secondsFor(it.q), 0);
   session = {
-    mode, timed, instant,
-    items: makeItems(pool),
+    mode, timed, instant, items,
     idx: 0,
-    deadline: timed ? Date.now() + pool.length * SECONDS_PER_Q * 1000 : null,
+    deadline: timed ? Date.now() + totalSecs * 1000 : null,
     startedAt: Date.now()
   };
   $("#progress-track").hidden = false;
@@ -208,12 +372,15 @@ function renderQuestion() {
   $("#quiz-area-badge").textContent = area.short;
   $("#quiz-area-badge").style.background = area.color + "1f";
   $("#quiz-area-badge").style.color = area.color;
-  $("#quiz-sub-badge").textContent = `${q.sub} · ${SUBAREA_LABELS[q.sub] || ""}`;
+  $("#quiz-sub-badge").textContent = [`${q.sub} · ${SUBAREA_LABELS[q.sub] || ""}`, ...lgTags(q)].join(" · ");
   $("#quiz-counter").textContent = `${session.idx + 1} / ${session.items.length}`;
 
   const baseEl = $("#quiz-base");
-  if (q.base) { baseEl.hidden = false; baseEl.textContent = q.base; }
-  else baseEl.hidden = true;
+  if (q.base) {
+    baseEl.hidden = false;
+    const kicker = it.glen ? `<div class="base-kicker">Texto compartido · pregunta ${it.gpos} de ${it.glen}</div>` : "";
+    baseEl.innerHTML = kicker + esc(q.base);
+  } else baseEl.hidden = true;
   const figEl = $("#quiz-figure");
   if (q.img) {
     figEl.hidden = false;
@@ -254,8 +421,8 @@ function answer(origIdx) {
   if (it.locked) return;
   it.picked = origIdx;
   updateProgress();
-  if (session.instant) { it.locked = true; renderQuestion(); }
-  else renderQuestion();
+  if (session.instant) it.locked = true;
+  renderQuestion();
 }
 
 /* ---------------- Temporizador ---------------- */
@@ -276,20 +443,34 @@ function tick() {
 }
 
 /* ---------------- Navegación ---------------- */
-$("#btn-prev").addEventListener("click", () => {
-  if (session.idx > 0) { session.idx--; renderQuestion(); }
-});
-$("#btn-next").addEventListener("click", () => {
-  if (session.idx < session.items.length - 1) { session.idx++; renderQuestion(); }
-});
-$("#btn-finish").addEventListener("click", openFinishDialog);
+/* Los botones de navegación sueltan el foco tras el clic: si no, Espacio o Enter
+   volverían a "pulsarlos" y la pantalla avanzaría sin que se haya elegido una opción. */
+function navTo(delta, btn) {
+  const next = session.idx + delta;
+  if (next >= 0 && next < session.items.length) { session.idx = next; renderQuestion(); }
+  btn?.blur();
+}
+$("#btn-prev").addEventListener("click", e => navTo(-1, e.currentTarget));
+$("#btn-next").addEventListener("click", e => navTo(1, e.currentTarget));
+$("#btn-finish").addEventListener("click", e => { e.currentTarget.blur(); openFinishDialog(); });
 
+/* Teclas 1·2·3 (fila superior o teclado numérico, con o sin NumLock): eligen la opción que se VE en
+   esa posición; como las opciones se mezclan, se traduce con it.order. Nunca cambian de pregunta. */
+const ANSWER_KEYS = { Digit1: 0, Digit2: 1, Digit3: 2, Numpad1: 0, Numpad2: 1, Numpad3: 2 };
 document.addEventListener("keydown", e => {
   if (screens.quiz.hidden || !session) return;
+  if (!$("#finish-overlay").hidden) return;                      // diálogo abierto
+  if (e.ctrlKey || e.altKey || e.metaKey) return;                 // atajos del navegador
+  if (e.target.closest?.("input, textarea, select")) return;
   const it = current();
-  if (["1", "2", "3"].includes(e.key) && !it.locked) answer(it.order[Number(e.key) - 1]);
-  if (e.key === "ArrowRight") $("#btn-next").click();
-  if (e.key === "ArrowLeft") $("#btn-prev").click();
+  const pos = e.code in ANSWER_KEYS ? ANSWER_KEYS[e.code] : ["1", "2", "3"].indexOf(e.key);
+  if (pos >= 0) {
+    e.preventDefault();
+    if (!it.locked && !e.repeat) answer(it.order[pos]);
+    return;
+  }
+  if (e.key === "ArrowRight") { e.preventDefault(); navTo(1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); navTo(-1); }
 });
 
 /* ---------------- Finalizar ---------------- */
@@ -302,6 +483,8 @@ function openFinishDialog() {
 }
 $("#btn-cancel-finish").addEventListener("click", () => { $("#finish-overlay").hidden = true; });
 $("#btn-confirm-finish").addEventListener("click", () => { $("#finish-overlay").hidden = true; finishSession(false); });
+
+const MODE_NAMES = { simulacro: "Simulacro", examen: "Examen real", errores: "Repaso errores", practica: "Práctica" };
 
 function finishSession(timeUp) {
   clearInterval(tickHandle);
@@ -316,11 +499,7 @@ function finishSession(timeUp) {
     if (ok) errSet.delete(i.q.id); else errSet.add(i.q.id);
   });
   saveErrors(errSet);
-  pushHistory({
-    date: new Date().toISOString(),
-    mode: session.mode === "simulacro" ? "Simulacro" : session.mode === "errores" ? "Repaso errores" : "Práctica",
-    correct, total, pct
-  });
+  pushHistory({ date: new Date().toISOString(), mode: MODE_NAMES[session.mode] || "Práctica", correct, total, pct });
   refreshHomeStats();
 
   if (timeUp) toast("Tiempo agotado — sesión finalizada.");
@@ -328,10 +507,22 @@ function finishSession(timeUp) {
 }
 
 /* ---------------- Resultados ---------------- */
+/* Nivel ESTIMADO por porcentaje de aciertos. El Ceneval no usa porcentajes: usa el Índice Ceneval
+   (700–1300; ≥1000 Satisfactorio, ≥1150 Sobresaliente). */
+const levelOf = pct => pct >= 85 ? "Sobresaliente" : pct >= 60 ? "Satisfactorio" : "Aún no satisfactorio";
+
+function breakdownRow(label, d, color, opacity = 1) {
+  const p = Math.round(d.c / d.t * 100);
+  return `<div class="breakdown-row">
+    <div class="breakdown-label"><span>${label}</span><span>${d.c}/${d.t} · ${p}%</span></div>
+    <div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%;background:${color};opacity:${opacity}"></div></div>
+  </div>`;
+}
+
 function renderResults(correct, total, pct) {
   $("#progress-track").hidden = true;
-  const level = pct >= 85 ? "Sobresaliente" : pct >= 60 ? "Satisfactorio" : "Aún no satisfactorio";
-  $("#score-detail").textContent = `Acertaste ${correct} de ${total} reactivos.`;
+  const level = levelOf(pct);
+  $("#score-detail").textContent = `Acertaste ${correct} de ${total} reactivos. Nivel estimado: ${level}.`;
 
   const ringFg = $("#ring-fg");
   const C = 2 * Math.PI * 52;
@@ -342,33 +533,50 @@ function renderResults(correct, total, pct) {
   }, 60);
   $("#score-pct").textContent = `${pct}%`;
   const lvlEl = $("#score-level");
-  lvlEl.textContent = level;
+  lvlEl.innerHTML = `${esc(level)}<br><small>(estimado)</small>`;
   lvlEl.style.color = pct >= 85 ? "#7c3aed" : pct >= 60 ? "#059669" : "#dc2626";
 
   // Por área y subárea
-  const byArea = {}, bySub = {};
+  const byArea = {}, bySub = {}, byLg = {};
+  const add = (map, k, ok) => { map[k] = map[k] || { c: 0, t: 0 }; map[k].t++; if (ok) map[k].c++; };
   session.items.forEach(i => {
-    const a = areaOfSub(i.q.sub), ok = i.picked === i.q.ans;
-    byArea[a] = byArea[a] || { c: 0, t: 0 }; byArea[a].t++; if (ok) byArea[a].c++;
-    bySub[i.q.sub] = bySub[i.q.sub] || { c: 0, t: 0 }; bySub[i.q.sub].t++; if (ok) bySub[i.q.sub].c++;
+    const q = i.q, ok = i.picked === q.ans;
+    add(byArea, areaOfSub(q.sub), ok);
+    add(bySub, q.sub, ok);
+    if (isLG(q)) {
+      if (q.ambito) add(byLg, `${q.sub}|ambito|${q.ambito}`, ok);
+      if (q.proceso) add(byLg, `${q.sub}|proceso|${q.proceso}`, ok);
+    }
   });
 
-  $("#area-breakdown").innerHTML = Object.entries(byArea).map(([a, d]) => {
-    const p = Math.round(d.c / d.t * 100), col = AREAS[a].color;
-    return `<div class="breakdown-row">
-      <div class="breakdown-label"><span>${esc(AREAS[a].name)}</span><span>${d.c}/${d.t} · ${p}%</span></div>
-      <div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%;background:${col}"></div></div>
-    </div>`;
-  }).join("");
+  $("#area-breakdown").innerHTML = Object.entries(byArea).map(([a, d]) =>
+    breakdownRow(`${esc(AREAS[a].name)} <span style="opacity:.6">· ${levelOf(Math.round(d.c / d.t * 100))} (est.)</span>`, d, AREAS[a].color)
+  ).join("");
 
-  $("#subarea-breakdown").innerHTML = Object.entries(bySub).sort().map(([s, d]) => {
-    const p = Math.round(d.c / d.t * 100);
-    const col = AREAS[areaOfSub(s)].color;
-    return `<div class="breakdown-row">
-      <div class="breakdown-label"><span>${esc(SUBAREA_LABELS[s] || s)} <span style="opacity:.6">(${s})</span></span><span>${d.c}/${d.t} · ${p}%</span></div>
-      <div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%;background:${col};opacity:.75"></div></div>
-    </div>`;
-  }).join("");
+  $("#subarea-breakdown").innerHTML = Object.entries(bySub).sort().map(([s, d]) =>
+    breakdownRow(`${esc(SUBAREA_LABELS[s] || s)} <span style="opacity:.6">(${s})</span>`, d, AREAS[areaOfSub(s)].color, .75)
+  ).join("");
+
+  // Lenguaje: por ámbito y por proceso/dimensión
+  const lgCard = $("#lg-breakdown-card");
+  const lgKeys = Object.keys(byLg);
+  lgCard.hidden = !lgKeys.length;
+  if (lgKeys.length) {
+    const color = AREAS.LG.color, html = [];
+    ["LC", "RI"].forEach(sub => {
+      ["ambito", "proceso"].forEach(dim => {
+        const keys = lgKeys.filter(k => k.startsWith(`${sub}|${dim}|`));
+        if (!keys.length) return;
+        const title = `${SUBAREA_LABELS[sub]} · ${dim === "ambito" ? "por ámbito" : sub === "LC" ? "por proceso" : "por dimensión"}`;
+        html.push(`<h4 class="breakdown-group">${title}</h4>`);
+        const labels = dim === "ambito" ? AMBITO_LABELS : PROCESO_LABELS;
+        const order = Object.keys(labels);
+        keys.sort((a, b) => order.indexOf(a.split("|")[2]) - order.indexOf(b.split("|")[2]))
+          .forEach(k => html.push(breakdownRow(esc(labels[k.split("|")[2]]), byLg[k], color, .75)));
+      });
+    });
+    $("#lg-breakdown").innerHTML = html.join("");
+  }
 
   showScreen("results");
 }
@@ -386,7 +594,6 @@ function renderReview() {
 
   list.innerHTML = rows.map(({ it, n }) => {
     const q = it.q, good = it.picked === q.ans, area = AREAS[areaOfSub(q.sub)];
-    const posCorrect = it.order.indexOf(q.ans);
     const optsHtml = it.order.map((orig, pos) => {
       let cls = "review-opt";
       if (orig === q.ans) cls += " opt-correct";
@@ -397,14 +604,17 @@ function renderReview() {
       if (orig === it.picked && good) marks.push("Tu respuesta");
       return `<div class="${cls}"><strong>${"ABC"[pos]})</strong> ${esc(q.opts[orig])}${marks.length ? ` <em style="float:right;font-size:.78rem">— ${marks.join(" · ")}</em>` : ""}</div>`;
     }).join("");
+    const tags = lgTags(q).map(t => `<span class="badge badge-sub">${esc(t)}</span>`).join("");
+    const baseLabel = it.glen ? `Ver texto compartido (pregunta ${it.gpos} de ${it.glen})` : "Ver texto/caso";
     return `<article class="card review-item">
       <div class="review-head">
         <span class="verdict-pill ${good ? "ok" : "bad"}">${good ? "CORRECTA" : "INCORRECTA"}</span>
         <span class="badge" style="background:${area.color}1f;color:${area.color}">${area.short}</span>
         <span class="badge badge-sub">${q.sub} · ${esc(SUBAREA_LABELS[q.sub] || "")}</span>
+        ${tags}
         <span class="muted small">#${n + 1}</span>
       </div>
-      ${q.base ? `<details><summary class="muted small" style="cursor:pointer;margin:.3rem 0">Ver texto/caso</summary>
+      ${q.base ? `<details><summary class="muted small" style="cursor:pointer;margin:.3rem 0">${baseLabel}</summary>
         <div class="question-base" style="margin-top:.4rem">${esc(q.base)}</div></details>` : ""}
       ${q.img ? `<img class="q-img" src="${esc(q.img)}" alt="${esc(q.imgAlt || "Diagrama de la pregunta")}" loading="lazy">` : ""}
       <p class="review-stem">${esc(q.stem)}</p>
@@ -432,23 +642,67 @@ function openSetup(mode) {
   setupMode = mode;
   selectedAreas.clear(); selectedSubs.clear();
   $("#toggle-timer").checked = mode !== "practica";
-  $("#toggle-instant").checked = mode !== "simulacro";
+  $("#toggle-instant").checked = mode === "practica";
+  $("#input-min-dis").value = prefs.minDis;
+  $("#input-min-lg").value = prefs.minLG;
+  $("#setup-areas-block").hidden = mode !== "practica";
+  $("#setup-length-block").hidden = mode !== "simulacro";
+  $("#setup-exam-block").hidden = mode !== "examen";
 
   if (mode === "simulacro") {
     $("#setup-title").textContent = "Configura tu simulacro";
-    $("#setup-areas-block").hidden = true;
-    $("#setup-length-block").hidden = false;
     renderLengthOptions(80);
+  } else if (mode === "examen") {
+    $("#setup-title").textContent = "Examen real";
+    renderExamInfo();
   } else if (mode === "practica") {
     $("#setup-title").textContent = "Práctica por tema";
-    $("#setup-areas-block").hidden = false;
-    $("#setup-length-block").hidden = true;
     selectedAreas.add("A1");
     renderAreaChecks();
     renderSubChips();
   }
+  syncTimeInputs();
   showScreen("setup");
 }
+
+function renderExamInfo() {
+  const plan = examPlan();
+  const lgN = (plan.quotas.LC || 0) + (plan.quotas.RI || 0);
+  const head = plan.full
+    ? `<p><strong>${plan.total} reactivos</strong> con la estructura de la guía: ${plan.total - lgN} disciplinares y ${lgN} de Lenguaje y Comunicación.</p>`
+    : `<p>El banco todavía no alcanza para los 203 reactivos. Se usará un examen de <strong>${plan.total} reactivos</strong>
+       con la misma proporción por subárea (${Math.round(plan.scale * 100)} % de la estructura): ${plan.total - lgN} disciplinares y ${lgN} de Lenguaje.
+       La subárea que limita es <strong>${esc(plan.limiting)} · ${esc(SUBAREA_LABELS[plan.limiting])}</strong>.</p>`;
+  $("#exam-info").innerHTML = head +
+    `<p class="muted small">Primero la sección disciplinar y al final Lenguaje, como en la aplicación real.
+     Tiempo total con tu configuración: <strong>${fmtDuration(plan.seconds)}</strong>
+     (el examen real dura 9 h en dos sesiones de 4.5 h).</p>`;
+}
+
+function readTimeInputs() {
+  const clamp = v => Math.min(10, Math.max(0.5, Math.round(v * 10) / 10));
+  const dis = parseFloat($("#input-min-dis").value), lg = parseFloat($("#input-min-lg").value);
+  prefs = {
+    minDis: Number.isFinite(dis) ? clamp(dis) : DEFAULT_PREFS.minDis,
+    minLG: Number.isFinite(lg) ? clamp(lg) : DEFAULT_PREFS.minLG
+  };
+}
+function syncTimeInputs() {
+  const on = $("#toggle-timer").checked;
+  $("#input-min-dis").disabled = !on;
+  $("#input-min-lg").disabled = !on;
+}
+$("#toggle-timer").addEventListener("change", syncTimeInputs);
+["#input-min-dis", "#input-min-lg"].forEach(sel => $(sel).addEventListener("input", () => {
+  readTimeInputs();
+  if (setupMode === "examen") renderExamInfo();
+}));
+$("#btn-time-reset").addEventListener("click", () => {
+  $("#input-min-dis").value = DEFAULT_PREFS.minDis;
+  $("#input-min-lg").value = DEFAULT_PREFS.minLG;
+  readTimeInputs();
+  if (setupMode === "examen") renderExamInfo();
+});
 
 function renderLengthOptions(defaultLen) {
   const wrap = $("#length-options");
@@ -458,7 +712,7 @@ function renderLengthOptions(defaultLen) {
     const b = document.createElement("button");
     b.textContent = label;
     b.dataset.len = String(val);
-    if ((val === Infinity && defaultLen === Infinity) || val === defaultLen) b.classList.add("active");
+    if (val === defaultLen) b.classList.add("active");
     b.addEventListener("click", () => {
       wrap.querySelectorAll("button").forEach(x => x.classList.remove("active"));
       b.classList.add("active");
@@ -504,21 +758,24 @@ function renderSubChips() {
 }
 
 $("#btn-start").addEventListener("click", () => {
+  readTimeInputs();
+  savePrefs(prefs);
   const timed = $("#toggle-timer").checked;
   const instant = $("#toggle-instant").checked;
-  let pool = [];
+  let pool = [], sectionOrder = false;
 
   if (setupMode === "simulacro") {
     const activeBtn = $("#length-options button.active");
     const len = Number(activeBtn?.dataset.len ?? 80);
-    pool = len >= BANK.length ? BANK.slice() : sampleWeighted(len);
-  } else if (setupMode === "errores") {
-    pool = [...getErrors()].map(id => BY_ID[id]).filter(Boolean);
+    pool = len >= BANK.length ? BANK.slice() : sampleSimulacro(len);
+  } else if (setupMode === "examen") {
+    pool = sampleByQuotas(examPlan().quotas);
+    sectionOrder = true;
   } else {
     pool = BANK.filter(q => selectedAreas.has(areaOfSub(q.sub)));
     if (selectedSubs.size) pool = pool.filter(q => selectedSubs.has(q.sub));
   }
-  startSession({ mode: setupMode, pool, timed, instant });
+  startSession({ mode: setupMode, pool, timed, instant, sectionOrder });
 });
 
 /* ---------------- Modos desde inicio ---------------- */
@@ -545,9 +802,11 @@ $("#btn-home").addEventListener("click", goHome);
 
 /* ---------------- Flashcards ---------------- */
 const FC_KNOWN_KEY = "isoft_fc_known_v1";
-const fcKnown = new Set(JSON.parse(localStorage.getItem(FC_KNOWN_KEY) || "[]"));
+const fcKnown = (() => {
+  try { return new Set(JSON.parse(localStorage.getItem(FC_KNOWN_KEY) || "[]")); } catch { return new Set(); }
+})();
 (window.FLASHCARDS || []).forEach((c, i) => { c.id = "fc-" + i; });
-const AREAS_FC = { A1: "A1 · Análisis", A2: "A2 · Diseño", A3: "A3 · Desarrollo", A4: "A4 · Gestión", LC: "Lenguaje" };
+const AREAS_FC = { A1: "A1 · Análisis", A2: "A2 · Diseño", A3: "A3 · Desarrollo", A4: "A4 · Gestión", LG: "Lenguaje" };
 let fc = null;
 
 function startFlashcards() {
@@ -620,7 +879,7 @@ function fcVerdict(knewIt) {
   const card = fc.deck[fc.idx];
   if (knewIt) { fcKnown.add(card.id); fc.ok++; }
   else { fcKnown.delete(card.id); fc.ko++; }
-  localStorage.setItem(FC_KNOWN_KEY, JSON.stringify([...fcKnown]));
+  try { localStorage.setItem(FC_KNOWN_KEY, JSON.stringify([...fcKnown])); } catch { /* sin almacenamiento */ }
   fc.flipped = false;
   fc.idx++;
   renderFc();

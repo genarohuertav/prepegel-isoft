@@ -45,14 +45,14 @@ window.QB_A1 = [
   {
     id: "a1-04", sub: "1.1",
     base: "Un banco exige que su portal opere 24 horas al día los 7 días de la semana, con un tiempo máximo anual de inactividad de 8.76 horas (disponibilidad ≥ 99.9 %).",
-    stem: "Según ISO/IEC 25010, el atributo de calidad al que responde esta exigencia es la…",
+    stem: "Según ISO/IEC 25010:2023, la subcaracterística de calidad a la que responde esta exigencia es la…",
     opts: [
-      "Usabilidad",
+      "Capacidad de interacción",
       "Disponibilidad",
-      "Portabilidad"
+      "Flexibilidad"
     ],
     ans: 1,
-    exp: "La DISPONIBILIDAD mide la proporción de tiempo en que el sistema está operativo (99.9 % ≈ 8.76 h/año de caída). La usabilidad se refiere a facilidad de uso y la portabilidad a trasladar el software entre entornos."
+    exp: "La DISPONIBILIDAD (subcaracterística de la Fiabilidad en ISO/IEC 25010:2023) mide la proporción de tiempo en que el sistema está operativo (99.9 % ≈ 8.76 h/año de caída). La capacidad de interacción (antes «usabilidad») se refiere a la facilidad de uso, y la flexibilidad (antes «portabilidad») a adaptar o trasladar el software a otros entornos."
   },
   {
     id: "a1-05", sub: "1.1",
@@ -128,14 +128,14 @@ window.QB_A1 = [
   {
     id: "a1-11", sub: "1.1",
     base: "Una empresa pide: «Nuestra aplicación debe poder instalarse tanto en Android como en iOS realizando cambios mínimos en el código».",
-    stem: "El atributo de calidad solicitado corresponde a la…",
+    stem: "Según ISO/IEC 25010:2023, la característica de calidad solicitada es la…",
     opts: [
-      "Portabilidad",
+      "Flexibilidad",
       "Mantenibilidad",
       "Fiabilidad"
     ],
     ans: 0,
-    exp: "PORTABILIDAD (ISO/IEC 25010): facilidad para transferir el software a otros entornos/plataformas. Mantenibilidad se refiere a modificarlo (corregir/mejorar) y fiabilidad a operar sin fallos durante un periodo."
+    exp: "FLEXIBILIDAD (ISO/IEC 25010:2023; en la versión 2011 se llamaba «portabilidad»): capacidad del producto para adaptarse a cambios de entorno o plataforma; incluye adaptabilidad, escalabilidad, instalabilidad y reemplazabilidad. Mantenibilidad se refiere a modificarlo (corregir/mejorar) y fiabilidad a operar sin fallos durante un periodo."
   },
 
   /* ====== 1.2 OBTENCIÓN, ANÁLISIS, PRIORIZACIÓN Y VALIDACIÓN ====== */
@@ -196,7 +196,7 @@ window.QB_A1 = [
       "Como sistema, quiero validar tarjetas, para cumplir mi trabajo de autorización"
     ],
     ans: 0,
-    exp: "Formato: «COMO [rol], QUIERO [acción/meta], PARA [beneficio]». El rol debe ser humano (no «como sistema») y debe expresar el valor obtenido. La opción B es un requerimiento tradicional y C invierte el rol."
+    exp: "Formato: «COMO [rol], QUIERO [acción/meta], PARA [beneficio]». El rol debe ser humano (no «como sistema») y debe expresar el valor obtenido. «El sistema permitirá registrar pagos…» es un requerimiento tradicional sin rol ni beneficio, y «Como sistema, quiero validar tarjetas…» pone al software en el lugar del usuario."
   },
   {
     id: "a1-17", sub: "1.2",
@@ -250,14 +250,14 @@ window.QB_A1 = [
   /* ==================== 1.3 DOCUMENTACIÓN ==================== */
   {
     id: "a1-21", sub: "1.3",
-    stem: "Sobre la Especificación de Requerimientos de Software (SRS, IEEE 830), ¿cuál afirmación es CORRECTA?",
+    stem: "Sobre la Especificación de Requerimientos de Software (SRS) según ISO/IEC/IEEE 29148:2018, ¿cuál afirmación es CORRECTA?",
     opts: [
       "Incluye diagramas de arquitectura y decisiones de diseño interno",
       "Define de manera completa, consistente y verificable QUÉ debe hacer el sistema, no CÓMO construirlo",
       "Es un documento exclusivamente dirigido a programadores senior"
     ],
     ans: 1,
-    exp: "La SRS establece los requerimientos (qué, no cómo): funciones, restricciones y atributos de calidad. El diseño (cómo) pertenece a documentos posteriores. Su audiencia incluye clientes, usuarios y desarrolladores."
+    exp: "La SRS establece los requerimientos (qué, no cómo): funciones, restricciones y atributos de calidad. El diseño (cómo) pertenece a documentos posteriores. Su audiencia incluye clientes, usuarios y desarrolladores. ISO/IEC/IEEE 29148:2018 reemplazó a IEEE 830 y además distingue las especificaciones de stakeholders (StRS), de sistema (SyRS) y de software (SRS)."
   },
   {
     id: "a1-22", sub: "1.3",

@@ -728,3 +728,44 @@ img.q-img {
   .fc-text { font-size: .98rem; }
   .flash-toolbar { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- Guía dic 2026: tiempo configurable, examen real, multirreactivos, Lenguaje ---------- */
+.btn-sm { padding: .4rem .8rem; font-size: .82rem; }
+.time-config {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: .6rem .9rem;
+  align-items: end;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: .8rem 1rem;
+}
+.time-config label { display: grid; gap: .3rem; font-size: .85rem; font-weight: 600; }
+.time-config input {
+  font: inherit;
+  padding: .45rem .6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 140px;
+}
+.time-config input:disabled { opacity: .5; }
+.time-config p { grid-column: 1 / -1; margin: 0; }
+.exam-info p { margin: 0 0 .5rem; }
+.base-kicker {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--primary-dark);
+  margin-bottom: .45rem;
+}
+.score-center span small { font-weight: 500; font-size: .72rem; }
+.breakdown-group {
+  margin: 1rem 0 .55rem;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+}
+.breakdown-group:first-child { margin-top: .2rem; }
