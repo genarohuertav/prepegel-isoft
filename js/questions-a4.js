@@ -294,7 +294,7 @@ window.QB_A4 = [
       "Son incomparables porque la métrica exige defectos/hora-hombre"
     ],
     ans: 0,
-    exp: "DENSIIDAD DE DEFECTOS = defectos / KLOC (normaliza por tamaño). 3 < 5 → el primer módulo es «más denso en calidad». Comparar defectos ABSOLUTOS sin normalizar lleva a conclusiones erróneas."
+    exp: "DENSIDAD DE DEFECTOS = defectos / KLOC (normaliza por tamaño). 3 < 5 → el primer módulo tiene mejor calidad interna. Comparar defectos ABSOLUTOS sin normalizar lleva a conclusiones erróneas."
   },
   {
     id: "a4-14", sub: "4.2",
@@ -509,22 +509,22 @@ window.QB_A4 = [
     opts: [
       "El Product Owner, dueño del Product Backlog y maximizador del valor",
       "El Scrum Master, como facilitador neutral del proceso",
-      "El equipo de desarrollo por autorganización absoluta"
+      "Los Developers, por la autogestión del equipo"
     ],
     ans: 0,
-    exp: "PRODUCT OWNER: única persona que ORDENA el backlog por valor (representa stakeholders/cliente). Scrum Master facilita y remueve impedimentos SIN decidir prioridades; el Developers autoorganiza el CÓMO dentro del sprint."
+    exp: "PRODUCT OWNER: única persona que ORDENA el Product Backlog por valor (representa a los interesados y al cliente). El Scrum Master facilita y ayuda a eliminar impedimentos SIN decidir prioridades; los Developers deciden el CÓMO del trabajo dentro del sprint."
   },
   {
     id: "a4-21", sub: "4.3",
-    base: "Reunión diaria de pie, máximo 15 minutos: cada integrante explica qué hizo, qué hará y si algo le bloquea.",
-    stem: "El propósito genuino del Daily Scrum es…",
+    base: "Cada día, a la misma hora y en no más de 15 minutos, los Developers se reúnen. Un integrante propone que siempre respondan qué hicieron ayer, qué harán hoy y qué los bloquea, «porque así lo exige Scrum».",
+    stem: "Según la Guía de Scrum 2020, el propósito del Daily Scrum es…",
     opts: [
-      "Sincronizar el plan del día e identificar impedimentos — es una reunion de planificación del Developers, no de estatus para el jefe",
-      "Reportar avance detallado al Product Owner para renovar el sprint",
-      "Renegociar el alcance del sprint con stakeholders externos"
+      "Revisar el avance hacia el Objetivo del Sprint y ajustar el plan",
+      "Reportar al Product Owner el avance detallado de cada persona",
+      "Renegociar el alcance del sprint con los interesados externos"
     ],
     ans: 0,
-    exp: "Daily Scrum: INSPECCIÓN diaria hacia la Sprint Goal + adaptación del plan de 24 h, PARA el equipo (no para dirección). Los impedimentos se gestionan aparte con el Scrum Master; el estatus formal sale del Sprint Review."
+    exp: "El Daily Scrum es un evento de 15 minutos PARA los Developers: inspeccionan el progreso hacia el Objetivo del Sprint y adaptan el Sprint Backlog, planificando el trabajo del siguiente día. Desde 2020 la guía NO exige las tres preguntas (ayer, hoy, bloqueos): el equipo elige la estructura y las técnicas que quiera, siempre que se centre en el objetivo y detecte impedimentos. No es una reunión de estatus para el Product Owner ni para la dirección, y el alcance se negocia con el Product Owner, no en este evento."
   },
   {
     id: "a4-22", sub: "4.3",
@@ -560,7 +560,7 @@ window.QB_A4 = [
       "Mob programming exclusivo de Kanban"
     ],
     ans: 0,
-    exp: "PAIR PROGRAMMING (XP): DRIVER teclea; NAVIGATOR observa estrategia/errores. Beneficios: calidad inmediata, transferencia de conocimiento, menos defectos. Es revisión CONTINUA, no postera."
+    exp: "PAIR PROGRAMMING (XP): DRIVER teclea; NAVIGATOR observa estrategia/errores. Beneficios: calidad inmediata, transferencia de conocimiento, menos defectos. Es revisión CONTINUA, no posterior."
   },
   {
     id: "a4-25", sub: "4.3",
