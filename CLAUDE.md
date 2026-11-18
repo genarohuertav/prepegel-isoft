@@ -72,6 +72,15 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 6. **Textos**: actualizar index.html y el README con la versión de la guía Dic 2026.
 7. **Script de validación** del banco (ids únicos, `ans` entre 0 y 2, 3 opciones, subárea válida).
 
+## Publicación y caché (cache-busting)
+
+- En `index.html`, `css/style.css` y todos los `js/*.js` se cargan con un parámetro de versión:
+  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-18`).
+- **Cada vez que se publique**, cambiar ese número en **todas** las etiquetas `<script>` y `<link>` a la
+  fecha de la publicación (si hay dos el mismo día, agregar sufijo: `2026-11-18b`). Así los navegadores
+  descargan los archivos nuevos en lugar de usar la copia en caché.
+- Todas las referencias llevan la misma versión. Si se agrega un archivo `.js` o `.css`, incluirle también el `?v=`.
+
 ## Estructura del proyecto
 
 - `index.html` — pantallas (inicio, configuración, quiz, resultados, repaso, flashcards).
