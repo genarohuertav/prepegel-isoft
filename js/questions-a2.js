@@ -23,9 +23,9 @@ window.QB_A2 = [
     base: "Se planeó desarrollar un software multimedia para la promoción turística de una localidad. La información debe estar estructurada y ser modificable, pero lo más relevante es la interfaz con el usuario, considerando que es posible migrar eventualmente a diferentes plataformas.",
     stem: "¿Qué arquitectura se requiere en este caso?",
     opts: [
-      "Basada en componentes",
+      "Basada en componentes reutilizables",
       "Modelo-vista-controlador (MVC)",
-      "Orientada a objetos"
+      "Orientada a objetos con herencia"
     ],
     ans: 1,
     exp: "Cuando la INTERFAZ domina y se requiere separar presentación (vista), lógica (controlador) y datos (modelo) para facilitar cambios y portabilidad, MVC es la respuesta. «Orientada a objetos» es un paradigma, no una arquitectura de aplicación."
@@ -35,9 +35,9 @@ window.QB_A2 = [
     base: "Una plataforma de comercio electrónico con millones de usuarios decide descomponer su monolito en servicios pequeños e independientes (catálogo, pagos, envíos), cada uno desplegable por separado.",
     stem: "¿Cuál trade-off caracteriza esta decisión de microservicios?",
     opts: [
-      "Permite escalar y desplegar cada servicio independientemente, pero aumenta la complejidad operativa (monitoreo, red, consistencia)",
-      "Reduce drásticamente todos los costos sin contrapartidas técnicas",
-      "Simplifica el modelo transaccional al eliminar las bases de datos distribuidas"
+      "Escala y despliega cada servicio aparte, pero suma complejidad operativa",
+      "Reduce todos los costos de operación sin ninguna contrapartida técnica",
+      "Simplifica las transacciones al eliminar las bases de datos distribuidas"
     ],
     ans: 0,
     exp: "MICROSERVICIOS: escalado independiente, despliegues ágiles y tolerancia a fallos parciales… a cambio de complejidad de operación, comunicación por red, consistencia eventual y gobernanza DevOps madura."
@@ -47,9 +47,9 @@ window.QB_A2 = [
     base: "En una aplicación web de tres niveles, el usuario pregunta dónde reside la lógica de negocio (reglas de crédito, cálculos fiscales).",
     stem: "En la arquitectura cliente-servidor de tres capas, esa lógica se ubica…",
     opts: [
-      "En el navegador del cliente para responder al instante",
-      "En la capa intermedia (servidor de aplicación), entre presentación y datos",
-      "Repartida indistintamente en todas las capas sin criterio"
+      "En el navegador del cliente, para responder al instante",
+      "En la capa intermedia, el servidor de aplicación",
+      "Repartida indistintamente en todas las capas, sin criterio"
     ],
     ans: 1,
     exp: "En 3-tier: PRESENTACIÓN (cliente), LÓGICA DE NEGOCIO (servidor de aplicación/capa intermedia) y DATOS (BD). Centralizar reglas en la capa intermedia evita duplicación y protege la lógica crítica del cliente."
@@ -60,8 +60,8 @@ window.QB_A2 = [
     stem: "El estilo arquitectónico que mejor resuelve este escenario es…",
     opts: [
       "Orientado a eventos con publicación/suscripción",
-      "Monolítico modular",
-      "Pipes and filters"
+      "Monolítico modular con llamadas directas entre módulos",
+      "Pipes and filters con etapas en secuencia fija"
     ],
     ans: 0,
     exp: "En ORIENTADA A EVENTOS, los productores publican eventos y los consumidores se suscriben: módulos totalmente desacoplados que reaccionan asincrónicamente. Pipes-and-filters procesa flujos secuenciales; el monolito acopla los módulos en un despliegue único."
@@ -71,9 +71,9 @@ window.QB_A2 = [
     base: "Una startup de 5 desarrolladores debe lanzar un MVP en tres meses con requisitos aún inestables.",
     stem: "¿Cuál elección arquitectónica es la más razonable para iniciar?",
     opts: [
-      "Microservices con malla de servicios desde el día uno",
-      "Arquitectura orientada a microfrontends con múltiples equipos",
-      "Monolito modular bien estructurado, que pueda evolucionar después"
+      "Microservicios con malla de servicios desde el día uno",
+      "Microfrontends repartidos entre varios equipos independientes",
+      "Monolito modular bien estructurado, que pueda evolucionar"
     ],
     ans: 2,
     exp: "Con equipos pequeños y requisitos volátiles, un MONOLITO MODULAR maximiza velocidad y simplicidad; la modularidad interna deja abierta la extracción futura a servicios. Microservicios prematuros impondrían sobrecosto operativo injustificado."
@@ -96,8 +96,8 @@ window.QB_A2 = [
     stem: "El método de evaluación arquitectónica descrito es…",
     opts: [
       "ATAM (Architecture Tradeoff Analysis Method)",
-      "COCOMO II",
-      "Planning poker"
+      "COCOMO II (Constructive Cost Model II)",
+      "Planning poker con cartas de Fibonacci"
     ],
     ans: 0,
     exp: "ATAM evalúa arquitecturas frente a escenarios de calidad, detectando TRADE-OFFS (decisiones que benefician un atributo y perjudican otro), puntos de sensibilidad y riesgos. COCOMO estima esfuerzo y planning poker estima historias."
@@ -107,9 +107,9 @@ window.QB_A2 = [
     base: "Un pipeline de análisis de datos procesa registros en etapas encadenadas: extracción → limpieza → transformación → carga, donde la salida de cada etapa alimenta a la siguiente.",
     stem: "El estilo arquitectónico representado es…",
     opts: [
-      "Repositorio centralizado",
-      "Pipes and filters (tuberías y filtros)",
-      "Peer-to-peer"
+      "Repositorio centralizado de datos compartidos",
+      "Tuberías y filtros (pipes and filters)",
+      "Peer-to-peer (red de nodos iguales)"
     ],
     ans: 1,
     exp: "PIPES AND FILTERS: componentes (filtros) que transforman datos conectados por conductos (pipes); ideal para transformaciones secuenciales (ETL, compiladores, streaming). Repositorio implica compartir un almacén central, no flujo lineal."
@@ -119,8 +119,8 @@ window.QB_A2 = [
     base: "Varias herramientas de un IDE (editor, depurador, analizador) trabajan sobre un almacén central del proyecto; los cambios hechos por unas son visibles para las demás.",
     stem: "Este patrón corresponde al estilo…",
     opts: [
-      "Basado en repositorio (centro de datos compartido)",
-      "Cliente-servidor de dos niveles",
+      "Basado en repositorio (almacén central compartido)",
+      "Cliente-servidor de dos niveles con llamadas directas",
       "Capas rígidas con comunicación solo adyacente"
     ],
     ans: 0,
@@ -239,8 +239,8 @@ window.QB_A2 = [
     stem: "El patrón de creación más apropiado es…",
     opts: [
       "Builder (constructor)",
-      "Singleton",
-      "State (estado)"
+      "Singleton (instancia única)",
+      "State (máquina de estados)"
     ],
     ans: 0,
     exp: "BUILDER separa la CONSTRUCCIÓN de objetos complejos de su representación, permitiendo crear variantes paso a paso con el mismo proceso. State es de comportamiento (máquina de estados); Singleton no construye nada."
@@ -262,21 +262,21 @@ window.QB_A2 = [
     base: "Cada vez que llega un nuevo tipo de descuento, el desarrollador modifica el método calcularTotal() agregando otro if. Los bugs reaparecen en casos ya probados.",
     stem: "El principio SOLID cuyo cumplimiento evitaría este problema es…",
     opts: [
-      "Abierto-cerrado (OCP): abierto a extensión, cerrado a modificación",
-      "Inversión de dependencias (DIP)",
-      "Responsabilidad única (SRP)"
+      "Abierto-cerrado (OCP): extender sin modificar lo probado",
+      "Inversión de dependencias (DIP): depender de abstracciones",
+      "Responsabilidad única (SRP): una sola razón para cambiar"
     ],
     ans: 0,
-    exp: "OCP exige extender el comportamiento con NUEVAS clases/estrategias (polimorfismo) sin tocar código probado. Con una interfaz Descuento y clases nuevas por tipo, calcularTotal() no volvería a modificarse."
+    exp: "OCP exige extender el comportamiento con NUEVAS clases/estrategias (polimorfismo) sin tocar código probado. Con una interfaz Descuento y clases nuevas por tipo, calcularTotal() no volvería a modificarse. El síntoma aquí no es una dependencia de clases concretas (DIP) ni una clase con varias responsabilidades (SRP), sino tener que editar el mismo método cada vez que aparece una variante."
   },
   {
     id: "a2-20", sub: "2.2",
     base: "Los módulos de alto nivel (ServicioFacturacion) instancian directamente clases concretas de bajo nivel (MySQLRepository), dificultando pruebas y migraciones.",
     stem: "La recomendación del principio de inversión de dependencias (DIP) es…",
     opts: [
-      "Depender de abstracciones (interfaces) y no de implementaciones concretas",
-      "Hacer que los módulos bajos invoquen a los altos directamente",
-      "Eliminar las interfaces para reducir archivos"
+      "Depender de abstracciones (interfaces), no de clases concretas",
+      "Hacer que los módulos de bajo nivel invoquen a los de alto nivel",
+      "Eliminar las interfaces para reducir el número de archivos"
     ],
     ans: 0,
     exp: "DIP: tanto módulos altos como bajos deben depender de ABSTRACCIONES. ServicioFacturacion usa la interfaz RepositorioPedidos; MySQL u otra implementación se inyecta — habilita pruebas con dobles y cambio de tecnología."
@@ -298,9 +298,9 @@ window.QB_A2 = [
     base: "Del diagrama E-R se obtiene la relación muchos-a-muchos entre Alumno y Curso («inscripción», con atributo fecha).",
     stem: "Al convertirlo a modelo relacional, la práctica correcta es…",
     opts: [
-      "Crear una tabla Inscripcion(id_alumno, id_curso, fecha) con claves foráneas a ambas entidades",
-      "Agregar el atributo fecha como columna en la tabla Alumno",
-      "Fusionar Alumno y Curso en una sola tabla repetida"
+      "Crear Inscripcion(id_alumno, id_curso, fecha) con FK a ambas tablas",
+      "Agregar fecha e id_curso como columnas en la tabla Alumno",
+      "Fusionar Alumno y Curso en una sola tabla con filas repetidas"
     ],
     ans: 0,
     exp: "Toda relación N:M se materializa como TABLA INTERMEDIA (junction) cuyas FK apuntan a las PK de ambas entidades; los atributos propios de la relación (fecha) viven ahí. Guardarla en Alumno causaría redundancia y anomalías."
@@ -310,21 +310,21 @@ window.QB_A2 = [
     base: "Tabla VENTA(id_venta, fecha, id_producto, nombre_producto, precio_producto). Se observa que nombre_producto y precio_producto dependen únicamente de id_producto y no de id_venta.",
     stem: "Esta estructura no cumple la segunda forma normal (2FN) porque…",
     opts: [
-      "Existen atributos no clave con dependencia parcial respecto a parte de la llave primaria",
-      "Existen dependencias transitivas de atributos no clave entre sí",
-      "La llave primaria contiene valores nulos"
+      "Hay atributos no clave que dependen solo de parte de la llave",
+      "Hay dependencias transitivas entre atributos que no son clave",
+      "La llave primaria compuesta admite valores nulos en id_venta"
     ],
     ans: 0,
-    exp: "2FN: sin dependencias PARCIALES (atributos que dependen solo de una parte de una llave compuesta). Aquí (id_venta + id_producto) es llave, pero los datos del producto dependen solo de id_producto → extraer tabla PRODUCTO(id_producto, nombre, precio)."
+    exp: "2FN: sin dependencias PARCIALES (atributos que dependen solo de una parte de una llave compuesta). Aquí (id_venta + id_producto) es llave, pero los datos del producto dependen solo de id_producto → extraer tabla PRODUCTO(id_producto, nombre, precio). Las dependencias transitivas son tema de la 3FN, y una llave primaria nunca admite nulos."
   },
   {
     id: "a2-26", sub: "2.2",
     base: "Tabla CLIENTE(id_cliente, nombre, id_ciudad, nombre_ciudad). nombre_ciudad queda determinado por id_ciudad, no por el cliente.",
     stem: "Para llevarla a tercera forma normal (3FN) se debe…",
     opts: [
-      "Crear CIUDAD(id_ciudad, nombre_ciudad) y dejar en CLIENTE solo id_ciudad como foránea",
-      "Concatenar ciudad al nombre del cliente en una sola columna",
-      "Eliminar la columna id_ciudad y repetir el nombre de la ciudad en cada fila"
+      "Crear CIUDAD(id_ciudad, nombre_ciudad) y dejar id_ciudad como FK",
+      "Concatenar la ciudad al nombre del cliente en una sola columna",
+      "Quitar id_ciudad y repetir el nombre de la ciudad en cada fila"
     ],
     ans: 0,
     exp: "3FN prohíbe dependencias TRANSITIVAS: atributo no clave (nombre_ciudad) que depende de otro no clave (id_ciudad) y no de la PK. Solución: extraer entidad Ciudad y referenciarla por FK, eliminando redundancia y anomalías de actualización."
@@ -334,9 +334,9 @@ window.QB_A2 = [
     base: "Un catálogo de ropa maneja productos con atributos muy variables (talla, color, material, impermeable, conectividad...) que cambian constantemente entre líneas y temporadas.",
     stem: "¿Qué base de datos NO relacional se ajusta mejor y por qué?",
     opts: [
-      "Documental (p. ej., MongoDB), porque cada producto se representa como documento JSON flexible sin esquema rígido",
+      "Documental (p. ej., MongoDB): cada producto es un documento flexible",
       "Clave-valor (p. ej., Redis), porque indexa textos largos mejor que SQL",
-      "Relacional normalizada, porque las formas normales resuelven la variabilidad de atributos"
+      "Relacional normalizada: las formas normales absorben atributos variables"
     ],
     ans: 0,
     exp: "Las BD DOCUMENTALES guardan documentos JSON autocontenidos con esquemas flexibles: perfecto para catálogos heterogéneos y cambiantes. Clave-valor solo recupera blobs por llave (ideal caché). Relacional exigiría alterar tablas constantemente."
@@ -421,7 +421,7 @@ window.QB_A2 = [
     stem: "¿A qué heurística de Nielsen responde directamente esta decisión?",
     opts: [
       "Visibilidad del estado del sistema",
-      "Estética y diseño minimalista",
+      "Ayuda y documentación para el usuario",
       "Atajos para usuarios expertos"
     ],
     ans: 0,
@@ -457,8 +457,8 @@ window.QB_A2 = [
     stem: "El conjunto de decisiones corresponde principalmente a…",
     opts: [
       "Ayudar a reconocer, diagnosticar y recuperarse de errores",
-      "Minimizar la carga de memoria del usuario",
-      "Uso de lenguaje de los usuarios"
+      "Reconocer en lugar de recordar (menos carga de memoria)",
+      "Usar el lenguaje de los usuarios y no el del sistema"
     ],
     ans: 0,
     exp: "Cuando el error ya es posible o ocurrió, la heurística exige mensajes explícitos del problema y caminos de recuperación (deshacer, corregir). Confirmación + undo + mensaje diagnóstico = recuperación robusta de errores."
@@ -468,9 +468,9 @@ window.QB_A2 = [
     base: "En fases tempranas del diseño, el equipo elabora bocetos en papel y wireframes simples que muestra a usuarios para validar conceptos de navegación antes de invertir en desarrollo.",
     stem: "Sobre estos prototipos de BAJA fidelidad, ¿cuál afirmación es correcta?",
     opts: [
-      "Son rápidos y baratos, ideales para explorar y descartar ideas temprano, aunque no capturan detalles visuales finales",
-      "Deben implementarse con el framework definitivo para medir rendimiento real",
-      "Solo sirven para presentarlo a inversionistas, nunca a usuarios"
+      "Son rápidos y baratos para explorar ideas, sin el detalle visual final",
+      "Deben hacerse con el framework definitivo para medir el rendimiento real",
+      "Solo sirven para presentarlos a inversionistas, nunca a los usuarios"
     ],
     ans: 0,
     exp: "La baja fidelidad (papel/wireframe) optimiza VELOCIDAD y COSTO de iteración conceptual: se descarta lo que falla sin apego emocional ni gasto técnico. Los detalles finos y métricas de rendimiento llegan con prototipos de alta fidelidad."
@@ -480,9 +480,9 @@ window.QB_A2 = [
     base: "Para cumplir WCAG, el equipo eleva el contraste texto/fondo a 4.5:1, añade texto alternativo a imágenes y garantiza navegación completa por teclado.",
     stem: "El objetivo transversal de estas prácticas es la…",
     opts: [
-      "Accesibilidad para personas con discapacidad visual o motriz",
-      "Internacionalización del contenido",
-      "Optimización SEO del producto"
+      "Accesibilidad para personas con discapacidad",
+      "Internacionalización del contenido a otros idiomas",
+      "Optimización del posicionamiento en buscadores (SEO)"
     ],
     ans: 0,
     exp: "Contraste suficiente, alt-text y navegabilidad por teclado son lineamientos WCAG de ACCESIBILIDAD (perceptible, operable). Internacionalización traduce idiomas/formatos; SEO posiciona en buscadores."
@@ -492,8 +492,8 @@ window.QB_A2 = [
     base: "Para evaluar la nueva app de boletos, se pide a participantes: «Compra un boleto de CDMX a Guadalajara para el viernes próximo usando tu tarjeta de crédito», observando dónde fallan y midiendo tiempos.",
     stem: "Esta técnica de prueba de usabilidad se basa en…",
     opts: [
-      "Escenarios de tarea realistas asignados a usuarios representativos",
-      "Inspección formal del código fuente",
+      "Escenarios de tarea realistas con usuarios representativos",
+      "Inspección formal del código fuente de la aplicación",
       "Encuestas de satisfacción posteriores al lanzamiento"
     ],
     ans: 0,

@@ -27,9 +27,9 @@ window.QB_LANG = [
     id: "lg-02", sub: "LC", grupo: "lc-t01", ambito: "estudio", proceso: "interpretacion",
     stem: "¿Cuál es la idea central del texto?",
     opts: [
-      "El teletrabajo siempre aumenta la productividad de los desarrolladores",
-      "La supervisión presencial es indispensable para garantizar resultados",
-      "La modalidad de trabajo importa menos que la claridad de objetivos y la calidad de la comunicación; el entorno físico influye pero no determina"
+      "El teletrabajo siempre aumenta la productividad de los desarrolladores, sin importar el entorno",
+      "La supervisión presencial es indispensable para que los equipos de desarrollo den resultados",
+      "Los objetivos claros y una comunicación madura pesan más que el lugar físico desde donde se trabaja"
     ],
     ans: 2,
     exp: "El eje argumentativo: «la claridad de objetivos y la madurez de los canales pesan más que el lugar físico», matizado con los descensos por malas condiciones domésticas. Decir que el teletrabajo «siempre» aumenta la productividad contradice los datos (21 % bajó), y la supervisión presencial «indispensable» es justamente la creencia que el estudio refuta."
@@ -38,9 +38,9 @@ window.QB_LANG = [
     id: "lg-03", sub: "LC", grupo: "lc-t01", ambito: "estudio", proceso: "evaluacion",
     stem: "¿Cuál situación ilustra MEJOR la advertencia de los autores sobre la generalización de resultados?",
     opts: [
-      "Una pyme de ocho personas sin infraestructura digital consolidada podría obtener resultados distintos a los del estudio",
-      "Las seis empresas grandes de Guadalajara deberían abandonar el esquema híbrido inmediatamente",
-      "Los 480 desarrolladores encuestados mintieron deliberadamente sobre su desempeño"
+      "Una pyme de ocho personas sin infraestructura digital consolidada podría obtener otros resultados",
+      "Las seis empresas grandes de Guadalajara deberían abandonar el esquema híbrido de inmediato",
+      "Los 480 desarrolladores del estudio mintieron deliberadamente sobre su propio desempeño"
     ],
     ans: 0,
     exp: "La limitación declarada: muestra solo de empresas GRANDES con infraestructura consolidada → los resultados quizá NO apliquen a pymes. El caso de la pyme sin infraestructura consolidada reproduce exactamente ese límite. Abandonar el esquema híbrido o suponer que los participantes mintieron son conclusiones que el texto no sostiene."
@@ -53,19 +53,19 @@ window.QB_LANG = [
     stem: "¿Qué hacía don Aurelio cada tarde según el relato?",
     opts: [
       "Esperaba un tren en el andén con su paraguas abierto",
-      "Reparaba el reloj de la fachada de la estación",
-      "Regañaba a los niños del pueblo"
+      "Le daba cuerda al reloj de la fachada de la estación",
+      "Les gritaba a los niños del pueblo que se alejaran"
     ],
     ans: 0,
-    exp: "Dato textual: llegaba a la estación, abría el paraguas y ESPERABA en el andén. Darle cuerda al reloj fue «alguien» una sola mañana (no él), y con los niños solo conversaba."
+    exp: "Dato textual: llegaba a la estación, abría el paraguas y ESPERABA en el andén. Darle cuerda al reloj lo hizo «alguien» una sola mañana (no él), y eran los niños quienes le gritaban a él; él solo les respondía."
   },
   {
     id: "lg-05", sub: "LC", grupo: "lc-t02", ambito: "literario", proceso: "interpretacion",
     stem: "La frase «los trenes no se van: se quedan guardados en la memoria de quienes los esperan» significa que…",
     opts: [
-      "Los ferrocarriles planean restablecer el servicio pronto",
-      "Su espera mantiene vivo un vínculo afectivo con el pasado, más allá del transporte real",
-      "Los trenes antiguos se conservan en museos del pueblo"
+      "Los ferrocarriles planean restablecer pronto el servicio en el pueblo",
+      "Su espera mantiene vivo un vínculo afectivo con el pasado",
+      "Los trenes antiguos se conservan en un museo del pueblo para visitarlos"
     ],
     ans: 1,
     exp: "Es una METÁFORA: lo que don Aurelio custodia no son locomotoras sino recuerdos y significados; esperar le da continuidad a esa parte de su vida. Las otras lecturas toman la frase literalmente, traicionando el tono literario."
@@ -75,8 +75,8 @@ window.QB_LANG = [
     stem: "¿Por qué el autor incluye que el reloj llevaba DIEZ años marcando las cuatro y cuarto?",
     opts: [
       "Para documentar la falla técnica de los relojes públicos de la época",
-      "Porque simboliza el tiempo detenido de don Aurelio; cuando el reloj vuelve a avanzar, él puede soltar la espera",
-      "Para explicar que don Aurelio nunca supo leer la hora correctamente"
+      "Porque simboliza el tiempo detenido de don Aurelio y el fin de su espera",
+      "Para explicar que don Aurelio nunca supo leer correctamente la hora"
     ],
     ans: 1,
     exp: "El reloj parado ES don Aurelio: tiempo congelado en un ritual de espera. Su «cuerda» coincide con la liberación del protagonista («cerró su paraguas... se fue antes de las cinco»). Es recurso simbólico, no dato técnico ni anécdota menor."
@@ -89,19 +89,19 @@ window.QB_LANG = [
     stem: "¿Qué documentos exige el registro a la convocatoria?",
     opts: [
       "Solicitud en línea, carta de motivos y comprobante de estudios",
-      "Comprobante de ingresos, cartas de recomendación y CURP",
-      "Título profesional, acta de nacimiento y constancia fiscal"
+      "Comprobante de ingresos, cartas de recomendación y la CURP vigente",
+      "Título profesional, acta de nacimiento y constancia de situación fiscal"
     ],
     ans: 0,
-    exp: "Enumeración literal del texto: solicitud EN LÍNEA + carta de motivos (una cuartilla) + comprobante de estudios. El ingreso familiar es un REQUISITO (no un documento); título profesional no se pide (basta bachillerato)."
+    exp: "Enumeración literal del texto: solicitud EN LÍNEA + carta de motivos (una cuartilla) + comprobante de estudios. El ingreso familiar es un REQUISITO (no un documento que se entregue); el texto no pide cartas de recomendación, CURP, acta ni constancia fiscal, y tampoco título profesional (basta el bachillerato)."
   },
   {
     id: "lg-08", sub: "LC", grupo: "lc-t03", ambito: "social", proceso: "interpretacion",
     stem: "Según la convocatoria, la mensualidad de apoyo de $3,500 se otorga…",
     opts: [
       "A todas las personas inscritas desde el primer día del curso",
-      "Solo al finalizar el curso como premio único",
-      "Condicionada a acreditar al menos 80 % de asistencia durante el curso"
+      "Solo al finalizar el curso, como premio único a quienes lo concluyan",
+      "A quienes acrediten al menos el 80 % de asistencia en el curso"
     ],
     ans: 2,
     exp: "El texto precisa: mensualidad CONDICIONADA a ≥ 80 % de asistencia — es decir, se recibe mes a mes SOLO si se cumple el umbral. No es automática por inscribirse ni un pago único final."
@@ -227,9 +227,9 @@ window.QB_LANG = [
     base: "Objetivo comunicativo: solicitar POR CORREO a servicios escolares la constancia de egreso necesaria para registrarse al EGEL.",
     stem: "¿Cuál mensaje cumple mejor el objetivo comunicativo con registro formal adecuado?",
     opts: [
-      "Oigan, necesito YA mi papelito de egreso, súper urgente, ¡gracias de antemano!",
-      "Estimados señores: Por medio del presente, me permito solicitar a ustedes se sirvan emitir la constancia de término de estudios a nombre del que subscribe, en virtud de resultar indispensable para efecto de registro ante el examen de egreso correspondiente. Sin otro particular, quedo de ustedes.",
-      "Buen día. Soy egresado de la licenciatura en Ingeniería de Software (matrícula 2019xxxx). Solicito amablemente me emitan la constancia de egreso, requisito para mi registro al EGEL Plus. Adjunto copia de credencial y comprobante de estudios. Agradezco su atención y quedo atento(a) a cualquier dato adicional. Atentamente, [nombre y teléfono]."
+      "Oigan, necesito YA mi papelito de egreso porque me voy a registrar al EGEL y se me pasa la fecha. Es súper urgente, se los encargo mucho. ¡Gracias de antemano!",
+      "Estimados señores: Por medio del presente, me permito solicitar a ustedes se sirvan emitir la constancia de término de estudios a nombre del que suscribe, en virtud de resultar indispensable para efecto de registro ante el examen de egreso correspondiente. Sin otro particular, quedo de ustedes.",
+      "Buen día. Soy egresado de Ingeniería de Software (matrícula 2019xxxx). Solicito amablemente la constancia de egreso, requisito para mi registro al EGEL Plus. Adjunto credencial y comprobante de estudios. Quedo atento(a) a cualquier dato adicional. Atentamente, [nombre y teléfono]."
     ],
     ans: 2,
     exp: "El mensaje que inicia con «Buen día. Soy egresado…» logra TODO: saludo apropiado, identificación clara (quién pide), PETICIÓN específica y motivada, documentos adjuntos, cortesía y cierre con datos de contacto. El de «Oigan, necesito YA mi papelito» viola el registro formal. El de «Estimados señores: Por medio del presente…» cae en fórmulas arcaicas y burocráticas («el que suscribe», «sin otro particular») sin identificarse siquiera: el formalismo hueco también falla en la dimensión comunicativa."
@@ -239,8 +239,8 @@ window.QB_LANG = [
     base: "Objetivo comunicativo: AVISO institucional para usuarios del sistema — informar mantenimiento programado con los datos mínimos indispensables.",
     stem: "¿Cuál aviso comunica mejor la información esencial sin ambigüedad?",
     opts: [
-      "Pronto habrá mantenimiento del sistema; estén pendientes de más información.",
-      "AVISO: El sistema no estará disponible el sábado 12 de septiembre de 22:00 a 02:00 horas por mantenimiento programado. Guarde su trabajo antes de las 22:00. Agradecemos su comprensión.",
+      "Pronto habrá mantenimiento del sistema y algunas funciones podrían fallar por un tiempo; estén pendientes de más información en este medio.",
+      "AVISO: El sistema no estará disponible el sábado 12 de septiembre de 22:00 a 02:00 h por mantenimiento programado. Guarde su trabajo antes de las 22:00.",
       "Debido a circunstancias ajenas a nuestro control, el servicio podría eventualmente presentar interrupciones en algún momento próximo sin fecha definida."
     ],
     ans: 1,
