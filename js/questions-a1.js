@@ -72,11 +72,11 @@ window.QB_A1 = [
     stem: "Este planteamiento proviene principalmente de un requerimiento…",
     opts: [
       "De usuario",
-      "No funcional genérico",
+      "Funcional",
       "De dominio"
     ],
     ans: 2,
-    exp: "Los requerimientos de DOMINIO surgen del ámbito de aplicación del sistema (medicina, banca, etc.), como leyes y regulaciones que deben cumplirse sin importar lo que pidan usuarios o desarrolladores."
+    exp: "Los requerimientos de DOMINIO surgen del ámbito de aplicación del sistema (medicina, banca, etc.), como leyes y regulaciones que deben cumplirse sin importar lo que pidan usuarios o desarrolladores. No describe un servicio que el sistema ofrezca (funcional) ni algo que pida un usuario. En la clasificación de Sommerville, estas exigencias legales también se cuentan entre los requerimientos no funcionales externos (legislativos); su origen es el dominio."
   },
   {
     id: "a1-07", sub: "1.1",
@@ -371,12 +371,12 @@ window.QB_A1 = [
     base: "El analista presenta los casos de uso ante clientes, usuarios y desarrolladores; los asistentes comentan errores, omisiones y malentendidos para corregirlos antes de aprobar la especificación.",
     stem: "Esta actividad corresponde a la VALIDACIÓN de requerimientos mediante…",
     opts: [
-      "Un recorrido formal (walkthrough) con stakeholders",
+      "Una revisión guiada (walkthrough) con stakeholders",
       "Una prueba de aceptación automatizada",
       "Una matriz de trazabilidad hacia las pruebas"
     ],
     ans: 0,
-    exp: "El WALKTHROUGH es una revisión guiada donde el autor recorre el documento y los participantes detectan problemas. La validación confirma que los requisitos describen el sistema que el cliente realmente necesita."
+    exp: "El WALKTHROUGH es una revisión guiada e informal: el autor recorre el documento y los participantes señalan errores, omisiones y malentendidos. La validación confirma que los requisitos describen el sistema que el cliente realmente necesita. Una prueba de aceptación se ejecuta sobre el software ya construido, y la matriz de trazabilidad vincula artefactos, pero ninguna de las dos reúne a los interesados para revisar la especificación."
   },
   {
     id: "a1-19", sub: "1.2",
@@ -614,7 +614,7 @@ window.QB_A1 = [
       "Requerimientos no funcionales globales del sistema"
     ],
     ans: 0,
-    exp: "Los CRITERIOS DE ACEPTACIÓN definen condiciones testeables que deben cumplirse para considerar terminada la historia (Definition of Done a nivel historia) y suelen expresarse con escenarios Gherkin (dado/cuando/entonces)."
+    exp: "Los CRITERIOS DE ACEPTACIÓN son condiciones verificables específicas de cada historia que deben cumplirse para aceptarla, y suelen expresarse con escenarios Gherkin (dado/cuando/entonces). No son lo mismo que la Definición de Terminado (Definition of Done): esa es un estándar común que se aplica a todo el Incremento, sin importar la historia."
   },
   {
     id: "a1-30", sub: "1.3",

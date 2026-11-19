@@ -124,7 +124,7 @@ window.QB_A4 = [
       "Prohibir las renuncias mediante una cláusula en el contrato"
     ],
     ans: 0,
-    exp: "El riesgo de «camión atropellado» se mitiga difundiendo conocimiento: documentación viva, pair programming/review cruzados, buses factor ≥ 2 por componente. Becarios no resuelven el punto crítico ni los contratos eliminan rotación."
+    exp: "El riesgo de «camión atropellado» se mitiga difundiendo conocimiento: documentación viva, pair programming/review cruzados, bus factor ≥ 2 por componente. Becarios no resuelven el punto crítico ni los contratos eliminan rotación."
   },
   {
     id: "a4-30", sub: "4.1",
@@ -334,7 +334,7 @@ window.QB_A4 = [
   },
   {
     id: "a4-17", sub: "4.2",
-    base: "Una revisión Fagan convoca moderador, autor, lectores y escribano; se distribuye el artefacto antes, se registra defectos con severidad y se miden tasas para mejorar el proceso.",
+    base: "Una revisión Fagan convoca moderador, autor, lectores y escribano; se distribuye el artefacto antes, se registran defectos con severidad y se miden tasas para mejorar el proceso.",
     stem: "Este tipo de revisión se caracteriza por ser…",
     opts: [
       "Inspección formal: roles definidos, criterios de entrada y métricas",
@@ -528,15 +528,15 @@ window.QB_A4 = [
   },
   {
     id: "a4-22", sub: "4.3",
-    base: "Al cierre del sprint, ANTES de la demostración al cliente, el equipo analiza internamente: qué funcionó, qué falló y qué experimentarán para mejorar la colaboración el próximo ciclo.",
+    base: "Al cierre del sprint, después de la Sprint Review, el equipo analiza internamente: qué funcionó, qué falló y qué experimentarán para mejorar la colaboración el próximo ciclo.",
     stem: "El evento descrito es la…",
     opts: [
       "Retrospectiva (Sprint Retrospective)",
-      "Revisión del sprint (Sprint Review)",
+      "Refinamiento del Product Backlog",
       "Planificación (Sprint Planning)"
     ],
     ans: 0,
-    exp: "RETROSPECTIVA: el equipo examina SU PROCESO de trabajo (personas, herramientas, interacciones) y compromete mejoras. REVIEW: inspecciona el PRODUCTO increment con stakeholders. Orden típico: Review → Retro → Planning."
+    exp: "RETROSPECTIVA: el equipo examina SU PROCESO de trabajo (personas, herramientas, interacciones) y compromete mejoras. REVIEW: inspecciona el PRODUCTO (el Incremento) con los interesados. Al cierre, la Sprint Review va primero y la Retrospectiva después; esta es el último evento del sprint. El Sprint Planning abre el sprint siguiente, y el refinamiento del Product Backlog es una actividad continua sobre los elementos del backlog, no sobre la forma de trabajar del equipo."
   },
   {
     id: "a4-23", sub: "4.3",
@@ -552,7 +552,7 @@ window.QB_A4 = [
   },
   {
     id: "a4-24", sub: "4.3",
-    base: "Dos desarrolladores comparten una estación: uno escribe código mientras el otro revisa en tiempo real, piensa casos límite y proponen alternativas; alternan roles cada cierto tiempo.",
+    base: "Dos desarrolladores comparten una estación: uno escribe código mientras el otro revisa en tiempo real, piensa casos límite y propone alternativas; alternan roles cada cierto tiempo.",
     stem: "La práctica XP y sus roles corresponden a…",
     opts: [
       "Pair programming: driver (escribe) y navigator (orienta)",
