@@ -11,9 +11,9 @@ window.QB_A1 = [
     base: "Una aerolínea encarga un sistema de reservas. Entre sus planteamientos está el siguiente: «La consulta de vuelos disponibles debe mostrarse en pantalla en menos de dos segundos».",
     stem: "¿A qué tipo de requerimiento corresponde este planteamiento?",
     opts: [
-      "Requerimiento funcional, porque describe una operación del sistema",
-      "Requerimiento no funcional de rendimiento, porque establece una medida de desempeño",
-      "Restricción de diseño, porque impone la tecnología a utilizar"
+      "Funcional, porque describe una operación que el sistema realiza",
+      "No funcional de rendimiento, porque fija un tiempo máximo de respuesta",
+      "Restricción de diseño, porque impone la tecnología que debe usarse"
     ],
     ans: 1,
     exp: "Es NO FUNCIONAL de rendimiento: no describe qué hace el sistema (función), sino CÓMO debe hacerlo de forma medible (<2 s). Los funcionales describen servicios o comportamientos; las restricciones limitan la solución (tecnología, normas, presupuesto)."
@@ -35,12 +35,12 @@ window.QB_A1 = [
     base: "La dirección de tecnología de una empresa establece: «Por políticas corporativas, todo sistema nuevo deberá utilizar Oracle Database como gestor de base de datos».",
     stem: "¿Cómo se clasifica correctamente este planteamiento?",
     opts: [
-      "Restricción (requerimiento impuesto) que limita las soluciones posibles",
-      "Requerimiento funcional del subsistema de persistencia",
-      "Atributo de calidad de portabilidad"
+      "Restricción impuesta que limita las soluciones posibles",
+      "Requerimiento funcional del subsistema de persistencia de datos",
+      "Atributo de calidad de flexibilidad entre plataformas"
     ],
     ans: 0,
-    exp: "Las RESTRICCIONES son condiciones impuestas que limitan el margen de diseño (tecnología obligatoria, normativas, presupuesto, plazos). No describen comportamiento ni una cualidad medible del producto, sino un límite impuesto por la organización."
+    exp: "Las RESTRICCIONES son condiciones impuestas que limitan el margen de diseño (tecnología obligatoria, normativas, presupuesto, plazos). No describen comportamiento (funcional) ni una cualidad medible del producto como la flexibilidad (llamada «portabilidad» antes de ISO/IEC 25010:2023), sino un límite impuesto por la organización."
   },
   {
     id: "a1-04", sub: "1.1",
@@ -83,12 +83,12 @@ window.QB_A1 = [
     base: "Se especifica: «Toda comunicación entre la aplicación móvil y el servidor deberá viajar cifrada mediante TLS 1.3».",
     stem: "Aunque menciona una acción técnica, este requerimiento se clasifica mejor como…",
     opts: [
-      "Funcional, porque indica algo que el sistema hace",
-      "No funcional de seguridad, porque define un atributo de calidad del producto",
-      "De interfaz externa, porque involucra otro sistema"
+      "Funcional, porque indica una acción que el sistema ejecuta",
+      "No funcional de seguridad, porque protege la información en tránsito",
+      "De interfaz externa, porque el servidor es otro sistema distinto"
     ],
     ans: 1,
-    exp: "El objetivo real es proteger la información (confidencialidad/integridad): es un atributo de SEGURIDAD, no una función visible para el usuario. Es un ejemplo clásico de requerimiento no funcional disfrazado de acción técnica."
+    exp: "El objetivo real es proteger la información (confidencialidad/integridad): es un atributo de SEGURIDAD, no una función visible para el usuario. Es un ejemplo clásico de requerimiento no funcional disfrazado de acción técnica. El servidor es parte del mismo sistema, no un sistema externo."
   },
   {
     id: "a1-08", sub: "1.1",
@@ -106,9 +106,9 @@ window.QB_A1 = [
     base: "En la especificación de un ERP aparecen estos dos requerimientos:\n(R7) «Los reportes financieros deben generarse en línea, al momento de solicitarlos».\n(R12) «Por seguridad contable, los reportes financieros solo podrán procesarse en lotes nocturnos».",
     stem: "¿Qué problema de calidad presentan R7 y R12 juntos?",
     opts: [
-      "Falta de trazabilidad",
-      "Violación de consistencia, pues se contradicen entre sí",
-      "Falta de completitud, porque falta un actor"
+      "Falta de trazabilidad hacia el origen de cada requerimiento",
+      "Inconsistencia: R7 y R12 se contradicen y no pueden cumplirse juntos",
+      "Falta de completitud, porque no se indica el actor que los pide"
     ],
     ans: 1,
     exp: "Dos requerimientos son INCONSISTENTES cuando no pueden satisfacerse simultáneamente. Aquí uno exige generación inmediata y otro solo nocturna: contradicción directa que debe resolverse mediante negociación con los stakeholders."
@@ -118,9 +118,9 @@ window.QB_A1 = [
     base: "Un cliente solicita: «Quiero que el sistema sea rápido».",
     stem: "El principal problema de este requerimiento es que…",
     opts: [
-      "Es ambiguo e impreciso, por lo que no puede validarse ni probarse",
-      "Es un requerimiento funcional mal redactado",
-      "Es demasiado detallado para un documento de usuario"
+      "Es ambiguo: no tiene una medida con la que pueda validarse ni probarse",
+      "Es un requerimiento funcional que solo está mal redactado",
+      "Es demasiado detallado para un documento dirigido al usuario"
     ],
     ans: 0,
     exp: "«Rápido» carece de criterio medible (¿cuánto?, ¿bajo qué carga?). Un buen requerimiento no funcional cuantifica: «el 95 % de las consultas debe responder en ≤ 2 s con 500 usuarios concurrentes»."
@@ -301,7 +301,7 @@ window.QB_A1 = [
     stem: "La técnica más adecuada para descubrir el proceso real es…",
     opts: [
       "La observación directa del trabajo en sitio",
-      "Un cuestionario enviado por correo",
+      "Un cuestionario enviado por correo a los empleados",
       "El análisis de la documentación existente"
     ],
     ans: 0,
@@ -337,7 +337,7 @@ window.QB_A1 = [
     stem: "Según el modelo de Kano, esa función es un atributo…",
     opts: [
       "Básico (debe estar presente)",
-      "Lineal (más es mejor)",
+      "Lineal o de desempeño (más es mejor)",
       "Atractivo/excitador (delighter)"
     ],
     ans: 2,
@@ -347,7 +347,7 @@ window.QB_A1 = [
     id: "a1-16", sub: "1.2",
     stem: "¿Cuál de las siguientes historias de usuario sigue el formato correcto y completo?",
     opts: [
-      "Como cajero, quiero registrar un pago en menos de 30 segundos, para reducir filas en ventanilla",
+      "Como cajero, quiero registrar un pago en 30 segundos, para reducir filas",
       "El sistema permitirá registrar pagos rápidamente desde la ventana de cobros",
       "Como sistema, quiero validar tarjetas, para cumplir mi trabajo de autorización"
     ],
@@ -359,12 +359,12 @@ window.QB_A1 = [
     base: "El equipo construye maquetas en papel de las pantallas y las muestra a usuarios solo para explorar y ajustar los requerimientos de interfaz; después las descartará y desarrollará desde cero.",
     stem: "Este tipo de prototipo se denomina…",
     opts: [
-      "Evolutivo, porque mejora hasta convertirse en producto",
-      "Desechable de baja fidelidad, porque solo sirve para aprender y luego se abandona",
-      "Vertical, porque implementa una capa completa del sistema"
+      "Evolutivo, porque se refina hasta convertirse en el producto final",
+      "Desechable de baja fidelidad: solo sirve para aprender y se abandona",
+      "Vertical, porque implementa completa una funcionalidad del sistema"
     ],
     ans: 1,
-    exp: "Los prototipos DESECHABLES (papel, mockups) se usan únicamente para clarificar y validar requisitos; su código/diseño no llega al producto. Los EVOLUTIVOS sí se refinan hasta volverse el sistema final."
+    exp: "Los prototipos DESECHABLES (papel, mockups) se usan únicamente para clarificar y validar requisitos; su código/diseño no llega al producto. Los EVOLUTIVOS sí se refinan hasta volverse el sistema final. Un prototipo VERTICAL implementa a fondo una funcionalidad (todas sus capas), cosa que una maqueta en papel no hace."
   },
   {
     id: "a1-18", sub: "1.2",
@@ -373,7 +373,7 @@ window.QB_A1 = [
     opts: [
       "Un recorrido formal (walkthrough) con stakeholders",
       "Una prueba de aceptación automatizada",
-      "Una matriz de trazabilidad"
+      "Una matriz de trazabilidad hacia las pruebas"
     ],
     ans: 0,
     exp: "El WALKTHROUGH es una revisión guiada donde el autor recorre el documento y los participantes detectan problemas. La validación confirma que los requisitos describen el sistema que el cliente realmente necesita."
@@ -383,9 +383,9 @@ window.QB_A1 = [
     base: "Ventas exige priorizar reportes, Almacén quiere primero el módulo de inventarios y Dirección pide acelerar ambos; las discusiones por correo no avanzan.",
     stem: "La técnica más efectiva para resolver este conflicto de prioridades es…",
     opts: [
-      "Decidir unilateralmente el líder técnico",
-      "Convocar un taller conjunto (JAD/workshop) facilitado para negociar consenso",
-      "Priorizar alfabéticamente los requerimientos"
+      "Que el líder técnico decida unilateralmente las prioridades",
+      "Un taller conjunto (JAD) facilitado para negociar consenso",
+      "Priorizar los requerimientos en orden alfabético de su nombre"
     ],
     ans: 1,
     exp: "Los talleres JAD (Joint Application Development) reúnen a los stakeholders en conflicto con un facilitador neutral para negociar y decidir en conjunto, evitando el estancamiento de cadenas de correos o decisiones impuestas."
@@ -395,9 +395,9 @@ window.QB_A1 = [
     base: "Con cuatro requerimientos candidatos, el equipo estimó su valor de negocio y su esfuerzo:\n· A: alto valor / bajo esfuerzo\n· B: alto valor / alto esfuerzo\n· C: bajo valor / bajo esfuerzo\n· D: bajo valor / alto esfuerzo",
     stem: "Siguiendo la matriz valor-esfuerzo, ¿qué requerimiento debe implementarse PRIMERO?",
     opts: [
-      "B, porque su impacto justifica todo el esfuerzo",
-      "C, porque siempre conviene empezar por lo fácil",
-      "A, porque entrega máximo valor con mínimo costo (quick win)"
+      "B, porque su alto impacto justifica todo el esfuerzo",
+      "C, porque siempre conviene empezar por lo más fácil",
+      "A, porque da el máximo valor con el mínimo esfuerzo"
     ],
     ans: 2,
     exp: "Los «quick wins» (alto valor/bajo esfuerzo) se implementan primero: máxima ganancia, mínimo riesgo. D (bajo/alto) es candidato a descartarse. B requiere planearlo y C puede hacerse como relleno."
@@ -517,8 +517,8 @@ window.QB_A1 = [
     stem: "Sobre la Especificación de Requerimientos de Software (SRS) según ISO/IEC/IEEE 29148:2018, ¿cuál afirmación es CORRECTA?",
     opts: [
       "Incluye diagramas de arquitectura y decisiones de diseño interno",
-      "Define de manera completa, consistente y verificable QUÉ debe hacer el sistema, no CÓMO construirlo",
-      "Es un documento exclusivamente dirigido a programadores senior"
+      "Define de forma verificable QUÉ debe hacer el sistema, no CÓMO",
+      "Está dirigida exclusivamente a los programadores senior del equipo"
     ],
     ans: 1,
     exp: "La SRS establece los requerimientos (qué, no cómo): funciones, restricciones y atributos de calidad. El diseño (cómo) pertenece a documentos posteriores. Su audiencia incluye clientes, usuarios y desarrolladores. ISO/IEC/IEEE 29148:2018 reemplazó a IEEE 830 y además distingue las especificaciones de stakeholders (StRS), de sistema (SyRS) y de software (SRS)."
@@ -528,9 +528,9 @@ window.QB_A1 = [
     base: "En el caso de uso «Retirar efectivo», además del flujo normal (insertar tarjeta → NIP → monto → dispensar), se documentó: «3a. Si el NIP es incorrecto en tres intentos, el sistema retiene la tarjeta y notifica al usuario».",
     stem: "El fragmento «3a.» representa un(a)…",
     opts: [
-      "Precondición del caso de uso",
+      "Precondición del caso de uso «Retirar efectivo»",
       "Flujo alternativo (excepción) respecto al flujo principal",
-      "Actor secundario del caso de uso"
+      "Actor secundario que participa en este caso de uso"
     ],
     ans: 1,
     exp: "Los FLUJOS ALTERNATIVOS documentan desviaciones del curso normal: errores del usuario, excepciones del sistema o caminos opcionales. La precondición es lo que debe ser cierto ANTES de iniciar el caso de uso."
@@ -552,9 +552,9 @@ window.QB_A1 = [
     base: "En el diagrama de casos de uso de un cajero automático, «Retirar efectivo» y «Consultar saldo» SIEMPRE ejecutan internamente «Validar identidad». En cambio, «Imprimir comprobante» solo ocurre si el usuario lo solicita.",
     stem: "Las relaciones correctas son…",
     opts: [
-      "«Validar identidad» con include desde ambos casos, e «Imprimir comprobante» con extend",
-      "Ambas relaciones son extend porque son opcionales",
-      "«Validar identidad» con generalización hacia los actores"
+      "«Validar identidad» con include desde ambos, e «Imprimir comprobante» con extend",
+      "Ambas con extend, porque las dos se ejecutan solo cuando el usuario lo pide",
+      "«Validar identidad» como generalización de los dos casos de uso"
     ],
     ans: 0,
     exp: "INCLUDE: el caso base SIEMPRE incorpora el comportamiento incluido (obligatorio, factoriza conducta común). EXTEND: añade comportamiento OPCIONAL/condicional en puntos de extensión. La generalización aplica a herencia entre actores o casos, no aquí."
@@ -564,8 +564,8 @@ window.QB_A1 = [
     stem: "¿Cuál es el propósito principal de la matriz de trazabilidad de requerimientos?",
     opts: [
       "Estimar el costo total del proyecto a partir de los requerimientos",
-      "Vincular cada requerimiento con su origen, su diseño y sus casos de prueba, para verificar cobertura completa",
-      "Ordenar los requerimientos por fecha de captura"
+      "Vincular cada requerimiento con su origen, su diseño y sus casos de prueba",
+      "Ordenar los requerimientos por la fecha en que fueron capturados"
     ],
     ans: 1,
     exp: "La matriz de TRAZABILIDAD conecta requerimientos ↔ fuente ↔ diseño ↔ pruebas, permitiendo verificar que todos estén implementados y probados, y evaluando el impacto de cambios. No estima costos ni define prioridades."
@@ -575,9 +575,9 @@ window.QB_A1 = [
     base: "En la SRS de un sistema logístico aparecen términos como «carta porte», «manifiesto de carga» y «consolidado», definidos en un apartado inicial.",
     stem: "Ese apartado corresponde al…",
     opts: [
-      "Glosario de términos, para establecer un lenguaje común del dominio",
-      "Apéndice de estándares de codificación",
-      "Registro de decisiones de arquitectura"
+      "Glosario de términos, con el lenguaje común del dominio",
+      "Apéndice de estándares de codificación del equipo",
+      "Registro de decisiones de arquitectura del sistema"
     ],
     ans: 0,
     exp: "El GLOSARIO define los términos del dominio del problema para que clientes y desarrolladores interpreten igual la especificación, reduciendo ambigüedades semánticas."
@@ -586,18 +586,18 @@ window.QB_A1 = [
     id: "a1-27", sub: "1.3",
     stem: "¿Cuál de los siguientes requerimientos está MEJOR redactado?",
     opts: [
-      "El sistema manejará usuarios de forma eficiente",
-      "Cuando el inventario de un producto baje de 10 unidades, el sistema enviará una alerta al encargado de compras en menos de 5 minutos",
-      "Sería bueno contar con alertas cuando algo pase con el stock"
+      "El sistema manejará a los usuarios y sus inventarios de forma eficiente y oportuna en todo momento",
+      "Si el stock de un producto baja de 10 unidades, el sistema alertará a compras en menos de 5 minutos",
+      "Sería bueno contar con alertas automáticas cuando pase algo importante con el stock de los productos"
     ],
     ans: 1,
-    exp: "Cumple completitud, precisión y verificabilidad: condición clara (stock < 10), acción definida (alerta), destinatario y límite temporal (≤ 5 min). Las otras opciones son vagas y no comprobables."
+    exp: "Cumple completitud, precisión y verificabilidad: condición clara (stock < 10), acción definida (alerta), destinatario (compras) y límite temporal (≤ 5 min). Las otras opciones son largas pero vagas: «eficiente y oportuna» o «algo importante» no se pueden comprobar."
   },
   {
     id: "a1-28", sub: "1.3",
     stem: "En un proyecto se elaboran DOS documentos de requerimientos: uno para clientes/usuarios y otro para el equipo de desarrollo. ¿Cuál distinción es correcta?",
     opts: [
-      "El de usuario usa lenguaje natural y gráficos comprensibles; el de sistema contiene definiciones detalladas y técnicas que servirán como contrato de construcción",
+      "El de usuario usa lenguaje natural; el de sistema es técnico y sirve de contrato",
       "Ambos deben contener exactamente el mismo nivel de detalle técnico",
       "El de desarrollo se redacta antes de conocer los requerimientos del cliente"
     ],
@@ -610,8 +610,8 @@ window.QB_A1 = [
     stem: "Ese acuerdo constituye los…",
     opts: [
       "Criterios de aceptación de la historia de usuario",
-      "Casos de prueba de integración del sistema",
-      "Requerimientos no funcionales globales"
+      "Casos de prueba de integración entre módulos del sistema",
+      "Requerimientos no funcionales globales del sistema"
     ],
     ans: 0,
     exp: "Los CRITERIOS DE ACEPTACIÓN definen condiciones testeables que deben cumplirse para considerar terminada la historia (Definition of Done a nivel historia) y suelen expresarse con escenarios Gherkin (dado/cuando/entonces)."
@@ -621,7 +621,7 @@ window.QB_A1 = [
     stem: "¿Cuál es la secuencia correcta de las actividades del proceso de ingeniería de requisitos?",
     opts: [
       "Validación → Elicitación → Especificación → Análisis",
-      "Elicitación → Análisis y negociación → Especificación → Validación (seguida de gestión continua)",
+      "Elicitación → Análisis → Especificación → Validación",
       "Especificación → Gestión → Elicitación → Validación"
     ],
     ans: 1,
