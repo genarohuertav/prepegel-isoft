@@ -414,11 +414,11 @@ window.QB_A3 = [
     stem: "Una ventaja genuina de esta decisión es…",
     opts: [
       "Menos tráfico de red y lógica centralizada que reutiliza cualquier aplicación",
-      "Permite versionar la lógica en Git junto con el código de cada aplicación",
+      "Elimina la necesidad de probar la lógica, porque el motor la valida solo",
       "Portabilidad total del procedimiento entre Oracle, SQL Server y PostgreSQL"
     ],
     ans: 0,
-    exp: "STORED PROCEDURES: ejecutan cerca de los datos → menos round-trips, plan precompilado, seguridad granular y UNA sola fuente de verdad para la lógica compartida. Su sintaxis suele ser propietaria (poca portabilidad) y no viven en Git del app."
+    exp: "STORED PROCEDURES: ejecutan cerca de los datos → menos round-trips, plan precompilado, seguridad granular y UNA sola fuente de verdad para la lógica compartida. Su sintaxis suele ser propietaria (poca portabilidad entre motores), y que el motor compile el procedimiento no prueba que su lógica sea correcta: sigue necesitando pruebas. Se versionan en Git igual que el resto del código, normalmente con scripts de migración."
   },
 
   /* ==================== 3.5 PLATAFORMAS DE DESARROLLO ==================== */
@@ -473,7 +473,7 @@ window.QB_A3 = [
   {
     id: "a3-39", sub: "3.5",
     base: "El mismo sitio muestra menú horizontal en escritorio (>992px), hamburguesa en tablet (≥768px) y tarjetas apiladas a una columna en teléfono (<576px).",
-    stem: "La técnica de diseño responsable aplicada combina…",
+    stem: "La técnica de diseño responsivo aplicada combina…",
     opts: [
       "Media queries CSS y grid/flexbox fluido según el ancho del viewport",
       "Detección del modelo exacto de dispositivo con JavaScript propietario",
