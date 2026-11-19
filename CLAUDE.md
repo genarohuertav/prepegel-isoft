@@ -76,7 +76,7 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 ## Publicación y caché (cache-busting)
 
 - En `index.html`, `css/style.css` y todos los `js/*.js` se cargan con un parámetro de versión:
-  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-18b`).
+  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-19`).
 - **Cada vez que se publique**, cambiar ese número en **todas** las etiquetas `<script>` y `<link>` a la
   fecha de la publicación (si hay dos el mismo día, agregar sufijo: `2026-11-18b`). Así los navegadores
   descargan los archivos nuevos en lugar de usar la copia en caché.
