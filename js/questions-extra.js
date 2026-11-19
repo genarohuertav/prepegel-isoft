@@ -188,7 +188,7 @@ window.QB_EXTRA = [
   },
   {
     id: "ex-20", sub: "2.2",
-    stem: "El cliente debe recorrer los elementos de una colección personalizada (lista doblemente enlazada, árbol B) SIN conocer su estructura interna ni exponerla, y mantener varios cursos de recorrido simultáneos. ¿Qué patrón?",
+    stem: "El cliente debe recorrer los elementos de una colección personalizada (lista doblemente enlazada, árbol B) SIN conocer su estructura interna ni exponerla, y mantener varios recorridos simultáneos. ¿Qué patrón?",
     opts: ["Iterator: provee un objeto secuencial next()/hasNext() por recorrido, desacoplando el cliente de la representación interna", "Visitor: aplica operaciones a los elementos declarando una visita por tipo", "Mediator: coordina la comunicación entre los elementos de la colección"],
     ans: 0,
     exp: "Iterator extrae la política de recorrido a un objeto independiente, permitiendo múltiples iteradores activos sobre la misma colección y cambiando la estructura interna sin romper clientes. Visitor sirve para añadir OPERACIONES a una estructura estable, no para recorrerla."

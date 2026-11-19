@@ -65,6 +65,10 @@ app/
     ├── questions-lang.js       # Banco Lenguaje y Comunicación
     ├── questions-extra.js      # Patrones de diseño y arquitectura (con imágenes)
     └── flashcards.js           # Mazo de tarjetas de repaso
+tools/
+├── validar.html        # Validación del banco en el navegador (no requiere instalar nada)
+├── validar.js          # La misma validación desde la terminal (requiere Node.js)
+└── validar-reglas.js   # Reglas compartidas por ambos
 ```
 
 ### Agregar más preguntas
@@ -84,6 +88,19 @@ Agrega objetos al arreglo del archivo del área correspondiente:
 ```
 
 Las opciones se mezclan aleatoriamente en cada sesión; `ans` siempre apunta a la opción original.
+
+### Validar el banco
+
+Después de agregar o cambiar preguntas, revisa el banco:
+
+- **En el navegador (sin instalar nada):** abre `tools/validar.html` con doble clic. Muestra el conteo por
+  subárea junto al peso de la guía y la lista de errores. Tras editar un archivo, pulsa «Volver a validar».
+- **En la terminal (si tienes Node.js):** desde la raíz del proyecto, `node tools/validar.js`. Termina con
+  código 1 si hay errores.
+
+Revisa: ids únicos, exactamente 3 opciones distintas, `ans` entre 0 y 2, subárea válida, `stem` y `exp`
+presentes, que `exp` no nombre opciones por letra, que existan las imágenes de `img`, `ambito` y `proceso`
+válidos en Lenguaje, y que cada multirreactivo (`grupo`) vaya seguido con su `base` solo en la primera.
 
 ## Aviso
 
