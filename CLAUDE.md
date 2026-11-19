@@ -46,6 +46,16 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 - Calificación: Índice Ceneval de 700 a 1300; Satisfactorio ≥ 1000, Sobresaliente ≥ 1150 (por área, por sección y global).
 - Formatos de reactivo de opción múltiple: cuestionamiento directo, completamiento y ordenamiento.
 
+## Cierre del proyecto (2026-11-19)
+
+- El examen es el **8 de diciembre de 2026**. Se está cerrando el proyecto.
+- **Lenguaje y Comunicación queda POSPUESTO y fuera del alcance**: no ampliar `questions-lang.js` (el paso 3
+  no se hará antes del examen). Se mantienen sus 20 preguntas actuales.
+- Opción **«Solo sección disciplinar»** en Simulacro y Examen real (activada por defecto, se guarda en
+  `prefs.soloDis`): el Examen real arma las 143 disciplinares con los pesos de la guía (~7 h) y Lenguaje no
+  limita el tamaño. Desactivada, funciona como antes (203 o su proporción).
+- Paso 5 (flashcards) y paso 6 (textos de index.html y README) hechos: 137 tarjetas; las 46 nuevas van al final.
+
 ## Prioridades (actualizado)
 
 - **La Sección Disciplinar es la prioridad**: es la que decide si se aprueba.
@@ -67,16 +77,17 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 1. **Inventario**: leer el PDF, README.md, js/app.js y todos los js/questions-*.js. Hacer una tabla de cobertura por subárea (banco contra guía) y listar los temas de los descriptores y la bibliografía que no tienen preguntas (p. ej. NoSQL, fragmentación y replicación, paradigmas lógico y funcional, móviles y embebidos, ISO/IEC 25002:2024, 29148:2018, PMBOK 7, Scrum 2020, COCOMO, 4+1, ATAM, heurísticas de Nielsen).
 2. **app.js**: muestreo del simulacro por subárea, subáreas nuevas de Lenguaje, soporte de multirreactivos y tiempo por reactivo configurable.
 3. **Lenguaje y Comunicación**: ampliar el banco a unas 60–90 preguntas con textos originales.
+   **Pospuesto** (fuera del alcance antes del examen del 8 de diciembre).
 4. **Parte disciplinar**: cubrir los huecos por subárea.
-5. **Flashcards** de los temas nuevos.
-6. **Textos**: actualizar index.html y el README con la versión de la guía Dic 2026.
+5. **Flashcards** de los temas nuevos. Hecho (46 tarjetas al final del arreglo).
+6. **Textos**: actualizar index.html y el README con la versión de la guía Dic 2026. Hecho.
 7. **Script de validación** del banco (ids únicos, `ans` entre 0 y 2, 3 opciones, subárea válida).
    Hecho: ver «Validación del banco».
 
 ## Publicación y caché (cache-busting)
 
 - En `index.html`, `css/style.css` y todos los `js/*.js` se cargan con un parámetro de versión:
-  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-19`).
+  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-19b`).
 - **Cada vez que se publique**, cambiar ese número en **todas** las etiquetas `<script>` y `<link>` a la
   fecha de la publicación (si hay dos el mismo día, agregar sufijo: `2026-11-18b`). Así los navegadores
   descargan los archivos nuevos en lugar de usar la copia en caché.

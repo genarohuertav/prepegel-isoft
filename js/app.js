@@ -68,6 +68,8 @@ function areaOfSub(sub) {
     : "LG";
 }
 const isLG = q => areaOfSub(q.sub) === "LG";
+/* Pesos solo de la sección disciplinar (143 reactivos) */
+const DIS_WEIGHTS = Object.fromEntries(Object.entries(EXAM.subWeights).filter(([s]) => areaOfSub(s) !== "LG"));
 
 /* ---------------- Banco global ---------------- */
 const BANK = [
@@ -89,7 +91,7 @@ Object.values(GROUPS).forEach(members => {
 
 /* ---------------- Preferencias (tiempo por reactivo) ---------------- */
 const LS_PREFS = "isoft_prefs_v1";
-const DEFAULT_PREFS = { minDis: 2.9, minLG: 2 };
+const DEFAULT_PREFS = { minDis: 2.9, minLG: 2, soloDis: true };
 function loadPrefs() {
   try { return { ...DEFAULT_PREFS, ...JSON.parse(localStorage.getItem(LS_PREFS) || "{}") }; }
   catch { return { ...DEFAULT_PREFS }; }
@@ -196,6 +198,8 @@ function refreshHomeStats() {
     Object.entries(AREAS).map(([k, v]) =>
       `<span class="stat-chip" style="background:${v.color}18;color:${v.color}">${v.short}: ${perArea[k] || 0}</span>`
     ).join("");
+
+  $("#fc-count-tag").textContent = `${(window.FLASHCARDS || []).length} tarjetas · repaso exprés`;
 
   const hist = getHistory();
   const box = $("#history-box"), list = $("#history-list");
@@ -306,25 +310,31 @@ function sampleByQuotas(quotas) {
 
 const availBySub = () => countBy(BANK, q => q.sub);
 
+/* Pesos a usar en Simulacro y Examen real: solo disciplinar (por defecto) o el examen completo */
+const activeWeights = () => (prefs.soloDis ? DIS_WEIGHTS : EXAM.subWeights);
+const poolSize = () => BANK.filter(q => !prefs.soloDis || !isLG(q)).length;
+
 /* Simulacro de N reactivos: cuotas por subárea proporcionales a los pesos de la guía */
 function sampleSimulacro(total) {
-  return sampleByQuotas(apportion(EXAM.subWeights, total, availBySub()));
+  return sampleByQuotas(apportion(activeWeights(), total, availBySub()));
 }
 
-/* Examen real: 203 reactivos con la estructura de la guía, o la misma proporción si el banco no alcanza */
+/* Examen real: 203 reactivos (o 143 solo disciplinares) con la estructura de la guía,
+   o la misma proporción si el banco no alcanza */
 function examPlan() {
-  const avail = availBySub();
+  const avail = availBySub(), weights = activeWeights();
+  const target = Object.values(weights).reduce((s, n) => s + n, 0);
   let scale = 1, limiting = null;
-  Object.entries(EXAM.subWeights).forEach(([sub, w]) => {
+  Object.entries(weights).forEach(([sub, w]) => {
     const r = (avail[sub] || 0) / w;
     if (r < scale) { scale = r; limiting = sub; }
   });
-  const total = scale >= 1 ? EXAM.total : Math.floor(EXAM.total * scale);
-  const quotas = scale >= 1 ? { ...EXAM.subWeights } : apportion(EXAM.subWeights, total, avail);
+  const total = scale >= 1 ? target : Math.floor(target * scale);
+  const quotas = scale >= 1 ? { ...weights } : apportion(weights, total, avail);
   const sumQ = Object.values(quotas).reduce((s, n) => s + n, 0);
   const lgN = (quotas.LC || 0) + (quotas.RI || 0);
   return {
-    full: scale >= 1, scale, limiting, total: sumQ, quotas,
+    full: scale >= 1, scale, limiting, total: sumQ, target, quotas,
     seconds: (sumQ - lgN) * prefs.minDis * 60 + lgN * prefs.minLG * 60
   };
 }
@@ -652,6 +662,8 @@ function openSetup(mode) {
   $("#toggle-instant").checked = mode === "practica";
   $("#input-min-dis").value = prefs.minDis;
   $("#input-min-lg").value = prefs.minLG;
+  $("#toggle-solo-dis").checked = prefs.soloDis;
+  $("#setup-solo-dis").hidden = mode === "practica";
   $("#setup-areas-block").hidden = mode !== "practica";
   $("#setup-length-block").hidden = mode !== "simulacro";
   $("#setup-exam-block").hidden = mode !== "examen";
@@ -676,14 +688,19 @@ function renderExamInfo() {
   const plan = examPlan();
   const lgN = (plan.quotas.LC || 0) + (plan.quotas.RI || 0);
   const head = plan.full
-    ? `<p><strong>${plan.total} reactivos</strong> con la estructura de la guía: ${plan.total - lgN} disciplinares y ${lgN} de Lenguaje y Comunicación.</p>`
-    : `<p>El banco todavía no alcanza para los 203 reactivos. Se usará un examen de <strong>${plan.total} reactivos</strong>
+    ? (prefs.soloDis
+      ? `<p><strong>${plan.total} reactivos</strong> de la sección disciplinar con los pesos por subárea de la guía (sin Lenguaje y Comunicación).</p>`
+      : `<p><strong>${plan.total} reactivos</strong> con la estructura de la guía: ${plan.total - lgN} disciplinares y ${lgN} de Lenguaje y Comunicación.</p>`)
+    : `<p>El banco todavía no alcanza para los ${plan.target} reactivos. Se usará un examen de <strong>${plan.total} reactivos</strong>
        con la misma proporción por subárea (${Math.round(plan.scale * 100)} % de la estructura): ${plan.total - lgN} disciplinares y ${lgN} de Lenguaje.
        La subárea que limita es <strong>${esc(plan.limiting)} · ${esc(SUBAREA_LABELS[plan.limiting])}</strong>.</p>`;
   $("#exam-info").innerHTML = head +
-    `<p class="muted small">Primero la sección disciplinar y al final Lenguaje, como en la aplicación real.
+    (prefs.soloDis
+      ? `<p class="muted small">Tiempo total con tu configuración: <strong>${fmtDuration(plan.seconds)}</strong>
+     (en el examen real la parte disciplinar ocupa unas 7 h: toda la sesión 1 y el inicio de la sesión 2).</p>`
+      : `<p class="muted small">Primero la sección disciplinar y al final Lenguaje, como en la aplicación real.
      Tiempo total con tu configuración: <strong>${fmtDuration(plan.seconds)}</strong>
-     (el examen real dura 9 h en dos sesiones de 4.5 h).</p>`;
+     (el examen real dura 9 h en dos sesiones de 4.5 h).</p>`);
 }
 
 function readTimeInputs() {
@@ -691,7 +708,8 @@ function readTimeInputs() {
   const dis = parseFloat($("#input-min-dis").value), lg = parseFloat($("#input-min-lg").value);
   prefs = {
     minDis: Number.isFinite(dis) ? clamp(dis) : DEFAULT_PREFS.minDis,
-    minLG: Number.isFinite(lg) ? clamp(lg) : DEFAULT_PREFS.minLG
+    minLG: Number.isFinite(lg) ? clamp(lg) : DEFAULT_PREFS.minLG,
+    soloDis: $("#toggle-solo-dis").checked
   };
 }
 function syncTimeInputs() {
@@ -700,6 +718,14 @@ function syncTimeInputs() {
   $("#input-min-lg").disabled = !on;
 }
 $("#toggle-timer").addEventListener("change", syncTimeInputs);
+$("#toggle-solo-dis").addEventListener("change", () => {
+  readTimeInputs();
+  if (setupMode === "examen") renderExamInfo();
+  if (setupMode === "simulacro") {
+    const cur = Number($("#length-options button.active")?.dataset.len ?? 80);
+    renderLengthOptions(cur);
+  }
+});
 ["#input-min-dis", "#input-min-lg"].forEach(sel => $(sel).addEventListener("input", () => {
   readTimeInputs();
   if (setupMode === "examen") renderExamInfo();
@@ -713,7 +739,7 @@ $("#btn-time-reset").addEventListener("click", () => {
 
 function renderLengthOptions(defaultLen) {
   const wrap = $("#length-options");
-  const options = [[40, "Corto · 40"], [80, "Estándar · 80"], [Infinity, `Completo · ${BANK.length}`]];
+  const options = [[40, "Corto · 40"], [80, "Estándar · 80"], [Infinity, `Completo · ${poolSize()}`]];
   wrap.innerHTML = "";
   options.forEach(([val, label]) => {
     const b = document.createElement("button");
@@ -774,7 +800,7 @@ $("#btn-start").addEventListener("click", () => {
   if (setupMode === "simulacro") {
     const activeBtn = $("#length-options button.active");
     const len = Number(activeBtn?.dataset.len ?? 80);
-    pool = len >= BANK.length ? BANK.slice() : sampleSimulacro(len);
+    pool = len >= poolSize() ? BANK.filter(q => !prefs.soloDis || !isLG(q)) : sampleSimulacro(len);
   } else if (setupMode === "examen") {
     pool = sampleByQuotas(examPlan().quotas);
     sectionOrder = true;

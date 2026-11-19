@@ -1,75 +1,84 @@
 # PrepEGEL ISOFT
 
-Simulador web para preparar el **EGEL Plus en Ingeniería de Software (EGEL Plus ISOFT)** del Ceneval.
+Simulador web para preparar el **EGEL Plus en Ingeniería de Software (EGEL Plus ISOFT)** del Ceneval,
+alineado a la *Guía para el Sustentante* de **diciembre 2026**.
 Hecho con HTML + CSS + JavaScript puros — sin dependencias, sin build. Funciona en celular y computadora.
+
+## El examen (guía de diciembre 2026)
+
+- **203 reactivos**: 143 de la sección disciplinar (Área 1 = 31, Área 2 = 33, Área 3 = 49, Área 4 = 30)
+  y 60 de Lenguaje y Comunicación (30 de comprensión lectora y 30 de redacción indirecta).
+- Incluye un **15 % de reactivos piloto**, que no cuentan para la calificación.
+- Opción múltiple con **3 opciones** y multirreactivos (un texto o caso con varias preguntas).
+- **9 h en 2 sesiones de 4.5 h**: la parte disciplinar ocupa unas 7 h (≈ 2.9 min por reactivo) y Lenguaje 2 h
+  (2 min por reactivo).
+- Calificación con el Índice Ceneval (700–1300): Satisfactorio desde 1000 y Sobresaliente desde 1150.
 
 ## Características
 
-- **155+ reactivos tipo examen** (3 opciones de respuesta, basados en casos) organizados según la estructura oficial:
-  - Área 1 · Análisis de Sistemas de Software (30)
-  - Área 2 · Diseño de Sistemas de Software (58, incluye patrones de diseño con diagramas UML)
-  - Área 3 · Desarrollo de Sistemas de Software (42)
-  - Área 4 · Gestión de Proyectos de Software (29)
+- **320 reactivos originales** (3 opciones, basados en casos, todos con explicación), por subárea de la guía:
+  - Área 1 · Análisis de Sistemas de Software (62)
+  - Área 2 · Diseño de Sistemas de Software (73, incluye patrones y arquitectura con diagramas)
+  - Área 3 · Desarrollo de Sistemas de Software (100)
+  - Área 4 · Gestión de Proyectos de Software (65)
   - Lenguaje y Comunicación (20)
-- **Preguntas con diagramas**: UML de patrones (Observer, Strategy, Adapter, Singleton), arquitectura MVC y en capas, diagrama de secuencia, normalización y relaciones UML — dibujados en SVG (`assets/`).
-- **Flashcards** (~91 tarjetas): definiciones clave por área, fórmulas EVM/PERT/ciclomática, SOLID, patrones problema→solución y ortografía LC. Con filtro por área, "solo no dominadas" y progreso guardado.
-- **3 modos**: Simulacro completo (muestreo ponderado según los pesos oficiales del examen), Práctica por área/subárea y Repaso de errores persistentes.
-- **Cronómetro** configurable: 2 minutos por reactivo (ritmo del examen real).
-- **Retroalimentación inmediata opcional** y **resumen final** con explicación detallada de cada reactivo.
-- Desglose de resultados por área y subárea; historial de intentos (localStorage).
+- **Preguntas con diagramas**: UML de patrones (Observer, Strategy, Adapter, Singleton), arquitectura MVC y en
+  capas, diagrama de secuencia, entidad-relación y relaciones UML, dibujados en SVG (`assets/`).
+- **Flashcards** (137 tarjetas): definiciones clave por área, normas (ISO/IEC/IEEE 29148, ISO/IEC 25010:2023,
+  25002, 12207, 29110, MoProSoft), PMBOK 7, Scrum 2020, fórmulas (COCOMO, puntos de función, EVM, DRE,
+  disponibilidad), arquitectura (4+1, ATAM, C4, tácticas), heurísticas de Nielsen, bases de datos distribuidas,
+  patrones y ortografía. Con filtro por área, «solo no dominadas» y progreso guardado.
+- **Modos**:
+  - **Simulacro**: muestreo proporcional a los pesos por subárea de la guía (40, 80 o todo el banco).
+  - **Examen real**: las 143 preguntas disciplinares con los pesos de la guía (unas 7 h), o los 203 reactivos
+    con Lenguaje al final si se desactiva «Solo sección disciplinar».
+  - **Práctica por tema** (área y subárea), **Repaso de errores** y **Flashcards**.
+- **Solo sección disciplinar** (activada por defecto en Simulacro y Examen real): deja fuera Lenguaje y
+  Comunicación. Desactivada, se incluye Lenguaje con sus pesos por ámbito y proceso.
+- **Cronómetro** configurable por reactivo: 2.9 min en la parte disciplinar y 2 min en Lenguaje por defecto.
+- **Retroalimentación inmediata opcional** y **resumen final** con la explicación de cada reactivo.
+- Desglose de resultados por área, subárea y (en Lenguaje) ámbito y proceso; nivel de desempeño estimado;
+  historial de intentos (localStorage).
 - Atajos de teclado: `1·2·3` responden, `←/→` navegan.
 
-## Publicarlo en GitHub Pages (2 minutos)
+## Publicarlo en GitHub Pages
 
-1. Crea un repositorio nuevo en GitHub (p. ej. `prepegel-isoft`).
-2. Sube TODO el contenido de esta carpeta `app/` a la raíz del repositorio:
+1. Sube el contenido de la raíz de este repositorio (donde está `index.html`) a GitHub.
+2. En el repositorio: **Settings → Pages → Source: Deploy from a branch → Branch: main / (root) → Save**.
+3. En 1–2 minutos la app estará en `https://TU_USUARIO.github.io/prepegel-isoft/`.
 
-   ```bash
-   cd app
-   git init
-   git add .
-   git commit -m "Simulador EGEL Plus ISOFT"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/prepegel-isoft.git
-   git push -u origin main
-   ```
+Antes de publicar, cambia el parámetro `?v=AAAA-MM-DD` de **todas** las etiquetas `<script>` y `<link>` de
+`index.html` a la fecha de la publicación, para que los navegadores no usen la copia en caché.
 
-3. En el repositorio: **Settings → Pages → Source: Deploy from a branch → Branch: main / (root) → Save**.
-4. En 1–2 minutos tu app estará en:
-   `https://TU_USUARIO.github.io/prepegel-isoft/`
-
-> Tip: ábrela en el celular y usa "Agregar a pantalla de inicio" para usarla como app.
+> Tip: ábrela en el celular y usa «Agregar a pantalla de inicio» para usarla como app.
 
 ## Estudiar localmente
 
-Abre `index.html` directamente en el navegador, o mejor:
-
-```bash
-cd app && python3 -m http.server 8080
-# → http://localhost:8080
-```
+Abre `index.html` directamente en el navegador (doble clic). No necesita servidor ni instalar nada.
 
 ## Estructura
 
 ```
-app/
-├── index.html          # Pantallas: inicio, configuración, quiz, resultados, repaso, flashcards
-├── css/style.css       # Diseño responsivo mobile-first
-├── assets/             # Diagramas SVG (patrones UML, MVC, capas, secuencia…)
-└── js/
-    ├── app.js                  # Lógica: modos, timer, resultados, flashcards, persistencia
-    ├── questions-a1.js         # Banco Área 1 · Análisis
-    ├── questions-a2.js         # Banco Área 2 · Diseño
-    ├── questions-a3.js         # Banco Área 3 · Desarrollo
-    ├── questions-a4.js         # Banco Área 4 · Gestión
-    ├── questions-lang.js       # Banco Lenguaje y Comunicación
-    ├── questions-extra.js      # Patrones de diseño y arquitectura (con imágenes)
-    └── flashcards.js           # Mazo de tarjetas de repaso
+index.html              # Pantallas: inicio, configuración, quiz, resultados, repaso, flashcards
+css/style.css           # Diseño responsivo mobile-first
+assets/                 # Diagramas SVG (patrones UML, MVC, capas, secuencia…)
+docs/guia-dic-2026.pdf  # Guía para el sustentante usada como referencia
+js/
+├── app.js              # Lógica: modos, timer, muestreo, resultados, flashcards, persistencia
+├── questions-a1.js     # Banco Área 1 · Análisis
+├── questions-a2.js     # Banco Área 2 · Diseño
+├── questions-a3.js     # Banco Área 3 · Desarrollo
+├── questions-a4.js     # Banco Área 4 · Gestión
+├── questions-lang.js   # Banco Lenguaje y Comunicación
+├── questions-extra.js  # Patrones de diseño y arquitectura (con imágenes)
+└── flashcards.js       # Mazo de tarjetas de repaso
 tools/
 ├── validar.html        # Validación del banco en el navegador (no requiere instalar nada)
 ├── validar.js          # La misma validación desde la terminal (requiere Node.js)
 └── validar-reglas.js   # Reglas compartidas por ambos
 ```
+
+## Banco de preguntas
 
 ### Agregar más preguntas
 
