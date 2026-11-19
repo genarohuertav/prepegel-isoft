@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="App de preparación para el EGEL Plus ISOFT del Ceneval: simulacros y práctica por áreas con explicaciones.">
+  <meta name="description" content="App de preparación para el EGEL Plus ISOFT del Ceneval (guía de diciembre 2026): simulacros y práctica por subárea con explicaciones.">
   <meta name="theme-color" content="#4338ca">
   <title>PrepEGEL ISOFT — Simulador EGEL Plus Ingeniería de Software</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234338ca'/%3E%3Ctext x='50' y='68' font-size='48' text-anchor='middle' fill='white' font-family='Arial'%3EPS%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/style.css?v=2026-11-19">
+  <link rel="stylesheet" href="css/style.css?v=2026-11-19b">
 </head>
 <body>
 
@@ -33,8 +33,12 @@
       <div class="hero card">
         <h1>¿Listo para acreditar tu <span class="grad-text">EGEL Plus ISOFT</span>?</h1>
         <p class="muted">
-          Practica con reactivos tipo Ceneval (3 opciones, basados en casos) organizados según la
-          estructura oficial: 4 áreas disciplinares + Lenguaje y Comunicación.
+          Practica con reactivos originales de 3 opciones, basados en casos y organizados según la
+          Guía para el Sustentante de diciembre 2026: 4 áreas disciplinares + Lenguaje y Comunicación.
+        </p>
+        <p class="muted small">
+          El examen tiene 203 reactivos (143 disciplinares y 60 de Lenguaje y Comunicación), incluido un 15 %
+          de reactivos piloto que no califican, y dura 9 h en 2 sesiones de 4.5 h.
         </p>
         <div class="hero-stats" id="hero-stats"></div>
       </div>
@@ -48,7 +52,7 @@
           </div>
           <div>
             <h3>Simulacro completo</h3>
-            <p>Mezcla proporcional por subárea según la guía, con cronómetro configurable y resultados al final.</p>
+            <p>Mezcla proporcional por subárea según la guía (por defecto solo la sección disciplinar), con cronómetro configurable y resultados al final.</p>
             <span class="tag">40, 80 o todo el banco</span>
           </div>
         </button>
@@ -59,7 +63,7 @@
           </div>
           <div>
             <h3>Examen real</h3>
-            <p>Estructura de 203 reactivos (143 disciplinares + 60 de Lenguaje), en el orden y con el ritmo del examen.</p>
+            <p>Las 143 preguntas disciplinares con los pesos de la guía (unas 7 h a 2.9 min por reactivo), o los 203 reactivos con Lenguaje.</p>
             <span class="tag">Recomendado antes del examen</span>
           </div>
         </button>
@@ -92,8 +96,8 @@
           </div>
           <div>
             <h3>Flashcards</h3>
-            <p>Tarjetas de repaso rápido: definiciones, fórmulas, SOLID y patrones problema-solución. Marca las que ya dominas.</p>
-            <span class="tag">Repaso exprés · memoriza lo clave</span>
+            <p>Tarjetas de repaso rápido: normas, fórmulas, marcos de gestión, arquitectura y patrones. Marca las que ya dominas.</p>
+            <span class="tag" id="fc-count-tag">Repaso exprés · memoriza lo clave</span>
           </div>
         </button>
 
@@ -105,7 +109,7 @@
       </div>
 
       <p class="footnote muted">
-        Material de estudio original alineado a la Guía para el Sustentante (EGEL Plus ISOFT, Ceneval).
+        Material de estudio original alineado a la Guía para el Sustentante del EGEL Plus ISOFT (Ceneval), versión diciembre 2026.
         No es material oficial del Ceneval.
       </p>
     </section>
@@ -136,6 +140,14 @@
         </div>
 
         <div class="toggles">
+          <label class="switch-row" id="setup-solo-dis">
+            <span>
+              <strong>Solo sección disciplinar</strong><br>
+              <span class="muted small">Sin Lenguaje y Comunicación: las 4 áreas con los pesos por subárea de la guía (143 reactivos en el Examen real).</span>
+            </span>
+            <input type="checkbox" id="toggle-solo-dis" checked>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
           <label class="switch-row">
             <span>
               <strong>Cronómetro</strong><br>
@@ -323,13 +335,13 @@
     PrepEGEL ISOFT · Estudia a tu ritmo · Hecho con cariño para futuros titulados
   </footer>
 
-  <script src="js/questions-a1.js?v=2026-11-19"></script>
-  <script src="js/questions-a2.js?v=2026-11-19"></script>
-  <script src="js/questions-a3.js?v=2026-11-19"></script>
-  <script src="js/questions-a4.js?v=2026-11-19"></script>
-  <script src="js/questions-lang.js?v=2026-11-19"></script>
-  <script src="js/questions-extra.js?v=2026-11-19"></script>
-  <script src="js/flashcards.js?v=2026-11-19"></script>
-  <script src="js/app.js?v=2026-11-19"></script>
+  <script src="js/questions-a1.js?v=2026-11-19b"></script>
+  <script src="js/questions-a2.js?v=2026-11-19b"></script>
+  <script src="js/questions-a3.js?v=2026-11-19b"></script>
+  <script src="js/questions-a4.js?v=2026-11-19b"></script>
+  <script src="js/questions-lang.js?v=2026-11-19b"></script>
+  <script src="js/questions-extra.js?v=2026-11-19b"></script>
+  <script src="js/flashcards.js?v=2026-11-19b"></script>
+  <script src="js/app.js?v=2026-11-19b"></script>
 </body>
 </html>
