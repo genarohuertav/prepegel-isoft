@@ -71,15 +71,30 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 5. **Flashcards** de los temas nuevos.
 6. **Textos**: actualizar index.html y el README con la versión de la guía Dic 2026.
 7. **Script de validación** del banco (ids únicos, `ans` entre 0 y 2, 3 opciones, subárea válida).
+   Hecho: ver «Validación del banco».
 
 ## Publicación y caché (cache-busting)
 
 - En `index.html`, `css/style.css` y todos los `js/*.js` se cargan con un parámetro de versión:
-  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-18`).
+  `js/app.js?v=AAAA-MM-DD` (versión actual: `2026-11-18b`).
 - **Cada vez que se publique**, cambiar ese número en **todas** las etiquetas `<script>` y `<link>` a la
   fecha de la publicación (si hay dos el mismo día, agregar sufijo: `2026-11-18b`). Así los navegadores
   descargan los archivos nuevos en lugar de usar la copia en caché.
 - Todas las referencias llevan la misma versión. Si se agrega un archivo `.js` o `.css`, incluirle también el `?v=`.
+
+## Validación del banco
+
+- Correrla **después de cada cambio en los bancos** y antes de publicar.
+- El usuario **no tiene Node ni Python**: para él la forma es abrir `tools/validar.html` en el navegador
+  (doble clic). Muestra conteo por subárea contra el peso de la guía, errores y avisos.
+- Con Node: `node tools/validar.js` desde la raíz (sale con código 1 si hay errores).
+- Las reglas viven en `tools/validar-reglas.js` (compartidas por ambos). Si se agrega una regla al banco,
+  agregarla ahí. Las subáreas válidas y los pesos se leen de `SUBAREA_LABELS` y `EXAM` en `js/app.js`.
+- `validar.html` carga los `js/` con `?t=<hora>` para leer siempre la versión actual; no necesita `?v=`.
+- En localStorage, los ids de preguntas o flashcards que ya no existen se descartan al leer
+  (`readList`/`getErrors` en app.js), así que se pueden quitar preguntas sin romper el Repaso de errores.
+  Ojo: las flashcards usan ids por posición (`fc-<índice>`); insertar tarjetas en medio desplaza las
+  marcadas como dominadas. Agregarlas al final del arreglo o darles un `id` fijo (paso 5).
 
 ## Estructura del proyecto
 
@@ -88,3 +103,4 @@ Se está actualizando a la guía nueva: `docs/guia-dic-2026.pdf`. Rama de trabaj
 - `js/questions-a1.js` … `questions-a4.js`, `questions-lang.js`, `questions-extra.js` — bancos (`window.QB_*`).
 - `js/flashcards.js` — mazo (`window.FLASHCARDS`, campos `a`, `f`, `b`).
 - `assets/` — diagramas SVG usados por `img` en las preguntas.
+- `tools/` — validación del banco (`validar.html`, `validar.js`, `validar-reglas.js`).

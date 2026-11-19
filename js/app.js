@@ -163,15 +163,22 @@ function lgTags(q) {
 /* ---------------- Persistencia ---------------- */
 const LS_ERRORS = "isoft_errors_v1";
 const LS_HISTORY = "isoft_history_v1";
+/* Lee una lista guardada; si falta, está corrupta o no es un arreglo, devuelve [] */
+function readList(key) {
+  try {
+    const v = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+/* Los ids de preguntas que ya no existen en el banco se descartan */
 function getErrors() {
-  try { return new Set(JSON.parse(localStorage.getItem(LS_ERRORS) || "[]")); }
-  catch { return new Set(); }
+  return new Set(readList(LS_ERRORS).filter(id => BY_ID[id]));
 }
 function saveErrors(set) {
   try { localStorage.setItem(LS_ERRORS, JSON.stringify([...set].filter(id => BY_ID[id]))); } catch { /* sin almacenamiento */ }
 }
 function getHistory() {
-  try { return JSON.parse(localStorage.getItem(LS_HISTORY) || "[]"); } catch { return []; }
+  return readList(LS_HISTORY).filter(h => h && typeof h === "object" && h.date);
 }
 function pushHistory(entry) {
   const h = getHistory();
@@ -802,10 +809,9 @@ $("#btn-home").addEventListener("click", goHome);
 
 /* ---------------- Flashcards ---------------- */
 const FC_KNOWN_KEY = "isoft_fc_known_v1";
-const fcKnown = (() => {
-  try { return new Set(JSON.parse(localStorage.getItem(FC_KNOWN_KEY) || "[]")); } catch { return new Set(); }
-})();
 (window.FLASHCARDS || []).forEach((c, i) => { c.id = "fc-" + i; });
+const FC_IDS = new Set((window.FLASHCARDS || []).map(c => c.id));
+const fcKnown = new Set(readList(FC_KNOWN_KEY).filter(id => FC_IDS.has(id)));
 const AREAS_FC = { A1: "A1 · Análisis", A2: "A2 · Diseño", A3: "A3 · Desarrollo", A4: "A4 · Gestión", LG: "Lenguaje" };
 let fc = null;
 

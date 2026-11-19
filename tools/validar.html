@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validar banco — PrepEGEL ISOFT</title>
+  <style>
+    :root { --bg: #f4f5fb; --card: #fff; --text: #1f2937; --muted: #6b7280; --ok: #047857; --err: #b91c1c; --warn: #b45309; --line: #e5e7eb; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #111318; --card: #1b1e26; --text: #e5e7eb; --muted: #9ca3af; --ok: #34d399; --err: #f87171; --warn: #fbbf24; --line: #2d3240; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px 16px; background: var(--bg); color: var(--text);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    main { max-width: 860px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin: 0 0 4px; }
+    h2 { font-size: 1.1rem; margin: 0 0 10px; }
+    .muted { color: var(--muted); font-size: .9rem; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px; }
+    .status { font-size: 1.2rem; font-weight: 700; }
+    .ok { color: var(--ok); } .err { color: var(--err); } .warn { color: var(--warn); }
+    table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+    td.n { text-align: right; }
+    ul { margin: 0; padding-left: 20px; } li { margin: 2px 0; word-break: break-word; }
+    button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Validación del banco de preguntas</h1>
+  <p class="muted">Revisa ids únicos, 3 opciones, <code>ans</code> entre 0 y 2, subárea válida, explicación presente,
+    que la explicación no nombre opciones por letra, imágenes existentes, ámbito/proceso de Lenguaje y multirreactivos.
+    Lee siempre la versión actual de los archivos de <code>js/</code>.</p>
+  <button id="again" type="button">Volver a validar</button>
+
+  <section class="card"><div id="status" class="status">Cargando bancos…</div><div id="summary" class="muted"></div></section>
+  <section class="card"><h2>Conteo por subárea</h2><table id="tabla"><thead><tr><th>Subárea</th><th>Nombre</th><th class="n">Preguntas</th><th class="n">Peso guía</th></tr></thead><tbody></tbody></table></section>
+  <section class="card" id="box-err" hidden><h2 class="err">Errores</h2><ul id="errores"></ul></section>
+  <section class="card" id="box-warn" hidden><h2 class="warn">Avisos</h2><ul id="avisos"></ul></section>
+</main>
+
+<script src="validar-reglas.js"></script>
+<script>
+(() => {
+"use strict";
+const ARCHIVOS = ["questions-a1.js", "questions-a2.js", "questions-a3.js", "questions-a4.js",
+  "questions-lang.js", "questions-extra.js", "app.js"];
+const $ = s => document.querySelector(s);
+
+// app.js se carga solo para leer SUBAREA_LABELS y EXAM; falla al no encontrar la interfaz, y ese error se ignora.
+window.addEventListener("error", e => { if (/app\.js/.test(e.filename || "")) e.preventDefault(); });
+
+function cargar(archivo) {
+  return new Promise(res => {
+    const s = document.createElement("script");
+    s.src = "../js/" + archivo + "?t=" + Date.now();   // evita la caché: siempre la versión actual
+    s.onload = () => res(true);
+    s.onerror = () => res(false);
+    document.body.appendChild(s);
+  });
+}
+function existeImagen(ruta) {
+  return new Promise(res => { const i = new Image(); i.onload = () => res(true); i.onerror = () => res(false); i.src = "../" + ruta; });
+}
+const li = t => { const e = document.createElement("li"); e.textContent = t; return e; };
+
+async function validar() {
+  if (window.__validado) { location.reload(); return; }   // recargar para leer de nuevo los archivos
+  window.__validado = true;
+  const faltan = [];
+  // Copia de los bancos tal como están en los archivos, antes de que app.js los modifique al cargarse
+  const bancos = {};
+  for (const f of ARCHIVOS) {
+    if (f === "app.js") VALIDAR_BANCOS.forEach(b => bancos[b] = window[b] && JSON.parse(JSON.stringify(window[b])));
+    if (!(await cargar(f))) faltan.push(f);
+  }
+
+  const subLabels = typeof SUBAREA_LABELS !== "undefined" ? SUBAREA_LABELS : null;
+  const pesos = typeof EXAM !== "undefined" ? EXAM.subWeights : {};
+  const r = validarBanco(bancos, subLabels ? Object.keys(subLabels) : []);
+  faltan.forEach(f => r.errores.unshift(`No se pudo cargar js/${f}`));
+  if (!subLabels) r.errores.unshift("No se pudo leer SUBAREA_LABELS de js/app.js");
+
+  for (const b of VALIDAR_BANCOS) for (const q of (bancos[b] || []))
+    if (q && q.img && !(await existeImagen(q.img))) r.errores.push(`${q.id}: no existe la imagen ${q.img}`);
+
+  const tbody = $("#tabla tbody"); tbody.innerHTML = "";
+  for (const [k, nombre] of Object.entries(subLabels || {})) {
+    const tr = document.createElement("tr");
+    [k, nombre, r.conteo[k] || 0, pesos[k] ?? "—"].forEach((v, i) => {
+      const td = document.createElement("td"); td.textContent = v; if (i >= 2) td.className = "n"; tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  }
+  const st = $("#status");
+  st.textContent = r.errores.length ? `✗ ${r.errores.length} error(es)` : "✓ Sin errores";
+  st.className = "status " + (r.errores.length ? "err" : "ok");
+  $("#summary").textContent = `${r.total} reactivos · ${r.avisos.length} aviso(s) · ` +
+    `la correcta es la opción más larga en ${r.masLarga} de ${r.total} (meta: que no sea la mayoría)`;
+  $("#box-err").hidden = !r.errores.length; $("#errores").replaceChildren(...r.errores.map(li));
+  $("#box-warn").hidden = !r.avisos.length; $("#avisos").replaceChildren(...r.avisos.map(li));
+}
+$("#again").addEventListener("click", validar);
+validar();
+})();
+</script>
+</body>
+</html>
