@@ -11,9 +11,9 @@ window.QB_A3 = [
     base: "Un equipo compila su programa Java y obtiene archivos .class que se ejecutan sobre la JVM en Windows, Linux y macOS sin recompilar.",
     stem: "¿Qué modelo de ejecución describe este comportamiento?",
     opts: [
-      "Compilación a código nativo específico de cada sistema operativo",
-      "Compilación a código intermedio (bytecode) interpretado/JIT por una máquina virtual",
-      "Interpretación directa del código fuente línea por línea"
+      "Compilación a código nativo distinto para cada sistema operativo",
+      "Compilación a bytecode que ejecuta una máquina virtual (JVM)",
+      "Interpretación directa del código fuente, línea por línea, en cada equipo"
     ],
     ans: 1,
     exp: "Java compila a BYTECODE neutral; la JVM lo ejecuta (interpretando o con JIT). Esto habilita «write once, run anywhere»: el mismo .class corre en cualquier plataforma con JVM instalada."
@@ -23,24 +23,24 @@ window.QB_A3 = [
     base: "En Python un desarrollador escribe:\n\ndef suma(a, b):\n    return a + b\nsuma(2, \"3\")",
     stem: "El error de tipos aparecerá…",
     opts: [
-      "Al compilar, antes de ejecutar",
-      "En tiempo de ejecución, porque Python asigna y verifica tipos dinámicamente",
-      "Nunca, porque Python convierte automáticamente enteros a cadenas"
+      "Al compilar, porque el intérprete revisa los tipos antes de iniciar",
+      "Al ejecutar la llamada, porque Python verifica tipos dinámicamente",
+      "Nunca, porque Python convierte automáticamente el entero a cadena"
     ],
     ans: 1,
-    exp: "Python es de TIPADO DINÁMICO: los tipos se resuelven en ejecución, así que errores de tipo emergen al correr (TypeError), no antes. Además es de tipado FUERTE: «2\" + 3» no concatena mágicamente como en JavaScript."
+    exp: "Python es de TIPADO DINÁMICO: los tipos se resuelven en ejecución, así que errores de tipo emergen al correr (TypeError), no antes. Además es de tipado FUERTE: «2 + \"3\"» no convierte el entero a cadena como haría JavaScript."
   },
   {
     id: "a3-03", sub: "3.1",
     base: "El equipo discute lenguajes para un sistema financiero crítico y prioriza detectar errores de tipo durante la compilación, no en producción.",
     stem: "La característica que deben buscar es…",
     opts: [
-      "Tipado estático, donde las variables tienen tipo definido en tiempo de compilación",
-      "Tipado dinámico con inferencia total en ejecución",
-      "Ausencia de tipos mediante uso exclusivo de cadenas"
+      "Tipado estático, verificado por el compilador antes de ejecutar",
+      "Tipado dinámico, con inferencia de tipos al momento de ejecutar",
+      "Tipado débil, con conversiones implícitas entre tipos compatibles"
     ],
     ans: 0,
-    exp: "TIPADO ESTÁTICO (Java, C#, C++, TypeScript): el compilador verifica tipos ANTES de ejecutar, atrapando mismatches temprano. El dinámico (Python, JS, Ruby) los descubre en runtime."
+    exp: "TIPADO ESTÁTICO (Java, C#, C++, TypeScript): el compilador verifica tipos ANTES de ejecutar, atrapando mismatches temprano. El dinámico (Python, JS, Ruby) los descubre en runtime, y el tipado débil convierte tipos de forma implícita, lo que oculta errores en vez de detectarlos."
   },
   {
     id: "a3-04", sub: "3.1",
@@ -71,9 +71,9 @@ window.QB_A3 = [
     base: "Para buscar usuarios por nombre de usuario en un sistema con millones de registros, el equipo quiere acceso promedio prácticamente inmediato por clave.",
     stem: "La estructura ideal y su complejidad promedio son…",
     opts: [
-      "Tabla hash — O(1) en búsqueda por clave",
-      "Arreglo lineal desordenado — O(n)",
-      "Lista ligada simple — O(n log n)"
+      "Tabla hash — O(1) promedio por clave",
+      "Arreglo lineal desordenado — O(n) por clave",
+      "Lista ligada simple — O(n log n) por clave"
     ],
     ans: 0,
     exp: "Las TABLAS HASH aplican una función hash a la clave y acceden directo al depósito: O(1) promedio. Arreglos/listas requieren recorridos O(n); árboles balanceados dan O(log n)."
@@ -83,9 +83,9 @@ window.QB_A3 = [
     base: "function factorial(n):\n    si n <= 1: regresa 1\n    regresa n * factorial(n - 1)",
     stem: "Esta técnica de resolución se denomina recursividad y funciona porque…",
     opts: [
-      "La función se invoca a sí misma con un problema más pequeño hasta llegar a un caso base",
-      "El compilador duplica el código en memoria para cada llamada",
-      "Se ejecuta siempre en tiempo constante independiente de n"
+      "La función se llama a sí misma con un caso menor hasta llegar al caso base",
+      "El compilador duplica el código de la función en memoria para cada llamada",
+      "Cada llamada se resuelve en tiempo constante, sin depender del valor de n"
     ],
     ans: 0,
     exp: "RECURSIVIDAD: la función se llama a sí misma reduciendo el problema hacia el CASO BASE (n ≤ 1 → 1), que detiene la cadena. Sin caso base habría desbordamiento de pila; el costo aquí es O(n) llamadas."
@@ -95,9 +95,9 @@ window.QB_A3 = [
     base: "En un programa, una función recibe un arreglo (objeto) y modifica sus elementos internamente; fuera de la función, el arreglo original quedó modificado.",
     stem: "Esto ocurre porque…",
     opts: [
-      "Los objetos/arreglos se pasan por referencia: ambos nombres apuntan a la misma estructura en memoria",
-      "Los arreglos siempre se copian completos al pasarlos como argumento",
-      "Java clona automáticamente todo argumento de entrada"
+      "Se pasa una referencia: ambos nombres apuntan al mismo arreglo en memoria",
+      "Los arreglos se copian completos al pasarlos como argumento a la función",
+      "Java clona automáticamente todo argumento de entrada antes de usarlo"
     ],
     ans: 0,
     exp: "Cuando se pasa una REFERENCIA al objeto, la función opera sobre la MISMA memoria: los cambios son visibles afuera (efecto lateral). Los primitivos (int, double) se copian por valor en la mayoría de lenguajes."
@@ -110,9 +110,9 @@ window.QB_A3 = [
     base: "En la clase CuentaBancaria, saldo es privado y solo puede leerse/modificarse mediante métodos depositar(), retirar() y getSaldo() que validan las reglas de negocio.",
     stem: "El principio orientado a objetos aplicado es…",
     opts: [
-      "Encapsulamiento: ocultar el estado interno y exponer operaciones controladas",
-      "Herencia múltiple con delegación automática",
-      "Polimorfismo paramétrico"
+      "Encapsulamiento: estado oculto y acceso solo por métodos",
+      "Herencia múltiple: la clase hereda reglas de varias clases base",
+      "Polimorfismo paramétrico: métodos genéricos sobre cualquier tipo"
     ],
     ans: 0,
     exp: "ENCAPSULAMIENTO: atributos privados + interfaz pública de métodos protegen la invariante (saldo nunca negativo) contra manipulación directa, centralizando validaciones."
@@ -122,9 +122,9 @@ window.QB_A3 = [
     base: "class Gerente extends Empleado — Gerente hereda nombre, RFC y calcularSueldo(), añadiendo bonoGerencial().",
     stem: "La relación y beneficio principal ilustrados son…",
     opts: [
-      "Herencia: reutilización de estructura y comportamiento de una clase base en clases derivadas",
-      "Composición: Gerente contiene varios Empleados internos",
-      "Sobrecarga de operadores"
+      "Herencia: la subclase reutiliza estructura y comportamiento de la base",
+      "Composición: Gerente contiene internamente un objeto Empleado",
+      "Sobrecarga: Gerente redefine calcularSueldo() con otros parámetros"
     ],
     ans: 0,
     exp: "HERENCIA («es-un»): Gerente ES un Empleado especializado; hereda atributos/métodos evitando duplicación y permite polimorfismo. Composición sería «tiene-un» (Gerente tiene una Cuenta)."
@@ -134,9 +134,9 @@ window.QB_A3 = [
     base: "Figura f = new Circulo(5);\ndouble a = f.area();\nSi f = new Cuadrado(4), la MISMA instrucción devuelve otro cálculo correcto.",
     stem: "La propiedad POO demostrada es…",
     opts: [
-      "Polimorfismo: una misma llamada ejecuta la implementación de la clase concreta (sobrescritura)",
-      "Abstracción pura sin clases concretas",
-      "Encapsulamiento de constructores"
+      "Polimorfismo: la llamada ejecuta el area() de la clase concreta",
+      "Sobrecarga: el compilador elige area() según el tipo de argumento",
+      "Abstracción pura: Figura define area() sin ninguna clase concreta"
     ],
     ans: 0,
     exp: "POLIMORFISMO: referencias de tipo Figura invocan area() resuelto DINÁMICAMENTE a la implementación de Circulo/Cuadrado (method overriding). Permite código genérico que funciona con nuevas subclases."
@@ -146,9 +146,9 @@ window.QB_A3 = [
     base: "abstract class Figura { abstract double area(); } — no pueden instanciarse Figuras directamente; cada subclase está obligada a definir area().",
     stem: "El mecanismo descrito corresponde a…",
     opts: [
-      "Abstracción mediante clases abstractas con métodos sin implementación",
-      "Interfaces marcadoras con reflexión",
-      "Sobrecarga de métodos estáticos"
+      "Abstracción con clases abstractas y métodos sin implementación",
+      "Interfaces marcadoras que se detectan en ejecución por reflexión",
+      "Sobrecarga de métodos estáticos resuelta en tiempo de compilación"
     ],
     ans: 0,
     exp: "La ABSTRACCIÓN captura lo esencial definiendo CONTRATOS incompletos (clase abstracta/interface): obliga a las especializaciones a proveer implementación, permitiendo programar contra conceptos generales."
@@ -158,9 +158,9 @@ window.QB_A3 = [
     base: "En un proyecto Haskell, el analista destaca dos funciones:\ncuadrado x = x * x\nsumarCuadrados xs = sum (map cuadrado xs)\nnunca hay variables modificadas ni impresiones dentro de ellas.",
     stem: "Las características funcionales exhibidas son…",
     opts: [
-      "Funciones puras (sin efectos secundarios) y funciones de orden superior (map recibe una función)",
-      "Mutación controlada de estado y punteros explícitos",
-      "Clases abstractas con métodos virtuales puros"
+      "Funciones puras y de orden superior (map recibe una función)",
+      "Mutación controlada de estado y uso explícito de punteros",
+      "Clases abstractas con métodos virtuales puros sobrescritos"
     ],
     ans: 0,
     exp: "Programación FUNCIONAL: funciones PURAS (mismo input → mismo output, cero efectos colaterales) y ORDEN SUPERIOR (tomar/devolver funciones: map, filter, compose). La inmutabilidad elimina estados compartidos problemáticos."
@@ -182,9 +182,9 @@ window.QB_A3 = [
     base: "Base de conocimiento Prolog:\npadre(juan, maria).\nabuelo(X, Z) :- padre(X, Y), padre(Y, Z).\nConsulta: ?- abuelo(juan, Z).",
     stem: "¿Qué característica del paradigma lógico se ilustra?",
     opts: [
-      "Se declaran hechos y reglas; un motor de inferencia deduce las respuestas (programación declarativa)",
+      "Hechos y reglas declarados de los que un motor infiere la respuesta",
       "El programador escribe paso a paso el algoritmo con bucles y contadores",
-      "Los objetos intercambian mensajes asincrónicos"
+      "Los objetos intercambian mensajes asíncronos para calcular la relación"
     ],
     ans: 0,
     exp: "PROLOG/LÓGICO: se declara QUÉ es verdadero (hechos) y reglas de derivación; el motor unifica y retrocede (backtracking) para responder consultas. No se programa el CÓMO iterativo — es declarativo puro."
@@ -194,9 +194,9 @@ window.QB_A3 = [
     base: "button.addEventListener(\"click\", () => { enviarFormulario(); });",
     stem: "El estilo de programación representado es…",
     opts: [
-      "Orientado a eventos: el flujo lo determinan sucesos externos manejados por callbacks/handlers",
-      "Lógico con unificación de términos",
-      "Estructurado con ciclo determinista main→fin"
+      "Orientado a eventos: un callback responde a un suceso externo",
+      "Lógico: el motor unifica el clic con una regla declarada",
+      "Estructurado: el flujo es un ciclo determinista de inicio a fin"
     ],
     ans: 0,
     exp: "ORIENTADA A EVENTOS: el programa registra manejadores y espera sucesos (clicks, teclas, red); el flujo depende del orden en que lleguen. Base de GUIs, web y sistemas reactivos."
@@ -219,9 +219,9 @@ window.QB_A3 = [
     id: "a3-18", sub: "3.3",
     stem: "¿Cuál es la ventaja central de usar un IDE integrado (como IntelliJ, Visual Studio o Eclipse) frente a editor + herramientas sueltas?",
     opts: [
-      "Integra edición, compilación, depuración y navegación de código en un entorno coherente, elevando la productividad",
-      "Garantiza software libre de defectos al momento de compilar",
-      "Sustituye la necesidad de pruebas y control de versiones"
+      "Reúne edición, compilación, depuración y navegación en un solo entorno",
+      "Garantiza que el software compilado quede libre de defectos lógicos",
+      "Sustituye la necesidad de escribir pruebas y de usar control de versiones"
     ],
     ans: 0,
     exp: "El IDE INTEGRA editor inteligente (autocompletado/refactor), compilador, DEBUGGER gráfico, navegación y plugins: menos fricción entre tareas. Ninguna herramienta garantiza ausencia de defectos ni sustituye pruebas/Git."
@@ -231,9 +231,9 @@ window.QB_A3 = [
     base: "Ante un bug intermitente, la desarrolladora coloca un punto de ruptura en la línea 87, ejecuta en modo debug e inspecciona el valor de variables locales en ese instante.",
     stem: "La herramienta y técnica utilizadas son…",
     opts: [
-      "Depurador (debugger) con breakpoints e inspección de estado en tiempo de ejecución",
-      "Analizador estático con reporte post-compilación",
-      "Perfilador de rendimiento con muestreo de CPU"
+      "Depurador con breakpoints e inspección del estado en ejecución",
+      "Analizador estático que reporta problemas después de compilar",
+      "Perfilador de rendimiento que muestrea el uso de CPU por función"
     ],
     ans: 0,
     exp: "El DEBUGGER ejecuta controladamente: BREAKPOINTS pausan en puntos exactos para examinar variables, pila de llamadas y flujo (análisis DINÁMICO). El análisis estático revisa código SIN ejecutarlo."
@@ -243,9 +243,9 @@ window.QB_A3 = [
     base: "Un desarrollador crea la rama feature/pagos para trabajar tres días sin afectar la línea principal; al terminar, integra sus commits de vuelta.",
     stem: "Las operaciones Git implicadas, en orden, son…",
     opts: [
-      "git branch/checkout → commits → git merge (o pull request) a la rama principal",
-      "git clone → git tag → git revert diario",
-      "git init remoto → fork → stash permanente"
+      "git branch/checkout → commits → git merge (o pull request)",
+      "git clone → git tag → git revert de los commits de cada día",
+      "git init remoto → fork del repositorio → git stash permanente"
     ],
     ans: 0,
     exp: "Flujo estándar: crear/cambiar a RAMA (aislamiento), hacer COMMITS incrementales, luego MERGE (o PR aprobado) reintegra cambios. Tags marcan versiones; stash guarda temporalmente trabajo no committeado."
@@ -255,9 +255,9 @@ window.QB_A3 = [
     base: "Ana y Beto modificaron las mismas líneas de config.js en ramas distintas; Git detiene el merge marcando <<<<<<< HEAD ======= >>>>>>> feature.",
     stem: "¿Qué ocurrió y cómo se resuelve?",
     opts: [
-      "Conflicto de fusión: debe editarse el archivo conservando/combinando el contenido correcto y confirmar el merge",
-      "Corrupción del repositorio: hay que clonar de nuevo desde cero",
-      "Error de sintaxis previo: basta compilar para que Git continúe solo"
+      "Conflicto de fusión: se edita el archivo, se elige el contenido y se confirma",
+      "Corrupción del repositorio: hay que clonarlo de nuevo desde el servidor remoto",
+      "Error de sintaxis en config.js: basta compilar para que Git continúe solo"
     ],
     ans: 0,
     exp: "CONFLICTO de merge: cambios simultáneos solapados que Git no puede reconciliar automáticamente. Se editan los marcadores eligiendo la versión final, se hace git add y se completa la fusión."
@@ -267,9 +267,9 @@ window.QB_A3 = [
     base: "SonarQube analiza el repositorio SIN ejecutar el programa y reporta: variables sin usar, métodos de 300 líneas y posibles NullPointerException.",
     stem: "Esta herramienta realiza análisis…",
     opts: [
-      "Estático del código fuente, detectando patrones problemáticos antes de ejecutar",
-      "Dinámico basado en cobertura de pruebas",
-      "De rendimiento con instrumentación en caliente"
+      "Estático: revisa el código fuente sin ejecutarlo",
+      "Dinámico: mide la cobertura alcanzada por las pruebas",
+      "De rendimiento: instrumenta el programa mientras corre"
     ],
     ans: 0,
     exp: "ANÁLISIS ESTÁTICO: inspecciona el código sin ejecución (code smells, vulnerabilidades, complejidad). El dinámico observa el programa corriendo (tests, profilers). Ambos se complementan en calidad."
@@ -279,9 +279,9 @@ window.QB_A3 = [
     base: "Antes de cada commit, el linter marca comillas inconsistentes, indentación irregular y variables renombradas mal escritas (usrNm vs userName).",
     stem: "El valor principal del linter en el flujo de trabajo es…",
     opts: [
-      "Aplicar estilo consistente y detectar errores comunes de forma temprana y automatizada",
-      "Reemplazar la fase de pruebas unitarias",
-      "Generar documentación API automáticamente"
+      "Unificar el estilo y detectar errores comunes antes de la revisión",
+      "Reemplazar las pruebas unitarias en cada commit del repositorio",
+      "Generar la documentación de la API a partir de los comentarios"
     ],
     ans: 0,
     exp: "Los LINTERS imponen convenciones de estilo y atrapan errores triviales ANTES de revisión/pruebas, ahorrando tiempo de code review y bugs superficiales. No sustituyen pruebas ni generan docs (eso es otro toolset)."
@@ -291,9 +291,9 @@ window.QB_A3 = [
     base: "Con un comando único, Maven descarga dependencias, compila módulos, ejecuta tests y empaqueta el JAR reproducible.",
     stem: "La categoría de herramienta y beneficio ilustrados son…",
     opts: [
-      "Automatización de build: procesos repetibles y estandarizados para todos los desarrolladores",
-      "Control de versiones distribuido con historial inmutable",
-      "Orquestación de contenedores con escalado automático"
+      "Automatización de build: un proceso repetible para todo el equipo",
+      "Control de versiones distribuido con historial de cambios inmutable",
+      "Orquestación de contenedores que escala automáticamente cada módulo"
     ],
     ans: 0,
     exp: "Herramientas de BUILD (Maven, Gradle, npm scripts, Make) AUTOMATIZAN dependencias+compilación+pruebas+empaquetado: builds reproducibles independientes del entorno personal de cada developer."
@@ -306,8 +306,8 @@ window.QB_A3 = [
     stem: "La consulta SQL correcta es…",
     opts: [
       "SELECT c.nombre, p.total FROM cliente c JOIN pedido p ON c.id_cliente = p.id_cliente;",
-      "SELECT nombre, total FROM cliente WHERE id_pedido IS NOT NULL;",
-      "SELECT * FROM cliente, pedido GROUP BY nombre;"
+      "SELECT nombre, total FROM cliente WHERE id_pedido IS NOT NULL ORDER BY nombre ASC;",
+      "SELECT * FROM cliente, pedido GROUP BY nombre ORDER BY nombre;"
     ],
     ans: 0,
     exp: "El JOIN relaciona tablas por la clave común (c.id_cliente = p.id_cliente) combinando columnas de ambas. La consulta con «WHERE id_pedido IS NOT NULL» usa una columna que CLIENTE no tiene, y «FROM cliente, pedido GROUP BY nombre» combina todas las filas sin condición (producto cartesiano) y agrupa sin función de agregación."
@@ -317,9 +317,9 @@ window.QB_A3 = [
     base: "Se necesita las ciudades con MÁS DE 10 pedidos. Un junior escribió: SELECT ciudad FROM pedido WHERE COUNT(*) > 10 GROUP BY ciudad; y obtuvo error.",
     stem: "¿Cuál es el problema?",
     opts: [
-      "COUNT(*) es agregación: la condición sobre grupos debe ir en HAVING, no en WHERE",
-      "GROUP BY debe escribirse antes del SELECT",
-      "COUNT no existe en SQL estándar"
+      "COUNT(*) es agregación: debe ir en HAVING, no en WHERE",
+      "GROUP BY debe escribirse antes de SELECT en la consulta",
+      "COUNT(*) no existe en SQL estándar; debe usarse SUM(1)"
     ],
     ans: 0,
     exp: "WHERE filtra FILAS antes de agrupar; HAVING filtra GRUPOS tras la agregación: SELECT ciudad FROM pedido GROUP BY ciudad HAVING COUNT(*) > 10. Es el error clásico WHERE-vs-HAVING."
@@ -329,9 +329,9 @@ window.QB_A3 = [
     base: "Sentencias del script: CREATE TABLE ... ; ALTER TABLE ... ; INSERT INTO ... ; UPDATE ... ; DELETE ...",
     stem: "¿Cuál clasificación es correcta?",
     opts: [
-      "CREATE/ALTER son DDL (estructura); INSERT/UPDATE/DELETE son DML (datos)",
-      "Todas son DCL porque modifican permisos",
-      "CREATE es DML y UPDATE es DDL"
+      "CREATE/ALTER son DDL; INSERT/UPDATE/DELETE son DML",
+      "Todas son DCL, porque modifican permisos sobre la base de datos",
+      "CREATE y ALTER son DML; INSERT, UPDATE y DELETE son DDL"
     ],
     ans: 0,
     exp: "DDL (Data Definition Language) define ESTRUCTURA: CREATE, ALTER, DROP, TRUNCATE. DML (Data Manipulation) opera DATOS: SELECT, INSERT, UPDATE, DELETE. DCL gestiona permisos (GRANT/REVOKE)."
@@ -341,9 +341,9 @@ window.QB_A3 = [
     base: "Tras crear un índice sobre columna email, las búsquedas por email bajaron de 900 ms a 8 ms, pero los INSERT nocturnos masivos tardan más.",
     stem: "¿Por qué ocurre el costo adicional en inserciones?",
     opts: [
-      "Cada INSERT/UPDATE debe mantener también actualizada la estructura del índice",
-      "El índice bloquea permanentemente la tabla contra escrituras",
-      "El índice duplica físicamente todas las filas de la tabla"
+      "Cada INSERT/UPDATE también debe actualizar la estructura del índice",
+      "El índice bloquea toda la tabla contra escrituras mientras exista",
+      "El índice duplica físicamente todas las filas completas de la tabla"
     ],
     ans: 0,
     exp: "ÍNDICES aceleran lecturas (búsqueda ordenada/hash vs escaneo completo) pero cada escritura debe actualizar el índice además de la tabla: trade-off lectura vs escritura/almacenamiento. Se indexan columnas muy consultadas."
@@ -365,9 +365,9 @@ window.QB_A3 = [
     base: "Al intentar insertar PEDIDO(id_pedido=101, id_cliente=9999) siendo que no existe cliente 9999, la BD rechaza la operación.",
     stem: "El mecanismo que actuó es…",
     opts: [
-      "Integridad referencial mediante la clave foránea id_cliente → CLIENTE(id_cliente)",
-      "Un trigger de auditoría configurado por el DBA",
-      "La restricción UNIQUE sobre id_pedido"
+      "Integridad referencial: la clave foránea id_cliente → CLIENTE",
+      "Un trigger de auditoría que el DBA configuró sobre la tabla PEDIDO",
+      "La restricción UNIQUE definida sobre la columna id_pedido"
     ],
     ans: 0,
     exp: "FOREIGN KEY impone integridad REFERENCIAL: no pueden existir hijos (pedidos) apuntando a padres inexistentes (clientes). UNIQUE evita duplicados en la propia columna, no relaciones huérfanas."
@@ -377,9 +377,9 @@ window.QB_A3 = [
     base: "Se crea vista_vendedores AS SELECT id, nombre, zona FROM empleado WHERE puesto='vendedor'; y solo se otorga permiso de consulta a esa vista, no a la tabla completa.",
     stem: "¿Qué beneficios aporta la vista en este escenario?",
     opts: [
-      "Simplifica el acceso (oculta joins/filtros) y restringe visibilidad de columnas/filas (seguridad)",
+      "Simplifica el acceso y limita las columnas y filas visibles",
       "Crea una copia física independiente que acelera todos los reportes",
-      "Elimina la necesidad de índices en la tabla original"
+      "Elimina la necesidad de crear índices en la tabla original"
     ],
     ans: 0,
     exp: "Una VIEW es una consulta almacenada: ABSTRAE complejidad para el usuario y actúa como capa de SEGURIDAD exponiendo solo columnas/filas autorizadas. Generalmente NO almacena datos (salvo vistas materializadas)."
@@ -389,9 +389,9 @@ window.QB_A3 = [
     base: "Un portal guarda la sesión de cada usuario activo en Redis con TTL de 30 minutos; las lecturas superan 100k ops/s con latencia < 1 ms.",
     stem: "El modelo NoSQL elegido y su justificación son…",
     opts: [
-      "Clave-valor, ideal para lookups ultrarrápidos por clave con datos simples y expirables",
-      "Orientada a grafos, porque modela amistades entre sesiones",
-      "Documental, porque Redis serializa JSON comprimido por diseño"
+      "Clave-valor: búsquedas muy rápidas por clave con datos que expiran",
+      "Orientada a grafos, porque modela relaciones entre las sesiones",
+      "Documental, porque Redis serializa por diseño cada sesión como JSON"
     ],
     ans: 0,
     exp: "Redis = CLAVE-VALOR en memoria: acceso O(1) por llave, perfecto para caché, sesiones y contadores. Grafos modelan relaciones transitables; documentales guardan JSON consultable pero no buscan esa latencia extrema."
@@ -401,9 +401,9 @@ window.QB_A3 = [
     base: "Un servicio recibe payloads como: { \"cliente\": { \"id\": 12, \"tags\": [\"vip\", \"mayoreo\"] }, \"total\": 350.50 }",
     stem: "Este formato de dato se clasifica como…",
     opts: [
-      "Semiestructurado: autocontenido, jerárquico y flexible sin esquema rígido (JSON/XML)",
-      "Estructurado clásico de tabla relacional",
-      "No estructurado binario como video o audio"
+      "Semiestructurado: jerárquico y etiquetado, sin esquema rígido",
+      "Estructurado: filas y columnas de una tabla con esquema fijo",
+      "No estructurado: contenido binario como video o audio"
     ],
     ans: 0,
     exp: "SEMIESTRUCTURADO (JSON, XML, YAML): tiene organización interna etiquetada pero esquema flexible/extensible por documento. Estructurado = esquemas fijos (tablas); no estructurado = blobs sin semántica interna (multimedia)."
@@ -413,9 +413,9 @@ window.QB_A3 = [
     base: "La lógica de cálculo de nómina reside en un procedimiento almacenado dentro de la base; las aplicaciones solo lo invocan pasando parámetros.",
     stem: "Una ventaja genuina de esta decisión es…",
     opts: [
-      "Menos tráfico de red (viajan parámetros/resultados, no sentencias) y lógica centralizada reutilizable por cualquier aplicación",
-      "Permite versionar la lógica con Git igual que el código front-end",
-      "Garantiza portabilidad total del procedimiento entre Oracle, SQL Server y PostgreSQL sin cambios"
+      "Menos tráfico de red y lógica centralizada que reutiliza cualquier aplicación",
+      "Permite versionar la lógica en Git junto con el código de cada aplicación",
+      "Portabilidad total del procedimiento entre Oracle, SQL Server y PostgreSQL"
     ],
     ans: 0,
     exp: "STORED PROCEDURES: ejecutan cerca de los datos → menos round-trips, plan precompilado, seguridad granular y UNA sola fuente de verdad para la lógica compartida. Su sintaxis suele ser propietaria (poca portabilidad) y no viven en Git del app."
@@ -427,9 +427,9 @@ window.QB_A3 = [
     base: "El equipo valida formularios con JavaScript en el navegador. El líder exige repetir TODAS las validaciones en el servidor.",
     stem: "La razón técnica correcta es que…",
     opts: [
-      "La validación del cliente mejora la experiencia, pero puede eludirse (desactivar JS, peticiones directas); el servidor es la barrera de seguridad definitiva",
-      "JavaScript no puede comparar cadenas, solo números",
-      "Duplicar validaciones reduce el tamaño de la base de datos"
+      "La validación del cliente puede eludirse; el servidor es la barrera real",
+      "JavaScript en el navegador no puede comparar cadenas, solo números",
+      "Duplicar las validaciones reduce el tamaño de la base de datos"
     ],
     ans: 0,
     exp: "«Never trust the client»: cualquier validación client-side es manipulable (devtools, curl, proxies). Client-side = UX fluida; SERVER-side = integridad y SEGURIDAD reales. Son complementarias, nunca excluyentes."
@@ -439,9 +439,9 @@ window.QB_A3 = [
     base: "API REST de pedidos: GET /pedidos/5 repetido 10 veces no altera datos; PUT /pedidos/5 repetido deja el mismo resultado; POST /pedidos crea uno nuevo cada vez.",
     stem: "Sobre idempotencia HTTP, la afirmación correcta es…",
     opts: [
-      "GET y PUT son idempotentes; POST no lo es porque cada llamada genera un nuevo recurso",
-      "POST es idempotente si se envía JSON bien formado",
-      "Todos los verbos son idempotentes si el servidor responde 200"
+      "GET y PUT son idempotentes; POST no, porque crea un recurso nuevo",
+      "POST es idempotente si el cuerpo es JSON bien formado y válido",
+      "Todos los verbos son idempotentes si el servidor responde 200 OK"
     ],
     ans: 0,
     exp: "IDEMPOTENTE = repetir la llamada no cambia el efecto neto: GET, PUT, DELETE sí; POST NO (crea recurso nuevo por invocación). Por eso reintentos automáticos son seguros con GET/PUT/DELETE y riesgosos con POST."
@@ -451,9 +451,9 @@ window.QB_A3 = [
     base: "Una app de campo para inspectores necesita cámara profesional, GPS en segundo plano continuo, funcionamiento offline total y máximo rendimiento gráfico.",
     stem: "La plataforma más adecuada y su justificación:",
     opts: [
-      "Nativa (Kotlin/Swift): acceso pleno a hardware/sensores, APIs del SO y mejor rendimiento sin capa puente",
-      "Web responsiva: cualquier navegador moderno ya expone todos esos sensores offline",
-      "CLI multiplataforma en Go compilada por dispositivo"
+      "Nativa (Kotlin/Swift): acceso pleno al hardware y mejor rendimiento",
+      "Web responsiva: los navegadores ya exponen todos esos sensores offline",
+      "CLI multiplataforma en Go, compilada por separado para cada equipo"
     ],
     ans: 0,
     exp: "APPS NATIVAS maximizan hardware (cámara, sensores, notificaciones), rendimiento y modo offline profundo al usar SDKs directos del SO. Las híbridas/web sacrifican parte de eso por portabilidad — trade-off central del desarrollo móvil."
@@ -463,9 +463,9 @@ window.QB_A3 = [
     base: "El firmware de una lavadora industrial controla válvulas y motor leyendo sensores; debe reaccionar a la señal de sobrecalentamiento dentro de milisegundos garantizados, con apenas 256 KB de memoria.",
     stem: "El tipo de plataforma descrita y su restricción dominante son…",
     opts: [
-      "Sistemas embebidos: recursos mínimos (memoria/energía) y requisitos de tiempo real determinista",
-      "Computo en la nube serverless con escalado elástico",
-      "Aplicación web progresiva con service workers"
+      "Embebida: poca memoria y respuesta en tiempo real determinista",
+      "Nube serverless: escalado elástico de funciones según la demanda",
+      "Aplicación web progresiva con service workers y caché local"
     ],
     ans: 0,
     exp: "EMBEDDED: software grabado en hardware dedicado con memoria/energía limitadas y a menudo deadlines de TIEMPO REAL (respuesta garantizada, no solo rápida). La nube ofrece elasticidad opuesta a esas restricciones."
@@ -475,9 +475,9 @@ window.QB_A3 = [
     base: "El mismo sitio muestra menú horizontal en escritorio (>992px), hamburguesa en tablet (≥768px) y tarjetas apiladas a una columna en teléfono (<576px).",
     stem: "La técnica de diseño responsable aplicada combina…",
     opts: [
-      "Media queries CSS con grid/flexbox fluido que reorganiza el layout según el ancho del viewport",
+      "Media queries CSS y grid/flexbox fluido según el ancho del viewport",
       "Detección del modelo exacto de dispositivo con JavaScript propietario",
-      "Publicar sitios separados por modelo de teléfono"
+      "Publicar un sitio distinto para cada modelo de teléfono y tableta"
     ],
     ans: 0,
     exp: "RESPONSIVE DESIGN: media queries ajustan estilos por breakpoint de viewport; grids/flexbox fluyen y se reacomodan. Se diseña UNA vez para rangos de tamaños, no por modelos específicos."
@@ -487,9 +487,9 @@ window.QB_A3 = [
     base: "En una planta sin internet estable, el punto de venta debe operar localmente, imprimir tickets en impresora USB y sincronizar cuando haya conexión.",
     stem: "La plataforma más apropiada es una aplicación…",
     opts: [
-      "De escritorio instalada localmente, con acceso directo a periféricos y tolerancia a desconexiones",
-      "Web SPA que confía en el caché del navegador indefinidamente",
-      "Serverless cuya lógica corre en funciones remotas"
+      "De escritorio, con acceso directo a periféricos y trabajo sin red",
+      "Web SPA que confía indefinidamente en el caché del navegador",
+      "Serverless, cuya lógica corre en funciones remotas de la nube"
     ],
     ans: 0,
     exp: "DESKTOP: corre en la máquina local → funciona sin red, acceso nativo a impresoras/periféricos y datos locales sincronizables. Web/serverless dependen de conectividad para su núcleo operativo."
@@ -499,9 +499,9 @@ window.QB_A3 = [
     base: "Una PWA permite instalarla desde el navegador al inicio del teléfono, abrirse en ventana propia y seguir mostrando el último contenido sin conexión gracias a sus service workers.",
     stem: "Las tecnologías/estrategias habilitantes de una PWA incluyen…",
     opts: [
-      "Manifest (instalabilidad/apariencia) + Service Workers (caché y offline) + HTTPS obligatorio",
-      "Applets de Java firmados digitalmente",
-      "Compilación cruzada a binario ARM nativo"
+      "Manifest, service workers (caché y offline) y HTTPS",
+      "Applets de Java firmados digitalmente por el navegador",
+      "Compilación cruzada del sitio a binario ARM nativo"
     ],
     ans: 0,
     exp: "PWA = web app con MANIFEST (ícono, nombre, standalone), SERVICE WORKERS (proxy de red: caché offline, push) servida bajo HTTPS. Combina alcance web + experiencia tipo app nativa."
@@ -511,9 +511,9 @@ window.QB_A3 = [
     base: "Un SaaS educativo enfrenta picos: 200 usuarios diarios, pero 15,000 concurrentes cada inicio de semestre durante 48 horas.",
     stem: "El atributo de la nube pública que resuelve directamente este patrón es…",
     opts: [
-      "Elasticidad: escalar recursos automáticamente ante demanda y liberarlos después, pagando por uso",
-      "Redundancia geográfica de centros de datos",
-      "Aislamiento físico de servidores dedicados"
+      "Elasticidad: escalar recursos ante la demanda y liberarlos después",
+      "Redundancia geográfica de centros de datos en varias regiones",
+      "Aislamiento físico mediante servidores dedicados a cada cliente"
     ],
     ans: 0,
     exp: "ELASTICIDAD/autoscaling: infraestructura crece y decrece con la demanda real → absorbe picos sin sobreprovisionar permanentemente (modelo capex→opex). Redundancia habla de disponibilidad ante desastres, no de picos."
